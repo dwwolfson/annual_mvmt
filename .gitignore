@@ -32,4 +32,5 @@ vignettes/*.pdf
 # all datasets (too big)
 data/
 
-
+# no word docs
+*.docx
