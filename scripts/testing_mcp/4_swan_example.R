@@ -14,7 +14,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 
 # Import data
 # This is the entire dataset (n=125) condensed to one record for day with averaged NSD
-df<-read_csv(here("data/full_dataset_6_28_2022/full_w_nsd.csv"))
+df<-read_csv(here("data/daily_NSD.csv"))
 
 # Pull off a few swans to try with mcp
 # I'll take a couple from a few different categories (easy long, short, resident, etc)
