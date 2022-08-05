@@ -1,0 +1,96 @@
+---
+title: "Interior Population Trumpeter Swan Annual Movements"
+author: 
+  - David W. Wolfson^[University of Minnesota, Minnesota Cooperative Fish and Wildlife Research Unit], David E. Andersen^[U.S. Geological Survey, Minnesota Cooperative Fish and Wildlife Research Unit], John R. Fieberg^[University of Minnesota]
+output: 
+  bookdown::word_document2:
+    fig_caption: yes
+    reference_docx: StylesTemplate.docx
+    always_allow_html: true
+bibliography: "Annual_MVMT_manuscript.bib"
+csl: http://www.zotero.org/styles/the-journal-of-wildlife-management
+link-citations: yes
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r chunk-setup-options, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message=FALSE,
+                      warning=FALSE,
+                      fig.cap=TRUE,
+                      fig.align="center",
+                      out.width = '100%',
+                      ft.keepnext=FALSE)
+```
+
+```{r flextable-settings, include=FALSE}
+flextable::set_flextable_defaults(
+    font.family = "New Times Roman",
+    font.size = 12,
+    text.align='center'
+  )
+```
+
+<!--- this is how to write a comment that won't knit--->
+
+<!--- --->
+
+```{r install packages}
+library(bookdown)
+library(rmarkdown)
+library(here)
+library(knitr)
+library(mcp)
+library(tidyverse)
+library(flextable)
+library(lubridate)
+```
+
+```{r}
+options(scipen = 999)
+```
+
+```{r theme_ggplot, include=FALSE}
+source(here("writing/ggplot_theme.R"))
+
+```
+
+## Abstract
+
+## Introduction
+
+Trumpeter swans (*Cygnus buccinator*) are the largest waterfowl species in North America and were widespread throughout the continent prior to European colonization during the $19^{th}$ century [@banko1960].
+Trumpeter swans were nearly extirpated in the lower 48 states and reached an estimated low of 70 individuals in the 1930s due to widespread hunting for meat, skins for powder puffs, and feather quills for writing.
+Critically low numbers of trumpeter swans led to the establishment of Red Rock Lakes National Wildlife Refuge (RRLNWR) in the confluence of Montana, Wyoming, and Idaho (also know as the Tri-State region) in 1935, which was the last vestige of a sizable breeding swan population in the lower 48 states.
+
+As trumpeter swan numbers at RRLNWR started to rise,this flock was used as a source population for many reintroduction efforts.
+Many states translocated trumpeter swans from RRLNWR to augment and boost the abundance and distribution of the Rocky Mountain Population (RMP) or to restore the Interior Population (IP), which had been extirpated.
+As many states pursued reintroduction programs in the 1980s, demand for trumpeter swans outpaced the number available in the Tri-State area and forced managers to search for an alternative source.
+Fortunately, in 1968, aerial surveys of Pacific Coast Population (PCP) swans in Alaska revealed previously undocumented populations that were abundant enough to augment reintroduction efforts, especially those targeting the IP [@matteson1988].
+An important distinction between these source populations is that PCP swans breeding in Alaska migrate to British Columbia, Washington and Oregon for the winter whereas RMP swans from the Tri-State area are considered non-migratory [@oyler-mccance2007].
+
+The IP has increased dramatically since reintroductions began in the 1960s, and both population size and distribution has expanded significantly (Cite TRUS survey report).
+Trumpeter swans currently breed throughout most of the western Great Lakes region, including in Minnesota, Wisconsin, Michigan, Iowa, Manitoba, Ontario, and Ohio.
+However, beyond estimates of population size and trends, there is relatively little recent information about their ecology, including seasonal movements and migration patterns.
+
+Objectives paragraph
+
+To address current information needs, we marked a sample of IP swans with GPS-GSM transmitters to evaluate the spatio-temporal patterns of this population during the annual cycle.
+Specifically, we will quantify 1) migration phenology, 2) the extent and duration of migratory movements, 3) the role of breeding status and breeding location on annual movement patterns, and 4) the degree of individual and population variability in migration patterns.
+
+## Methods
+
+To quantify migration phenology, we first defined the summer territory by calculating a 95% occurrence distribution for the locations of each marked swan from June 1 - August 1 using the amt and ctmm packages (cite).
+To define the onset of autumn migration and the end of spring migration, we used a spatial threshold to determine if a swan was within its summer territory.
+After visually inspecting graphs of Net-Squared Displacement (NSD) over time, we chose xxx km^2^ as the NSD threshold, but we also performed a sensitivity analysis to demonstrate results were robust to this choice (include in supplemental) **(or try mcp or migrateR approach instead)**.
+Using this threshold, we considered the onset of autumn migration when a swan was \>xxx km from the centroid of its summer territory and the end of spring migration when the swan was \< xxx km from the centroid of the previous year's summer territory
+
+## Results
+
+## Discussion
+
+## Acknowledgements
+
+## References
