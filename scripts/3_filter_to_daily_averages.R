@@ -26,9 +26,9 @@ df$year_day<-paste(df$year, df$yday, sep="-")
 
 # calculate daily nsd average
 df<-df %>% 
-  group_by(id) %>% 
-  group_by(year_day) %>% 
+  group_by(id, year_day) %>% 
   mutate(nsd_daily_mean=mean(nsd))
+
 
 # distill dataset down to one observation a day
 # because the combination of the rest of the variables are not distinct for each day, 

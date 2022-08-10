@@ -19,20 +19,21 @@ plan(multisession)
 # Import data
 # This is the entire dataset (n=125) condensed to one record for day with averaged NSD
 df<-read_csv(here("data/full_dataset_6_28_2022/full_daily_nsd.csv"))
-
 ids<-unique(df$id)
 
-
-# Create object to store the results
+# Create objects to store the results
 res<-data.frame(id=NA, year=NA, name=NA, mean=NA, lower=NA, upper=NA, Rhat=NA, n.eff=NA)
-write_csv(res, here("output/mcp_params.csv"))
+write_csv(res, here("output/best_mod_params.csv"))
 
-system.time(foreach(i=xxx)%dopar%functions)
-
-
+model_comparison<-data.frame(id=NA, year=NA, 
+                             one_int_loo=NA, 
+                             two_int_loo=NA,
+                             three_int_loo=NA,
+                             four_int_loo=NA,
+                             five_int_loo=NA)
+write_csv(model_comparison, here("output/model_comparisons.csv"))
 
 # split years up each summer
-
 df <- df %>%
   group_by(id) %>%
   mutate(swan_yr = ifelse(yday < 182, paste(id, year - 1, year, sep = "-"),
@@ -84,13 +85,6 @@ for(i in seq_along(ids)){
   
   # fit mcp models
   out_mods<-list()
-
-  # worth keeping track of names?
-  # mod_names<-NA
-  # for(k in 1:5){   #hardwired for the number of models I'm currently trying
-  #   mod_names[[k]]<-paste("fit", years[[j]], k, "int", sep="_")
-  # }
-  # names(out_mods)<-mod_names
   
   # fit mcp models
   out_mods<-foreach(mm=1:length(int_mods))%dopar%{
@@ -116,27 +110,35 @@ for(i in seq_along(ids)){
       }
   }
   
-  # Save the relative fit of each model
+   # Save the relative fit of each model
+   loo_vec<-unlist(loo_list)
+   # cbind together with id as 1st col and year as 2nd
+   mods<-c(ids[[i]], years[[j]],loo_vec)
+   # write out to file
+   write_csv(as.data.frame(t(mods)), here("output/model_comparisons.csv"), append = T)
 
-
-  
+  # pick the best model based on loo
   best_mod<-out_mods[[which.max(loo_list)]]
   params<-as.data.frame(summary(best_mod))
   
   # cbind together with id as 1st col and year as 2nd
-  
-  # test that it's a row
-  # write_csv(params, here("output/mcp_params.csv), append = T)
+  params<-cbind.data.frame(id=ids[[i]], year=years[[j]], params)
+  # write out to file
+  write_csv(params, here("output/best_mod_params.csv"), append = T)
+
   
 
   p<-plot(best_mod, q_fit=T)+
       ggtitle(glue::glue("The best model for {ids[[i]]} in year {years[[j]]} has {length(best_mod$model)} intercepts"))
-  ggsave
+  p<-p+labs(y = "displacement in km", x = "Date", title = paste(years[[j]], sep = "-"))
   
+  ggsave(plot = p, filename = here(glue::glue("output/best_mod_plots/{years[[j]]}.pdf")))
   
   
   }
-}
+    cat("Working on swan", i, "out of", length(ids), "\n")
+  }
+
 
 
 
