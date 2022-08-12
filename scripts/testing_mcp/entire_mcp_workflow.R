@@ -12,6 +12,7 @@ if(any(installed_packages == FALSE)){
 # load packages
 invisible(lapply(packages, library, character.only = TRUE))
 source(here("scripts/ggplot_custom_function.R"))
+options(scipen = 999)
 
 registerDoFuture()
 plan(multisession)
@@ -62,11 +63,7 @@ five_int<-list(rescale~1,
                ~1)
 int_mods<-list(one_int, two_int, three_int, four_int, five_int)
 
-
-# # thin dataset by discarding every other observation
-# df<-df %>% 
-#   filter(row_number()%%2==1)
-
+###
 # fit models
 for(i in seq_along(ids)){
   # filter dataset for each swan
@@ -80,6 +77,9 @@ for(i in seq_along(ids)){
   tmp_yr<-tmp %>% 
     filter(swan_yr==years[[j]])
   
+  # some years are too few locations
+  if(nrow(tmp_yr)>30){
+  
   # create a numeric index so that dates track chronologically
   tmp_yr$index<-1:nrow(tmp_yr)
   
@@ -87,29 +87,36 @@ for(i in seq_along(ids)){
   out_mods<-list()
   
   # fit mcp models
-  out_mods<-foreach(mm=1:length(int_mods))%dopar%{
+  out_mods<-foreach(mm=1:length(int_mods), .errorhandling = 'pass')%dopar%{
     out_mods<-.GlobalEnv$out_mods
-    out_mods[[mm]]<-mcp(model = int_mods[[mm]], 
+    
+    tryCatch(out_mods[[mm]]<-mcp(model = int_mods[[mm]], 
                         data = tmp_yr[,c("rescale", "index")],
-                        par_x = "index")
+                        par_x = "index",
+                        adapt=10000),
+             error = function(e) NULL)
   }
   
-  # determine if models fit well or if they are junk based on Rhat values
-  for(k in 1:length(out_mods)){
-    mod<-as.data.frame(summary(out_mods[[k]]))
-    out_mods[[k]]$rhat_check<-any(mod$Rhat<1.1)
-  }
-  
+  # determine if models fit well or not based on if any Rhat values are higher than 1.1
   loo_list<-list()
+  
+  for(k in 1:length(out_mods)){
+    if(length(out_mods[[k]])!=0){
+    mod<-as.data.frame(summary(out_mods[[k]]))
+    out_mods[[k]]$rhat_fail<-any(mod$Rhat>1.1)
+    }}
+  
+  # extract parameters for models that had an acceptable fit
   for(nn in 1:length(out_mods)){
-    if(out_mods[[nn]]$rhat_check==T){
+    if(length(out_mods[[nn]])!=0){
+    if(out_mods[[nn]]$rhat_fail==F){
     out_mods[[nn]]$loo<-loo(out_mods[[nn]])
     loo_list[[nn]]<-out_mods[[nn]]$loo$estimates[[1]]
     }else{
       loo_list[[nn]]<-(-9999) # this is reflect that it didn't pass rhat check but stay in numeric for which.max
-      }
-  }
+    }}}
   
+
    # Save the relative fit of each model
    loo_vec<-unlist(loo_list)
    # cbind together with id as 1st col and year as 2nd
@@ -117,28 +124,33 @@ for(i in seq_along(ids)){
    # write out to file
    write_csv(as.data.frame(t(mods)), here("output/model_comparisons.csv"), append = T)
 
-  # pick the best model based on loo
-  best_mod<-out_mods[[which.max(loo_list)]]
-  params<-as.data.frame(summary(best_mod))
-  
-  # cbind together with id as 1st col and year as 2nd
-  params<-cbind.data.frame(id=ids[[i]], year=years[[j]], params)
-  # write out to file
-  write_csv(params, here("output/best_mod_params.csv"), append = T)
-
-  
-
-  p<-plot(best_mod, q_fit=T)+
-      ggtitle(glue::glue("The best model for {ids[[i]]} in year {years[[j]]} has {length(best_mod$model)} intercepts"))
-  p<-p+labs(y = "displacement in km", x = "Date", title = paste(years[[j]], sep = "-"))
-  
-  ggsave(plot = p, filename = here(glue::glue("output/best_mod_plots/{years[[j]]}.pdf")))
-  
-  
+   # pick the best model based on loo
+   best_mod<-out_mods[[which.max(loo_list)]]
+   params<-as.data.frame(summary(best_mod))
+   
+   # cbind together with id as 1st col and year as 2nd
+   params<-cbind.data.frame(id=ids[[i]], year=years[[j]], params)
+   # write out to file
+   write_csv(params, here("output/best_mod_params.csv"), append = T)
+   
+   # save out plot of best model
+   p<-plot(best_mod, q_fit=T)+
+      labs(y = "displacement in km", 
+           x = "Index in days from July 1",
+           title = glue::glue("The best model for {years[[j]]} has {length(best_mod$model)} intercepts"))
+   
+   ggsave(plot = p, filename = here(glue::glue("output/best_mod_plots/{years[[j]]}.pdf")))
+     
+  # keep track of progress 
+  cat("Working on year", j, "out of", length(years), "\n")
+  }else{
+    # keep track of which swans didn't have enough data to fit a model
+    cat("Dataset for ", years[[j]], "skipped because of insufficient sample size.\n",
+        file=here("output/skipped_swan_years.txt"), append=T)
+  }}
+  # keep track of progress
+  cat("Working on swan", i, "out of", length(ids), "\n")
   }
-    cat("Working on swan", i, "out of", length(ids), "\n")
-  }
-
 
 
 

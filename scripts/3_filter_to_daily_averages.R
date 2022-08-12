@@ -18,6 +18,9 @@ df<-read_csv(here("data/full_dataset_6_28_2022/full_w_nsd.csv"))
 # get in posixct format
 df$timestamp<-as.POSIXct(df$timestamp, format="%Y-%m-%d %H:%M:%OS")
 
+# remove CTT incorrect dates
+df<-df %>% filter(timestamp<"2022-07-01 00:00:00")
+
 # pull off julian day
 df$yday<-yday(df$timestamp)
 
