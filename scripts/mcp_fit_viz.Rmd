@@ -1,0 +1,104 @@
+---
+title: "mcp_fits"
+author: "David Wolfson"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(here)
+library(knitr)
+library(stringr)
+```
+
+```{r}
+# get file names
+plots<-list.files(path=here("output/best_mod_plots_pngs"), full.names = T)
+```
+
+# Arkansas
+
+
+```{r results='asis'}
+ar<-c(grep("[7-9]L", plots), grep("0H_2nd", plots))
+ar_paths<-plots[ar]
+for(i in seq_along(ar)){
+  cat(paste0("![](", ar_paths[[i]], "){#id .class width=50% height=50%}"))
+}
+
+```
+
+
+# Iowa
+
+```{r results='asis'}
+ia<-grep("C", plots)
+ia_paths<-plots[ia]
+for(i in seq_along(ia)){
+  cat(paste0("![](", ia_paths[[i]], "){#id .class width=50% height=50%}"))
+}
+```
+
+# Manitoba
+
+```{r results='asis'}
+mb<-grep("H", plots)
+mb_paths<-plots[mb]
+for(i in seq_along(mb)){
+  cat(paste0("![](", mb_paths[[i]], "){#id .class width=50% height=50%}"))
+}
+
+```
+
+# Michigan
+```{r results='asis'}
+mi<-grep("[JK]", plots)
+mi_paths<-plots[mi]
+for(i in seq_along(mi)){
+  cat(paste0("![](", mi_paths[[i]], "){#id .class width=50% height=50%}"))
+}
+
+```
+
+# Minnesota
+```{r results='asis'}
+mn<-c(grep("[AERT]", plots), 
+      grep("[1-6]L", plots), 
+      grep("9H_2nd", plots), 
+      grep("2H_2nd", plots), 
+      grep("0N_2nd", plots),
+      grep("6P", plots))
+mn_paths<-plots[mn]
+for(i in seq_along(mn)){
+  cat(paste0("![](", mn_paths[[i]], "){#id .class width=50% height=50%}"))
+}
+
+```
+
+# Ohio
+```{r results='asis'}
+oh<-c(grep("M", plots), grep("N", plots))
+oh_paths<-plots[oh]
+oh_paths<-oh_paths[!grepl("0N_2nd", oh_paths)]
+for(i in seq_along(oh_paths)){
+  cat(paste0("![](", oh_paths[[i]], "){#id .class width=50% height=50%}"))
+}
+
+```
+
+# Wisconsin
+```{r results='asis'}
+wi<-c(grep("[1-5]P", plots), grep("[7-9]P", plots))
+wi_paths<-plots[wi]
+for(i in seq_along(wi)){
+  cat(paste0("![](", wi_paths[[i]], "){#id .class width=50% height=50%}"))
+}
+
+```

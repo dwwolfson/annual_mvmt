@@ -1,0 +1,44 @@
+Ruleset for interpreting mcp fit output
+
+1) Intercepts must be >2 km of each other.
+Justification: We only care about separate areas of space use.
+Comments: The scale varies so much that it's hard to set a threshold equally for all swans.
+
+2)  Changepoints must be >2 days in length.
+Justification: We are focused on staging more than just stopping and resting. Also, this may reduce erroneous segments.
+
+
+
+
+
+Possible output to interpret:
+
+1) When did they leave? -> first changepoint 
+
+2) How many stops (over min time)? -> # of segments b/w first and last intercept with min duration (>3 days?)
+
+3) How long was each stop? -> duration of each segment between first and last (i.e. 2nd changepoint minus 1st, 3rd minus 2nd, etc)
+
+5) How far was the overall extent of migration? -> (max value intercept - first intercept)
+
+6) When did they arrive on wintering ground? -> changepoint at beginning of max intercept segment
+
+7) How long on wintering ground? -> duration of max intercept segment
+
+8) When did they leave wintering ground and start spring migration? -> changepoint at end of max intercept segment
+How to distinguish between start of spring migration versus other movement?
+
+9) Time between spring onset and breeding ground arrival? -> diff in time b/w changepoint at max intercept and last changepoint
+
+10) When did they return to breeding grounds? last changepoint (assuming last intercept is near first intercept (how near???), otherwise consider categorizing as a dispersal)
+
+11) Breeding site fidelity -> (last - first intercept; if 0 or low then high site fidelity)
+
+
+Rejected:
+4) Time between fall onset and wintering arrival? -> diff in time b/w first changepoint and changepoint at max intercept
+I don't like this one because there is only a fall migration duration when there is either 1 or 2 staging areas between breeding 
+and overwintering. For most swans this will be 0, and that isn't realistic.
+
+
+

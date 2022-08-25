@@ -34,3 +34,6 @@ data/
 
 # no word docs
 *.docx
+
+# output
+output/

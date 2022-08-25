@@ -1,126 +1,126 @@
-ids,capture_state,"resident/short/long-distance/multiple/other (resident 0-25km; short 25-150km; long >100km) (resident may have increased HR size, but short-term implies a relocation for an extended period of time)",clear_pattern (obvious migration pattern easy for mcp to fit?),max_NSD,comments
-0A,MN,resident,y,15,nearby bubbler
-0C,IA,resident,y,5,
-0C_2nd,IA,resident,n,40,mostly under 10; a few spikes in Jan/Feb/March to 35 from 10
-0E,MN,short,y,150,only july 2020- feb 2021; questionable short vs long migration
-0E_2nd,MN,NA,NA,NA,no migration data; mort soon after deployment
-0H,MB,long,y,1400,
-0H_2nd,AR,NA,NA,NA,no migration data; mort soon after deployment
-0L,MN,long,y,1000,mort 1yr after deployment
-0L_2nd,MN,long,y,650,
-0M,OH,resident,y,25,
-0N,OH,resident,y,5,
-0N_2nd,MN,long,y,800,
-0P,WI,long,y,800,
-0R,MN,long,y,500,
-0T,MN,NA,NA,NA,no migration data; mort soon after deployment
-0T_2nd,MN,resident,y,25,mostly 15; one spike up to 25
-1A,MN,long,y,425,425 first winter; only 225 second winter
-1C,IA,multiple,y,650,long distance first winter; resident second winter
-1E,MN,resident,y,10,spend winter on aerator at Oak Lake and fed by Waconia
-1H,MB,long,y,1100,
-1L,MN,resident,y,10,
-1M,OH,resident,y,20,under 5 except for 1 spike to 20
-1N,OH,resident,y,7,
-1P,WI,long,y,600,in captivity first winter
-1R,MN,long,y,425,
-1T,MN,long,y,1250,
-2A,MN,long,y,325,
-2C,IA,resident,y,7,
-2E,MN,long,y,200,
-2H,MB,long,y,350,
-2H_2nd,MN,long,y,200,spend winter on aerator at Oak Lake
-2J,MI,other,n,175,mostly resident but took at least one foray >100km each winter
-2K,MI,short,y,40,moves from Seney NWR to Indian River each winter
-2L,MN,short,n,70,several back and forth 40-50km trips
-2M,OH,resident,y,25,mostly under 10; one spike to 25
-2N,OH,resident,y,13,mostly under 5; one spike to 13
-2P,WI,long,y,700,
-2R,MN,long,y,500,
-2T,MN,long,y,950,
-3A,MN,long,y,250,not a complete migration cycle the first year (2019)
-3C,IA,long,y,275,
-3E,MN,long,y,650,
-3H,MB,long,y,1200,
-3J,MI,other,n,65,first winter resident with many 30-50km forays; second winter stable at 40km away
-3K,MI,short,y,50,
-3L,MN,short,y,125,Agassiz-Olson down to Ottertail river each winter
-3M,OH,resident,y,4,
-3N,OH,resident,n,20,never really settle for a stretch of time
-3P,WI,long,y,750,
-3R,MN,long,y,450,
-3T,MN,long,n,250,lots of movement around MN; indicative of non-breeder? (round lake flock)
-4A,MN,resident,y,12,moved to Bemidji River in winter (Grass Lake swan)
-4C,IA,long,y,225,
-4E,MN,long,y,1000,
-4H,MB,long,y,600,
-4J,MI,resident,n,120,some 50-100km forays during winter
-4K,MI,short,y,125,moves from Seney NWR to Indian River each winter
-4L,MN,short,y,75,moves from Tamarac NWR to Ottertail River at Fergus each winter
-4M,OH,resident,n,40,resident but brief period at 40 in Feb
-4N,OH,resident,n,6,
-4P,WI,long,y,800,wintered in IN; but spent last summer 800km away in Manitoba; ???
-4R,MN,long,y,325,
-4T,MN,long,y,800,
-5A,MN,long,y,400,lost collar before finish of first spring return migration path
-5C,IA,multiple,y,400,long distance first winter; short distance second winter
-5E,MN,long,y,1100,
-5H,MB,long,y,600,
-5H_2nd,MB,long,y,1400,
-5J,MI,resident,n,15,"mostly under 2km, but forays in winter"
-5K,MI,resident,y,20,made short relocation; plateau may be id'able
-5L,MN,long,n,1000,made trip up to Hudson Bay for possible molt?
-5M,OH,resident,y,10,increased movement in the winter
-5N,OH,resident,y,60,"increased mvmt in winter, regular longer ~50km forays in Feb"
-5P,WI,long,y,800,
-5R,MN,resident,y,25,increased mvmt in winter
-5T,MN,long,y,700,only partial data; moved further south in Feb and went offline
-6A,MN,long,y,175,kinda in between short/long; Rice Lake NWR to St. Croix
-6C,IA,resident,y,30,plateau for Jan/Feb 30km away
-6E,MN,long,y,150,Kettle WMA to St Croix
-6H,MB,long,n,400,split winter between 2 sites at 250km and 400km
-6J,MI,resident,y,25,increased mvmt in winter
-6K,MI,short,y,125,regular winter plateaus around 125
-6L,MN,long,y,1000,
-6L_2nd,MN,long,y,750,
-6M,OH,other,y,1250,"resident during winter, then made huge dispersal movement to MN in spring/summer 2022"
-6N,OH,resident,y,25,increased mvmt during winter; longer forays during Feb
-6P,MN,long,n,350,didn't return to Lake Christina next spring
-6R,MN,long,y,800,died on Calumet River during winter 
-6R_2nd,MN,short,y,40,short but distinct winter plateau
-6T,MN,both,n,45,"mostly under 5km in winter, two forays in 2021; an extended short term winter plateau in 2022"
-7A,MN,resident,y,22,"incomplete migration data, cut out in Feb first winter"
-7C,IA,long,y,450,split first winter between two sites
-7E,MN,long,y,500,"~500km first winter, only 100-150km the second winter"
-7H,MB,long,y,1200,
-7J,MI,resident,y,12,increased mvmt in winter
-7K,MI,resident,y,17,"mid-winter forays, possibly back to HR?"
-7L,AR,long,y,1750,step-wise staging from AR to Ontario
-7M,OH,other,n,175,"resident, but made 175km dispersal mvmt then back to HR"
-7N,OH,other,n,50,"mostly resident, short periods ~50km away"
-7P,WI,short,n,35,
-7R,MN,resident,n,22,
-7T,MN,long,y,800,
-8A,MN,other,n,600,went up to Ontario during summer
-8C,IA,long,y,600,
-8E,MN,long,y,1400,
-8E_2nd,MN,other,y,600,different summer location the next year
-8H,MB,long,y,600,incomplete migration data; went offline during return spring migration
-8L,AR,long,y,1550,
-8M,OH,resident,y,8,increased mvmt during winter
-8N,OH,other,n,60,just weird
-8P,WI,other,n,350,"short 70km winter plateau, then big dispersal event next summer"
-8R,MN,resident,y,10,increased mvmt during winter
-8T,MN,long,y,175,Bemidji to Fergus
-9A,MN,long,y,200,incomplete 2nd year of migration data
-9C,IA,short,y,125,
-9E,MN,long,y,800,
-9H,MB,long,y,800,long staging from Nov-Jan
-9H_2nd,MN,long,y,500,
-9J (first deployment),MI,NA,NA,NA,incomplete data
-9J (swan originally collared as 5J),MI,resident,n,60,resident but a bunch of 10-20 forays with one 60km foray
-9L,AR,long,y,1500,
-9M,OH,resident,y,11,
-9N,OH,other,n,1300,"resident first winter, then huge dispersal 2nd summer"
-9P,WI,long,y,600,
-9R,MN,long,y,850,
+ids,capture_state,"resident/short/long-distance/multiple/other (resident 0-25km; short 25-150km; long >100km) (resident may have increased HR size, but short-term implies a relocation for an extended period of time)",clear_pattern (obvious migration pattern easy for mcp to fit?),"did mcp fit well (y=yes on all year, n=no on all years, mixed)",max_NSD,comments
+0A,MN,resident,y,n,15,nearby bubbler
+0C,IA,resident,y,n,5,
+0C_2nd,IA,resident,n,y,40,mostly under 10; a few spikes in Jan/Feb/March to 35 from 10
+0E,MN,short,y,y,150,only july 2020- feb 2021; questionable short vs long migration
+0E_2nd,MN,NA,NA,n,NA,no migration data; mort soon after deployment
+0H,MB,long,y,,1400,
+0H_2nd,AR,NA,NA,,NA,no migration data; mort soon after deployment
+0L,MN,long,y,,1000,mort 1yr after deployment
+0L_2nd,MN,long,y,,650,
+0M,OH,resident,y,,25,
+0N,OH,resident,y,,5,
+0N_2nd,MN,long,y,,800,
+0P,WI,long,y,,800,
+0R,MN,long,y,,500,
+0T,MN,NA,NA,,NA,no migration data; mort soon after deployment
+0T_2nd,MN,resident,y,,25,mostly 15; one spike up to 25
+1A,MN,long,y,,425,425 first winter; only 225 second winter
+1C,IA,multiple,y,,650,long distance first winter; resident second winter
+1E,MN,resident,y,,10,spend winter on aerator at Oak Lake and fed by Waconia
+1H,MB,long,y,,1100,
+1L,MN,resident,y,,10,
+1M,OH,resident,y,,20,under 5 except for 1 spike to 20
+1N,OH,resident,y,,7,
+1P,WI,long,y,,600,in captivity first winter
+1R,MN,long,y,,425,
+1T,MN,long,y,,1250,
+2A,MN,long,y,,325,
+2C,IA,resident,y,,7,
+2E,MN,long,y,,200,
+2H,MB,long,y,,350,
+2H_2nd,MN,long,y,,200,spend winter on aerator at Oak Lake
+2J,MI,other,n,,175,mostly resident but took at least one foray >100km each winter
+2K,MI,short,y,,40,moves from Seney NWR to Indian River each winter
+2L,MN,short,n,,70,several back and forth 40-50km trips
+2M,OH,resident,y,,25,mostly under 10; one spike to 25
+2N,OH,resident,y,,13,mostly under 5; one spike to 13
+2P,WI,long,y,,700,
+2R,MN,long,y,,500,
+2T,MN,long,y,,950,
+3A,MN,long,y,,250,not a complete migration cycle the first year (2019)
+3C,IA,long,y,,275,
+3E,MN,long,y,,650,
+3H,MB,long,y,,1200,
+3J,MI,other,n,,65,first winter resident with many 30-50km forays; second winter stable at 40km away
+3K,MI,short,y,,50,
+3L,MN,short,y,,125,Agassiz-Olson down to Ottertail river each winter
+3M,OH,resident,y,,4,
+3N,OH,resident,n,,20,never really settle for a stretch of time
+3P,WI,long,y,,750,
+3R,MN,long,y,,450,
+3T,MN,long,n,,250,lots of movement around MN; indicative of non-breeder? (round lake flock)
+4A,MN,resident,y,,12,moved to Bemidji River in winter (Grass Lake swan)
+4C,IA,long,y,,225,
+4E,MN,long,y,,1000,
+4H,MB,long,y,,600,
+4J,MI,resident,n,,120,some 50-100km forays during winter
+4K,MI,short,y,,125,moves from Seney NWR to Indian River each winter
+4L,MN,short,y,,75,moves from Tamarac NWR to Ottertail River at Fergus each winter
+4M,OH,resident,n,,40,resident but brief period at 40 in Feb
+4N,OH,resident,n,,6,
+4P,WI,long,y,,800,wintered in IN; but spent last summer 800km away in Manitoba; ???
+4R,MN,long,y,,325,
+4T,MN,long,y,,800,
+5A,MN,long,y,,400,lost collar before finish of first spring return migration path
+5C,IA,multiple,y,,400,long distance first winter; short distance second winter
+5E,MN,long,y,,1100,
+5H,MB,long,y,,600,
+5H_2nd,MB,long,y,,1400,
+5J,MI,resident,n,,15,"mostly under 2km, but forays in winter"
+5K,MI,resident,y,,20,made short relocation; plateau may be id'able
+5L,MN,long,n,,1000,made trip up to Hudson Bay for possible molt?
+5M,OH,resident,y,,10,increased movement in the winter
+5N,OH,resident,y,,60,"increased mvmt in winter, regular longer ~50km forays in Feb"
+5P,WI,long,y,,800,
+5R,MN,resident,y,,25,increased mvmt in winter
+5T,MN,long,y,,700,only partial data; moved further south in Feb and went offline
+6A,MN,long,y,,175,kinda in between short/long; Rice Lake NWR to St. Croix
+6C,IA,resident,y,,30,plateau for Jan/Feb 30km away
+6E,MN,long,y,,150,Kettle WMA to St Croix
+6H,MB,long,n,,400,split winter between 2 sites at 250km and 400km
+6J,MI,resident,y,,25,increased mvmt in winter
+6K,MI,short,y,,125,regular winter plateaus around 125
+6L,MN,long,y,,1000,
+6L_2nd,MN,long,y,,750,
+6M,OH,other,y,,1250,"resident during winter, then made huge dispersal movement to MN in spring/summer 2022"
+6N,OH,resident,y,,25,increased mvmt during winter; longer forays during Feb
+6P,MN,long,n,,350,didn't return to Lake Christina next spring
+6R,MN,long,y,,800,died on Calumet River during winter 
+6R_2nd,MN,short,y,,40,short but distinct winter plateau
+6T,MN,both,n,,45,"mostly under 5km in winter, two forays in 2021; an extended short term winter plateau in 2022"
+7A,MN,resident,y,,22,"incomplete migration data, cut out in Feb first winter"
+7C,IA,long,y,,450,split first winter between two sites
+7E,MN,long,y,,500,"~500km first winter, only 100-150km the second winter"
+7H,MB,long,y,,1200,
+7J,MI,resident,y,,12,increased mvmt in winter
+7K,MI,resident,y,,17,"mid-winter forays, possibly back to HR?"
+7L,AR,long,y,,1750,step-wise staging from AR to Ontario
+7M,OH,other,n,,175,"resident, but made 175km dispersal mvmt then back to HR"
+7N,OH,other,n,,50,"mostly resident, short periods ~50km away"
+7P,WI,short,n,,35,
+7R,MN,resident,n,,22,
+7T,MN,long,y,,800,
+8A,MN,other,n,,600,went up to Ontario during summer
+8C,IA,long,y,,600,
+8E,MN,long,y,,1400,
+8E_2nd,MN,other,y,,600,different summer location the next year
+8H,MB,long,y,,600,incomplete migration data; went offline during return spring migration
+8L,AR,long,y,,1550,
+8M,OH,resident,y,,8,increased mvmt during winter
+8N,OH,other,n,,60,just weird
+8P,WI,other,n,,350,"short 70km winter plateau, then big dispersal event next summer"
+8R,MN,resident,y,,10,increased mvmt during winter
+8T,MN,long,y,,175,Bemidji to Fergus
+9A,MN,long,y,,200,incomplete 2nd year of migration data
+9C,IA,short,y,,125,
+9E,MN,long,y,,800,
+9H,MB,long,y,,800,long staging from Nov-Jan
+9H_2nd,MN,long,y,,500,
+9J (first deployment),MI,NA,NA,,NA,incomplete data
+9J (swan originally collared as 5J),MI,resident,n,,60,resident but a bunch of 10-20 forays with one 60km foray
+9L,AR,long,y,,1500,
+9M,OH,resident,y,,11,
+9N,OH,other,n,,1300,"resident first winter, then huge dispersal 2nd summer"
+9P,WI,long,y,,600,
+9R,MN,long,y,,850,

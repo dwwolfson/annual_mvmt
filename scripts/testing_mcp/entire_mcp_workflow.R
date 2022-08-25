@@ -139,7 +139,7 @@ for(i in seq_along(ids)){
            x = "Index in days from July 1",
            title = glue::glue("The best model for {years[[j]]} has {length(best_mod$model)} intercepts"))
    
-   ggsave(plot = p, filename = here(glue::glue("output/best_mod_plots/{years[[j]]}.pdf")))
+   ggsave(plot = p, filename = here(glue::glue("output/best_mod_plots/{years[[j]]}.png")))
      
   # keep track of progress 
   cat("Working on year", j, "out of", length(years), "\n")
