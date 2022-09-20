@@ -20,13 +20,10 @@
 # How to distinguish between start of spring migration versus other movement?
 #   param name: spring_mig_onset
 
-# 8) Time between spring onset and breeding ground arrival? -> diff in time b/w changepoint at max intercept and last changepoint
-#   param name: spring_mig_duration
-
-# 9) When did they return to breeding grounds? last changepoint (assuming last intercept is near first intercept (how near???), otherwise consider categorizing as a dispersal)
+# 8) When did they return to breeding grounds? last changepoint (assuming last intercept is near first intercept (how near???), otherwise consider categorizing as a dispersal)
 #    param name: spring_arrival
 
-# 10) Breeding site fidelity -> (last - first intercept; if 0 or low then high site fidelity)
+# 9) Breeding site fidelity -> (last - first intercept; if 0 or low then high site fidelity)
 #    param name: breeding_site_fidelity
 
 # Extra (Non-Biological param): number of intercepts in chosen model (just for housekeeping)

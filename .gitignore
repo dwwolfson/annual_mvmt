@@ -40,3 +40,6 @@ output/
 
 # figures
 figures/
+
+# MSI junk
+scripts/for_MSI/

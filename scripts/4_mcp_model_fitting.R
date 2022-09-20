@@ -18,7 +18,7 @@ registerDoFuture()
 plan(multisession)
 
 # This is the entire dataset (n=125) condensed to one record for day with averaged NSD
-df<-read_csv(here("full_daily_nsd.csv"))
+df<-read_csv(here("data/full_dataset_6_28_2022/full_daily_nsd.csv"))
 ids<-unique(df$id)
 
 # split years up each summer
@@ -48,22 +48,37 @@ five_int<-list(rescale~1,
                ~1,
                ~1,
                ~1)
-int_mods<-list(one_int, two_int, three_int, four_int, five_int)
-int_mod_vec<-c("one_int", "two_int", "three_int", "four_int", "five_int")
+six_int<-list(rescale~1,
+              ~1,
+              ~1,
+              ~1,
+              ~1,
+              ~1)
+seven_int<-list(rescale~1,
+                ~1,
+                ~1,
+                ~1,
+                ~1,
+                ~1,
+                ~1)
+int_mods<-list(one_int, two_int, three_int, four_int, five_int, six_int, seven_int)
+int_mod_vec<-c("one_int", "two_int", "three_int", "four_int", "five_int", "six_int", "seven_int")
 
 
 
 # Create objects to store the results
 res<-data.frame(id=NA, year=NA, name=NA, mean=NA, lower=NA, upper=NA, Rhat=NA, n.eff=NA)
-write_csv(res, here("rerun2_output/best_mod_params.csv"))
+write_csv(res, here("rerun4_output/best_mod_params.csv"))
 
 model_comparison<-data.frame(id=NA, year=NA, 
                              one_int_loo=NA, 
                              two_int_loo=NA,
                              three_int_loo=NA,
                              four_int_loo=NA,
-                             five_int_loo=NA)
-write_csv(model_comparison, here("rerun2_output/model_comparisons.csv"))
+                             five_int_loo=NA,
+                             six_int_loo=NA,
+                             seven_int_loo=NA)
+write_csv(model_comparison, here("rerun4_output/model_comparisons.csv"))
 
 
 ###
@@ -83,8 +98,11 @@ for(i in seq_along(ids)){
     # some years are too few locations
     if(nrow(tmp_yr)>30){
       
-      # create a numeric index so that dates track chronologically
-      tmp_yr$index<-1:nrow(tmp_yr)
+      # a numeric index by rows wouldn't include data gaps
+      # instead, translate July1 -> July1 with julian dates converted to 1 -> 366
+      
+      tmp_yr<-tmp_yr %>% 
+        mutate(date = ifelse(181<yday& yday<367, yday-181, yday+185))
       
       # fit mcp models
       out_mods<-list()
@@ -94,8 +112,8 @@ for(i in seq_along(ids)){
         out_mods<-.GlobalEnv$out_mods
         
         tryCatch(out_mods[[mm]]<-mcp(model = int_mods[[mm]], 
-                                     data = tmp_yr[,c("rescale", "index")],
-                                     par_x = "index",
+                                     data = tmp_yr[,c("rescale", "date")],
+                                     par_x = "date",
                                      adapt=10000, # first run was adap=10000
                                      iter=15000), # first run was default (3000)
                  error = function(e) NULL)
@@ -117,10 +135,11 @@ for(i in seq_along(ids)){
             out_mods[[nn]]$loo<-loo(out_mods[[nn]])
             loo_list[[nn]]<-out_mods[[nn]]$loo$estimates[[1]]
           }else{
-            cat("Skipped model ", years[[j]], int_mod_vec[[k]], "\n",
-                file=here("rerun2_output/skipped_mods.txt"), append=T)
-            loo_list[[nn]]<-(-9999) # this is reflect that it didn't pass rhat check but stay in numeric for which.max
-          }}}
+             cat("Skipped model ", years[[j]], int_mod_vec[[nn]], "\n",
+                 file=here("rerun4_output/skipped_mods.txt"), append=T)
+             loo_list[[nn]]<-(-9999) # this is reflect that it didn't pass rhat check but stay in numeric for which.max
+          }
+          }}
       
       
       # Save the relative fit of each model
@@ -128,7 +147,7 @@ for(i in seq_along(ids)){
       # cbind together with id as 1st col and year as 2nd
       mods<-c(ids[[i]], years[[j]],loo_vec)
       # write out to file
-      write_csv(as.data.frame(t(mods)), here("rerun2_output/model_comparisons.csv"), append = T)
+      write_csv(as.data.frame(t(mods)), here("rerun4_output/model_comparisons.csv"), append = T)
       
       # pick the best model based on loo
       best_mod<-out_mods[[which.max(loo_list)]]
@@ -137,22 +156,22 @@ for(i in seq_along(ids)){
       # cbind together with id as 1st col and year as 2nd
       params<-cbind.data.frame(id=ids[[i]], year=years[[j]], params)
       # write out to file
-      write_csv(params, here("rerun2_output/best_mod_params.csv"), append = T)
+      write_csv(params, here("rerun4_output/best_mod_params.csv"), append = T)
       
       # save out plot of best model
       p<-plot(best_mod, q_fit=T)+
         labs(y = "displacement in km", 
-             x = "Index in days from July 1",
+             x = "Date, starting from July 1",
              title = glue::glue("The best model for {years[[j]]} has {length(best_mod$model)} intercepts"))
       
-      ggsave(plot = p, filename = here(glue::glue("rerun2_output/best_mod_plots/{years[[j]]}.png")))
+      ggsave(plot = p, filename = here(glue::glue("rerun4_output/best_mod_plots/{years[[j]]}.png")))
       
       # keep track of progress 
       cat("Working on year", j, "out of", length(years), "\n")
     }else{
       # keep track of which swans didn't have enough data to fit a model
       cat("Dataset for ", years[[j]], "skipped because of insufficient sample size.\n",
-          file=here("rerun2_output/skipped_swan_years.txt"), append=T)
+          file=here("rerun4_output/skipped_swan_years.txt"), append=T)
     }}
   # keep track of progress
   cat("Working on swan", i, "out of", length(ids), "\n")
