@@ -11,7 +11,6 @@ if (any(installed_packages == FALSE)) {
 
 # load packages
 invisible(lapply(packages, library, character.only = TRUE))
-source(here("scripts/ggplot_custom_function.R"))
 
 ###################################################################################################
 # Exclude years with incomplete info (e.g. only summer/fall migration data)
@@ -39,8 +38,6 @@ nsd_df %>%
 #  *** The best way might be to divide everything into 2 datasets: one for 'complete-enough',
 #  *** and the other into a partial dataset. There seems to be a bunch of years where at least the 
 #  *** summer->winter data is there, just not the entire return trip back to the breeding area.
-
-
 
 
 ###################################################################################################
@@ -75,39 +72,60 @@ for (i in seq_along(ids)) {
     out_params["swan_ID"]<-ids[[i]]
     out_params["year"]<-years[[j]]
     
+    ######################################################################
+    ## Thresholds ###
     
     # rule 1: segments must be at least 2 km from each other in displacement      
     dist_threshold<-2  #kilometers
+    
     # rule 2: segments must be at least 2 days separate from each other in time   
     time_threshold<-2 #days
-    # spring return to breeding/capture area threshold
-    spring_return_threshold<-10
+    
+    # fall migration onset threshold
+    # In order for 'traditional' fall migration to start, 
+    # the animal must move a certain distance between breeding/capture zone and the furthest eventual segment.
+    # This is to exclude the movements of locally resident animals from those of migrants
+    fall_onset_threshold<-100    # kilometers
+    
+    # spring migration onset threshold
+    # similar to fall, I want to exclude locally resident animals from registering spring arrivals
+    # this is the minimum distance between the max segment and the segment considered spring return
+    spring_distance_threshold<-100
+    
+    # spring return threshold
+    # In order to be considered a return to the breeding/capture site, the animal must be within a certain proximity
+    spring_proximity_threshold<-10   # kilometers
+    
     # latest date to be considered fall migration onset/ earliest date to be considered spring return
     fall_spring_threshold<-150  #translates to about December 1
+    
+    ######################################################################
 
-    # parameter 1: when do individuals leave the initial breeding area intercept
+    # parameter 1: when do individuals leave the initial breeding area intercept (to initiate migration)
+    # I'm going to consider this in the context of 'traditional' long-distance migration
     # I don't think I need rule 2 for this parameter
     if (length(grep("int", tmp_yr$name))==2){  #if only 1 changepoint, (exclude residents with only one intercept)
-      if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold &&   # rule 1 passes
-         tmp_yr[tmp_yr$name=="int_2", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]    &&    # swan must be moving away from breeding/capture origin
-         tmp_yr[tmp_yr$name == "cp_1", "mean"]<fall_spring_threshold    # must be between July and December
-         ){ out_params["fall_mig_onset"] <- tmp_yr[tmp_yr$name == "cp_1", "mean"]
-      } else{
         out_params["fall_mig_onset"]<-NA
-        out_params["fall_mig_onset_comment"]<-"no onset because swan didn't fly far enough away or away from origin, or wasn't during fall"
-      }}else if (length(grep("int", tmp_yr$name))>2){ # at least 2 changepoints
+        out_params["fall_mig_onset_comment"]<-"can't consider a migrant with only 1 changepoint"
+      } else if (length(grep("int", tmp_yr$name))>2){ # at least 2 changepoints
         if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st 2 segments
            tmp_yr[tmp_yr$name=="int_2", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"] && # swan must be moving away from breeding/capture origin
-           tmp_yr[tmp_yr$name == "cp_1", "mean"]<fall_spring_threshold     # must be between July and December
+           tmp_yr[tmp_yr$name == "cp_1", "mean"]<fall_spring_threshold &&    # must be between July and December
+           
+           # get the first and max intercepts and determining if the distance between exceeds the fall_onset_threshold 
+           abs(max(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)-tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean[[1]])>fall_onset_threshold
            ){      
           out_params["fall_mig_onset"] <- tmp_yr[tmp_yr$name == "cp_1", "mean"]
         } else if ((tmp_yr[tmp_yr$name == "int_3", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 3rd seg
                    tmp_yr[tmp_yr$name=="int_3", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"] && # swan must be moving away from breeding/capture origin
-                   tmp_yr[tmp_yr$name == "cp_1", "mean"]<fall_spring_threshold     # must be between July and December
+                   tmp_yr[tmp_yr$name == "cp_1", "mean"]<fall_spring_threshold  &&   # must be between July and December
+                   
+                   # get the first and max intercepts and determining if the distance between exceeds the fall_onset_threshold
+                   abs(max(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)-tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean[[1]])>fall_onset_threshold
                    ){  out_params["fall_mig_onset"] <- tmp_yr[tmp_yr$name == "cp_2", "mean"]   #skip 1st segment
       } else {
         out_params["fall_mig_onset"]<-NA
-        out_params["fall_mig_onset_comment"]<-"no onset because swan didn't fly far enough away or away from origin, or wasn't during fall"
+        out_params["fall_mig_onset_comment"]<-"no onset because swan didn't fly far enough away, wasn't moving away from origin, or movment wasn't during fall"
         #I'm going to assume that there aren't legit fall departures to grab if both the 1st and 2nd segments break rules.....
         }}else if (length(grep("int", tmp_yr$name))==1){
       out_params["fall_mig_onset"] <-NA
@@ -117,12 +135,114 @@ for (i in seq_along(ids)) {
     
     #################################################################################################################
     
+    # parameter 2: when do individuals first leave breeding area 
+    # this is without the threshold to enforce longer-distance migration, AND the rule that the movement must be between July and December,
+    # so this is a better metric to use for considering the movements of residents and/or short-distance migrants either in fall or winter
+    if (length(grep("int", tmp_yr$name))>1){
+      if(length(grep("int", tmp_yr$name))==2){
+      if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st 2 segments
+         tmp_yr[tmp_yr$name=="int_2", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]  # swan must be moving away from breeding/capture origin
+      ){
+        out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_1", "mean"]
+      } else {
+        out_params["first_departure"]<-NA
+        out_params["first_departure_comment"]<-"no first departure because first transition not far enough or no moving away from initial segment"
+      }} else 
+      
+          if (length(grep("int", tmp_yr$name))==3){
+            if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st 2 segments
+               tmp_yr[tmp_yr$name=="int_2", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]  # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_1", "mean"]
+            }else  if((tmp_yr[tmp_yr$name == "int_3", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 3rd seg
+                tmp_yr[tmp_yr$name=="int_3", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]   # swan must be moving away from breeding/capture origin
+                ){
+        out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_2", "mean"]
+      } else{
+        out_params["first_departure"]<-NA
+        out_params["first_departure_comment"]<-"no first departure because 1st and 2nd transitions not far enough or no moving away from initial segment"  
+        }} else 
+          
+          if (length(grep("int", tmp_yr$name))==4){
+            if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st 2 segments
+               tmp_yr[tmp_yr$name=="int_2", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]  # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_1", "mean"]
+            }else  if((tmp_yr[tmp_yr$name == "int_3", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 3rd seg
+                      tmp_yr[tmp_yr$name=="int_3", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]   # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_2", "mean"]
+            } else if((tmp_yr[tmp_yr$name == "int_4", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 4th seg))
+                  tmp_yr[tmp_yr$name=="int_4", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]     # swan must be moving away from breeding/capture origin
+        ){
+          out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_3", "mean"]
+        } else {
+          out_params["first_departure"]<-NA
+          out_params["first_departure_comment"]<-"no first departure because first 3 transitions not far enough or not away from initial segment"
+        }} else 
+          
+          if (length(grep("int", tmp_yr$name))==5){
+            if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st 2 segments
+               tmp_yr[tmp_yr$name=="int_2", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]  # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_1", "mean"]
+            }else  if((tmp_yr[tmp_yr$name == "int_3", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 3rd seg
+                      tmp_yr[tmp_yr$name=="int_3", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]   # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_2", "mean"]
+            } else if((tmp_yr[tmp_yr$name == "int_4", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 4th seg))
+                      tmp_yr[tmp_yr$name=="int_4", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]     # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_3", "mean"]
+            } else if((tmp_yr[tmp_yr$name == "int_5", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 4th seg))
+             tmp_yr[tmp_yr$name=="int_5", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]     # swan must be moving away from breeding/capture origin
+          ){
+            out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_4", "mean"]
+          } else {
+            out_params["first_departure"]<-NA
+            out_params["first_departure_comment"]<-"no first departure because first 4 transitions not far enough or not away from initial segment"
+          }} else 
+          
+          if (length(grep("int", tmp_yr$name))==6){
+            if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st 2 segments
+               tmp_yr[tmp_yr$name=="int_2", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]  # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_1", "mean"]
+            }else  if((tmp_yr[tmp_yr$name == "int_3", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 3rd seg
+                      tmp_yr[tmp_yr$name=="int_3", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]   # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_2", "mean"]
+            } else if((tmp_yr[tmp_yr$name == "int_4", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 4th seg))
+                      tmp_yr[tmp_yr$name=="int_4", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]     # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_3", "mean"]
+            } else if((tmp_yr[tmp_yr$name == "int_5", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 4th seg))
+                      tmp_yr[tmp_yr$name=="int_5", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]     # swan must be moving away from breeding/capture origin
+            ){
+              out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_4", "mean"]
+            }else if((tmp_yr[tmp_yr$name == "int_6", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 4th seg))
+             tmp_yr[tmp_yr$name=="int_6", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"]     # swan must be moving away from breeding/capture origin
+          ){
+            out_params["first_departure"]<-tmp_yr[tmp_yr$name=="cp_5", "mean"]
+          } else {
+            out_params["first_departure"]<-NA
+            out_params["first_departure_comment"]<-"no first departure because first 5 transitions not far enough or not away from initial segment"
+          }}}
+          
+      else{
+          out_params["first_departure"]<-NA
+          out_params["first_departure_comment"]<-"no first departure becuase only 1 intercept resident"
+        }
+    
+    
+    #################################################################################################################
+    
     # extra param: number of intercepts in loo-cv chosen model
     out_params["num_intercepts"]<-length(grep("int", tmp_yr$name))
 
     #################################################################################################################
     
-    # parameter 2: number of stops (i.e. segments additional to first and last, therefore wintering range counts as a stop)
+    # parameter 3: number of stops (i.e. segments additional to first and last, therefore wintering range counts as a stop)
     # needs to pass both rules
     if (length(grep("int", tmp_yr$name)) == 1) {
       out_params["num_stops"] <- 0 # if only 1 intercept, no changepoints, no stops, rules don't matter
@@ -216,7 +336,7 @@ for (i in seq_along(ids)) {
       out_params["num_stops_comment"] <- "flag_didn't_fit_conditions" # go back and figure out what's wrong
     }
     #################################################################################################################
-    # parameter 3: how long was each stop
+    # parameter 4: how long was each stop
     if (length(grep("int", tmp_yr$name)) == 3 &&
       min(abs(diff(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean))) > dist_threshold &&
       min(abs(diff(tmp_yr[grepl("cp", tmp_yr$name), "mean"]$mean))) > time_threshold) {
@@ -254,7 +374,7 @@ for (i in seq_along(ids)) {
     # as accurate as the actual duration of fall migration. Also, for any swan that doesn't have a "proper"
     # staging area fit with an intercept, the duration would come out as 0, which is clearly wrong.
    #################################################################################################################    
-    # parameter 4: Overall extent of migration
+    # parameter 5: Overall extent of migration
     # still needs to clear the distance rule
     if (length(grep("int", tmp_yr$name))>1){  #exclude residents with only one intercept
       min_int<-min(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)
@@ -267,7 +387,7 @@ for (i in seq_along(ids)) {
       }
       }
   ##############################################################################################################     
-    # parameter 5: date of arrival on 'winter range'/(furthest displacement from origin)
+    # parameter 6: date of arrival on 'winter range'/(furthest displacement from origin)
     if (length(grep("int", tmp_yr$name))>1){  #exclude residents with only one intercept
       min_int<-min(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)
       max_int<-max(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)
@@ -291,7 +411,7 @@ for (i in seq_along(ids)) {
         out_params["furthest_seg_arrival"]<-NA
       }}
     #################################################################################################################  
-    # parameter 6: how long did they stay on furthest displacement segment
+    # parameter 7: how long did they stay on furthest displacement segment
     if (length(grep("int", tmp_yr$name))>1){  #exclude residents with only one intercept
       min_int<-min(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)
       max_int<-max(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)
@@ -332,7 +452,7 @@ for (i in seq_along(ids)) {
     
     #################################################################################################################
     
-    # parameter 7: when did they leave max segment
+    # parameter 8: when did they leave max segment
     # 7) When did they leave wintering ground and start spring migration? -> changepoint at end of max intercept segment
     # How to distinguish between start of spring migration versus other movement?
     #   param name: furthest_seg_departure
@@ -370,36 +490,39 @@ for (i in seq_along(ids)) {
       }}
     
     #################################################################################################################
-    # parameter 8: When did they return to breeding grounds? 
+    # parameter 9: When did they return to breeding grounds? 
     #  last plateau has to be within the 'spring_return_threshold' to the first plateau
     #    param name: spring_arrival
     if (length(grep("int", tmp_yr$name))>2){       # have at least 3 intercepts
       num_ints<-length(grep("int", tmp_yr$name))
       first_int<-tmp_yr[tmp_yr$name=="int_1", "mean"]
       last_int<-tmp_yr[tmp_yr$name==paste0("int_", num_ints), "mean"]
-        if(abs(first_int-last_int)<spring_return_threshold){    # the spring distance threshold is satisfied
+        if(abs(first_int-last_int)<spring_proximity_threshold){    # the spring proximity threshold is satisfied
           num_cp<-length(grep("cp", tmp_yr$name))
           if(tmp_yr[tmp_yr$name==paste0("cp_", num_cp), "mean"]>fall_spring_threshold  && # the last changepoint is during the winter/spring/summer
-             last_int<tmp_yr[tmp_yr$name==paste0("int_", num_ints-1), "mean"] #last intercept was moving towards the origin
+             last_int<tmp_yr[tmp_yr$name==paste0("int_", num_ints-1), "mean"] && # last intercept was moving towards the origin
+             abs(max(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)-tail(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean, n=1))>spring_onset_threshold                                                                    # overall migration extent was enough to not be considered resident
              ){    
-          out_params["spring_arrival"]<-tmp_yr[tmp_yr$name==paste0("cp_", num_cp), "mean"]
+          out_params["spring_arrival"]<-tmp_yr[tmp_yr$name==paste0("cp_", num_cp), "mean"] # spring arrival is the last changepoint
           }else{
             out_params["spring_arrival"]<-NA
-            out_params["spring_arrival_comment"]<-"last changepoint not during winter/spring/summer (Dec-July), or last movement away from origin"
+            out_params["spring_arrival_comment"]<-glue::glue("last changepoint not during winter/spring/summer (Dec-July),
+                                                             or last movement away from origin, or migration extent not above {spring_distance_threshold}")
         }
-          } else if(abs(first_int-last_int)>spring_return_threshold){
+          } else if(abs(first_int-last_int)>spring_proximity_threshold){
           out_params["spring_arrival"]<-NA
-          out_params["spring_arrival_comment"]<-glue::glue("first and last intercepts not within {spring_return_threshold} km")
+          out_params["spring_arrival_comment"]<-glue::glue("first and last intercepts not within {spring_proximity_threshold} km")
         }} else if (length(grep("int", tmp_yr$name))<3){
           out_params["spring_arrival"]<-NA
           out_params["spring_arrival_comment"]<-"no spring arrival date because less than 3 intercepts"
         }
     #################################################################################################################
-    # parameter 9: How long was the duration of time between fall onset and spring arrival
+    # parameter 10: How long was the duration of time between fall onset and spring arrival
     #  param name: mig_duration
+    # considered in the context of 'traditional' longer-distance migration
     if (length(grep("int", tmp_yr$name))>2){          # have at least 3 intercepts
-        if (!is.na(out_params[["fall_mig_onset"]]) &&     # have a legit fall departure
-          !is.na(out_params[["spring_arrival"]])){        # have a legit spring arrival
+        if (!is.na(out_params[["fall_mig_onset"]]) &&     # have a legit fall departure (traveled far enough away)
+          !is.na(out_params[["spring_arrival"]])){        # have a legit spring arrival (returned within proximity of previous year)
           out_params["mig_duration"]<-out_params[["spring_arrival"]]-out_params[["fall_mig_onset"]]
     } else {
       out_params["mig_duration"]<-NA
@@ -427,5 +550,4 @@ for (i in seq_along(ids)) {
 param_df<-master_params %>% bind_rows()
 
 write_csv(param_df, here("output/migration_metrics.csv"))
-# Translate back to dates from julian day
 
