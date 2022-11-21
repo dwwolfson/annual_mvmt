@@ -1,0 +1,103 @@
+---
+title: "Ohio swan movement summary"
+author: "David Wolfson"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+
+```{r, message=F, warning=F}
+# package names
+packages <- c("tidyverse", "here", "lubridate")
+
+# install any packages not previously installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+# load packages
+invisible(lapply(packages, library, character.only = TRUE))
+```
+
+Load full dataset up until July 2022
+```{r warning=F, message=F}
+df<-read_csv(here("data/full_dataset_6_28_2022/full_daily_nsd.csv"))
+df<-df %>% 
+  filter(capture_state=="OH")
+
+df<-df %>% 
+  mutate(disp_km=sqrt(nsd_daily_mean)/1000)
+```
+
+Max displacement by swan over entire collar duration (in kilometers)
+```{r}
+df %>% 
+  group_by(id) %>% 
+  summarize(max_displacement=max(disp_km))
+```
+
+If we group seasons by fall=Aug-Nov, winter=Dec-Feb, breeding=Mar-July
+
+```{r}
+
+df$month<-month(df$timestamp)
+
+df<-df %>% 
+  mutate(season=case_when(
+    month==8|month==9|month==10|month==11 ~ "fall",
+    month==12|month==1|month==2 ~ "winter",
+    month==3|month==4|month==5|month==6|month==7 ~ "breeding"
+  ))
+```
+
+Average max displacement by season
+```{r}
+df %>% 
+  group_by(season) %>% 
+  summarise(avg_max_displacement=mean(max(disp_km)))
+```
+
+Remove 6M and 9N as outliers (dispersers)
+```{r}
+df %>% 
+  filter(id!="6M" & id!="9N") %>% 
+  group_by(season) %>% 
+  summarise(avg_max_displacement=mean(max(disp_km)))
+```
+
+Remove 7M as well
+```{r}
+df %>% 
+  filter(id!="6M" & id!="9N" & id!="7M") %>% 
+  group_by(season) %>% 
+  summarise(avg_max_displacement=mean(max(disp_km)))
+```
+
+Summarize by month instead of season
+```{r}
+df %>% 
+  group_by(month) %>% 
+  summarise(avg_max_displacement=mean(max(disp_km)))
+```
+
+Drop big dispersers(6M and 9N)
+```{r}
+df %>% 
+  filter(id!="6M" & id!="9N") %>% 
+  group_by(month) %>% 
+  summarise(avg_max_displacement=mean(max(disp_km)))
+```
+
+Drop 7M as well
+```{r}
+df %>% 
+  filter(id!="6M" & id!="9N" & id!="7M") %>% 
+  group_by(month) %>% 
+  summarise(avg_max_displacement=mean(max(disp_km)))
+```
+

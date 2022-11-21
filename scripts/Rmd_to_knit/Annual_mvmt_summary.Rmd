@@ -152,16 +152,17 @@ Migration extent:
 ```{r}
 p_dates %>% 
   filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
-  ggplot(., aes(mig_extent, breeding_lat))+
+  filter(entire_yr!="2019-2020") %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
   geom_point()+
   geom_smooth(method="lm")+
-  ylim(40,52)+ # to exclude arkansas winter captures
+  xlim(40,52)+ # to exclude arkansas winter captures
   facet_wrap(~entire_yr)+
-  ggtitle(label="Extent of Displacement from Breeding/Capture Origin throughout the annual cycle",
+  ggtitle(label="Extent of Displacement from Breeding/Capture Origin\n throughout the annual cycle",
           subtitle="\n Trends are consistent across years")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="Migration extent (in km)", y="Breeding/Capture latitude")
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
   
 ```
 
@@ -175,19 +176,19 @@ and also a threshold of 300km for "long-distance migration", though this is tota
 ```{r}
 p_dates %>% 
   filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
-  ggplot(., aes(mig_extent, breeding_lat))+
+  ggplot(., aes(breeding_lat, mig_extent))+
   geom_point()+
   geom_smooth(method="lm")+
-  ylim(40,52)+ # to exclude arkansas winter captures
+  xlim(40,52)+ # to exclude arkansas winter captures
   facet_wrap(~entire_yr)+
-  ggtitle(label="Extent of Displacement from Breeding/Capture Origin throughout the annual cycle",
+  ggtitle(label="Extent of Displacement from Breeding/Capture Origin\n throughout the annual cycle",
           subtitle="\n ")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  geom_hline(yintercept=42.5, linetype="dashed", color="red")+
-  geom_hline(yintercept = 48, linetype="dashed", color="red")+
-  geom_vline(xintercept=300, linetype="dashed", color="black")+
-  labs(x="Migration extent (in km)", y="Breeding/Capture latitude")
+  geom_vline(xintercept=42.5, linetype="dashed", color="red")+
+  geom_vline(xintercept = 48, linetype="dashed", color="red")+
+  geom_hline(yintercept=300, linetype="dashed", color="black")+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
 ```
 
 2. How long are swans spending overwintering in non-breeding areas?\
@@ -195,19 +196,35 @@ p_dates %>%
 ```{r}
 p_dates %>% 
   filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
-  ggplot(., aes(mig_duration, breeding_lat))+
+  ggplot(., aes(breeding_lat,mig_duration,))+
   geom_point()+
   geom_smooth(method="lm")+
-  ylim(40,52)+ # to exclude arkansas winter captures
+  xlim(40,52)+ # to exclude arkansas winter captures
   facet_wrap(~entire_yr)+
   ggtitle(label="Duration of Migration",
           subtitle="\n Somewhat contingent on the year (winter severity?) \n mostly 120-140 in 2020-2021 \n mostly 100-120 in 2020-2021")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="\nMigration extent (in km)", y="Breeding/Capture latitude")
+  labs(x="Breeding/Capture latitude", y="\nMigration duration (in days)")
 ```
 
 I wonder if my rule set is too restrictive. There aren't a ton of data points for the duration of migration because there are a bunch of reasons why swans could get excluded from fall onset or spring arrival parameters.  
+
+A special request by John: Migration duration vs extent
+```{r}
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  ggplot(., aes(mig_duration,mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  facet_wrap(~entire_yr)+
+  ggtitle(label="Migration duration vs extent",
+          subtitle="Swans that migrated farther took less time")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Migration duration (in days)", y="\nMigration extent (in km)")
+```
+
 
 
 3. What are the dates that swans leave their summer territory in the fall and return in the spring?\
@@ -216,32 +233,32 @@ Fall onset:
 ```{r}
 p_dates %>% 
   filter(!is.na(breeding_status)) %>% 
-  ggplot(aes(fall_mig_onset, breeding_lat))+
+  ggplot(aes( breeding_lat,fall_mig_onset))+
   geom_point()+
   geom_smooth(method="lm")+
   facet_wrap(~fall_yr)+
-  ylim(41,52)+
+  xlim(41,52)+
   ggtitle(label="Onset of Long-Distance (>100km) Fall Migration by Breeding/Capture Latitude",
           subtitle="Questionable if there is a clear relationship with latitude\n It seems like swans are leaving in waves, probably timed with things freezing up \n Although maybe the smoother is deceiving, because collar failure might be non-random")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="\nFall Migration Onset", y="Breeding/Capture latitude")
+  labs(x="Breeding/Capture latitude", y="\nFall Migration Onset")
 ```
 
 Spring arrival:  
 ```{r}
 p_dates %>% 
   filter(!is.na(breeding_status)) %>% 
-  ggplot(aes(spring_arrival, breeding_lat))+
+  ggplot(aes( breeding_lat,spring_arrival))+
   geom_point()+
   geom_smooth(method="lm")+
   facet_wrap(~spring_yr)+
-  ylim(41,52)+
+  xlim(41,52)+
   ggtitle(label="Spring Arrival on previous summer territory by Breeding/Capture Latitude",
           subtitle="Swans return to southern sites first\n 2021 looks like everyone moves together\n 2022 more punctuated in waves")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="\nSpring arrival", y="Breeding/Capture latitude")
+  labs(x="Breeding/Capture latitude", y="\nSpring arrival")
 ```
 
 ### Breeding status
@@ -251,12 +268,12 @@ Migration extent:
 ```{r}
 p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
-  ggplot(., aes(breeding_status, mig_extent))+
-  geom_violin(aes(fill=breeding_status),trim=F)+
-  geom_boxplot(width=0.2)+
+  ggplot(., aes(breeding_status, mig_extent, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.2,alpha=0.9)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="Migration Extent by Breeding Status",
-          subtitle="Lots of overlap\n I wonder if distributions are influenced by non-random sampling over latitudinal range?")+
+          subtitle="Lots of overlap\n I wonder if distributions are influenced \nby non-random sampling over latitudinal range?")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=14))+
   labs(x="\nBreeding Status", y="\nExtent of Migration (in km)", fill="Breeding Status")
@@ -267,11 +284,11 @@ p_dates %>%
 ```{r}
 p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
-  ggplot(., aes(breeding_status, mig_duration))+
-  geom_violin(aes(fill=breeding_status),trim=F)+
-  geom_boxplot(width=0.2)+
+  ggplot(., aes(breeding_status, mig_duration, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.2,alpha=0.9)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
-  ggtitle(label="Migration Extent by Breeding Status",
+  ggtitle(label="Migration Duration by Breeding Status",
           subtitle="Seems breeders tend to have shorter migrations")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=14))+
@@ -284,9 +301,9 @@ Fall onset:
 ```{r}
 p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
-  ggplot(., aes(breeding_status, fall_mig_onset))+
-  geom_violin(aes(fill=breeding_status),trim=F)+
-  geom_boxplot(width=0.2)+
+  ggplot(., aes(breeding_status, fall_mig_onset, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.2,alpha=0.9)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="Fall Migration Onset by Breeding Status",
           subtitle="Lots of overlap, but non-breeders seem to leave earlier on average")+
@@ -299,9 +316,9 @@ Spring arrival:
 ```{r}
 p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
-  ggplot(., aes(breeding_status, spring_arrival))+
-  geom_violin(aes(fill=breeding_status),trim=F)+
-  geom_boxplot(width=0.2)+
+  ggplot(., aes(breeding_status, spring_arrival, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.2,alpha=0.9)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="Spring arival by Breeding Status",
           subtitle="\nBreeders arrive before non-breeders.")+

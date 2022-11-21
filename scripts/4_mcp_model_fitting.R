@@ -17,9 +17,7 @@ options(scipen = 999)
 registerDoFuture()
 plan(multisession)
 
-# This is the entire dataset (n=125) condensed to one record for day with averaged NSD
-df<-read_csv(here("data/full_dataset_6_28_2022/full_daily_nsd.csv"))
-ids<-unique(df$id)
+
 
 # split years up each summer
 df <- df %>%

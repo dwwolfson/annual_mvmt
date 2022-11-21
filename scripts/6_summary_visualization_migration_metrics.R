@@ -158,11 +158,59 @@ p_dates %>%
         plot.subtitle = element_text(hjust=0.5, size=14))+
   labs(x="\nBreeding Status", y="\nExtent of Migration (in km)", fill="Breeding Status")
 
+p_dates<-p_dates %>% 
+  mutate(lat_distance=(breeding_lat-40)*111)
+p1<-p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  filter(entire_yr!="2019-2020") %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  ggtitle(label="Extent of Displacement from Breeding/Capture Origin\n throughout the annual cycle",
+          subtitle="\n Trends are consistent across years")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
+
+p1+geom_line(data=bob, aes(x=lat_distance, y=mig_extent))
+
+bob<-p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  filter(entire_yr!="2019-2020")
+ggplot(bob, aes(breeding_lat, mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  ggtitle(label="Extent of Displacement from Breeding/Capture Origin\n throughout the annual cycle",
+          subtitle="\n Trends are consistent across years")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")+
+  
+  bob<-bob %>% 
+  filter(lat_distance>0)
+  ggplot(data=bob, aes(x=lat_distance, y=mig_extent))+geom_point()
+
+  d<-data.frame(a=seq(0,1230), b=seq(0,1230))
+  geom_line(data=data.frame(a,b), mapping=aes(x=a, y=b))
+    ggplot(d, aes(a,b))+geom_point()
+  
+  
+
+p_dates %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40, 53)
 
 
-
-
-
+p<-p_dates %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
+  geom_point()
+plotly::ggplotly(p)
 
 
 
@@ -264,21 +312,89 @@ ggplot(p_dates, aes(first_departure, year))+
   labs(y="Individual Swans", x="Dates")
 
 
-# add breeding latitude information
-# add fall year and spring year as columns to be able to pull apart and facet
-# latitude versus duration
-# latitude versus fall onset
-# latitude versus spring arrival
-# redo model prior to abstracts with latitude vs extent?
+# Number of stops vs breeding
+
+p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  ggplot(., aes(breeding_status, num_stops, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.05,alpha=0.9)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  ggtitle(label="Number of stops during non-breeding season",
+          subtitle="Breeders make less stops than non-breeders and paired swans")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="\nBreeding Status", y="\nNumber of Stops")
+
+# number of stops vs latitude
+
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  ggplot(., aes(breeding_lat,num_stops))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  ggtitle(label="Duration of Migration",
+          subtitle="\n Somewhat contingent on the year (winter severity?) \n mostly 120-140 in 2020-2021 \n mostly 100-120 in 2020-2021")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="\nMigration duration (in days)")
 
 
+# first departure vs latitude
+
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  ggplot(., aes(breeding_lat,first_departure))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~fall_yr)+
+  ggtitle(label="First departure from breeding/capture origin",
+          subtitle="\n No long-distance movement threshold criteria")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="\n Departure from breeding/capture origin")
+
+# first departure vs breeding
+p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  ggplot(., aes(breeding_status, first_departure, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.05,alpha=0.9)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  ggtitle(label="Number of stops during non-breeding season",
+          subtitle="Breeders make less stops than non-breeders and paired swans")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="\nBreeding Status", y="\nNumber of Stops")
 
 
+# date of leaving max segment vs latitude
 
 
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  ggplot(., aes(breeding_lat,furthest_seg_departure))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~fall_yr)+
+  ggtitle(label="Date of departure from max segment")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="\n Departure from breeding/capture origin")
 
-
-
-
-
-
+# date of leaving max segment vs breeding
+p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  ggplot(., aes(breeding_status, furthest_seg_departure, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.05,alpha=0.9)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  ggtitle(label="Date of departure from max segment",
+          subtitle="No big difference")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="\nBreeding Status", y="\nDate of departure from max segment")

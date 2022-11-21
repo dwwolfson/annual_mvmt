@@ -1,0 +1,375 @@
+---
+title: "TRUS IP Annual Mvmt Summary"
+author: "David Wolfson"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    code_folding: hide 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning=F)
+```
+
+These are the 7 questions I shared with the project collaborators at the last meeting in Feb 2022.
+
+Research questions:\
+1. How far are swans moving from summer territories during the non-breeding period?\
+2. How long are swans spending overwintering in non-breeding areas?\
+3. What are the dates that swans leave their summer territory in the fall and return in the spring?\
+4. How does breeding status affect migration patterns?\
+5. How do migration patterns differ by latitude?\
+6. How does water condition influence swan settlement during the non-breeding period?\
+7. What is the degree of annual within-individual variability and within-population variability in migration patterns?
+
+Here is the list of migration metrics that I have for all the models fit with mcp:
+
+1.  **Fall migration onset (for long-distance migrants)**
+
+    -   migration extent \>100km
+
+    -   transition must be between July and December
+
+    -   transition between segments \>2 km
+
+    -   movement must be away from origin
+
+2.  **First departure from summer territory (applies to residents and short-distance movements)**
+
+    -   no distance threshold
+
+    -   no seasonal date range requirement
+
+    -   transition between segments \>2 km
+
+    -   movement must be away from origin
+
+3.  **Number of stops (segments additional to first and last, so a 'traditional' migrant with no staging would have 1)**
+
+    -   transitions between segments \>2 km
+
+    -   time between segments \>2 days
+
+4.  **Duration of each stop**
+
+    -   transitions between segments \>2 km
+
+    -   time between segments \>2 days
+
+5.  **Overall extent of migration (distance between max and min displacement segments)**
+
+    -   transitions between segments \>2 km
+
+6.  **Date of arrival on furthest segment**
+
+    -   transitions between segments \>2 km
+
+7.  **Duration of stay on furthest segment**
+
+    -   transitions between segments \>2 km
+
+8.  **Date of departure from furthest segment**
+
+    -   self-explanatory; no other rules
+
+9.  **Spring Arrival (Date of arrival to last year summer territory)**
+
+    -   Transition must be between December and July
+
+    -   Segment transition corresponding with return must be moving closer to origin
+
+    -   Segment corresponding with return must be \<10 km displacement from summer territory
+
+10. **Duration of migration (time between fall onset and spring arrival)**
+
+    -   Must satisfy the rules for 'fall migration onset' and 'spring arrival
+    
+  
+  For the upcoming two presentations I'll try to focus on questions 1-5 primarily.    
+```{r message=F, warning=F}
+# package names
+packages <- c("tidyverse", "here", "lubridate")
+
+# install any packages not previously installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+# load packages
+invisible(lapply(packages, library, character.only = TRUE))
+source(here("scripts/ggplot_custom_function.R"))
+
+
+param_df<-read_csv(here("output/migration_metrics.csv"))
+
+# Merge additional info onto dataframe
+ids<-read_csv(here("ids.csv"))
+param_df<-param_df %>% 
+  left_join(., ids,
+            by=c("swan_ID" = "id")) %>% 
+  select(-mate_present, -'mass (kg)', -'skull (mm)',-'tarsus (mm)', -comments) %>% 
+  rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
+         id_year=year)
+
+
+# Translate back to dates from julian day
+p_dates<-param_df %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~ifelse(.<186, .+181, .-185)))
+
+
+p_dates<-p_dates %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~as.Date(., origin="2019-12-31")))
+
+# Add specific years for the fall and spring events (fall_onset and spring_arrival) to track yearly variation
+p_dates<-p_dates %>% 
+  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
+
+# add column for entire year cycle
+p_dates<-p_dates %>% 
+  mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+                         map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
+```
+
+I'll consider questions 1, 2, and 3 within the context of 4 and 5. Therefore, look at migration extent, migration duration, fall onset, and spring arrival versus first latitude and then breeding status.
+
+### Latitude
+
+1. How far are swans moving from summer territories during the non-breeding period?\
+Migration extent:  
+
+```{r}
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
+  
+```
+
+```{r}
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  filter(entire_yr!="2019-2020") %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
+  
+```
+
+
+```{r}
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  filter(entire_yr!="2019-2020") %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
+  geom_point()+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
+  
+```
+
+We can impose 3 latitudinal categories of:
+1) obligate long-distance migration (latitudes further north than 48)  
+2) facultative migration (42.5-48)  
+3) close to obligate residency:(further south than 42.5)  
+
+and also a threshold of 300km for "long-distance migration", though this is totally arbitrary.
+
+```{r}
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+    filter(entire_yr!="2019-2020") %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  geom_vline(xintercept=42.5, linetype="dashed", color="red")+
+  geom_vline(xintercept = 48, linetype="dashed", color="red")+
+  geom_hline(yintercept=300, linetype="dashed", color="black")+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
+
+p1<-p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+    filter(entire_yr!="2019-2020") %>% 
+  ggplot(., aes(breeding_lat, mig_extent, col=swan_ID))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  geom_vline(xintercept=42.5, linetype="dashed", color="red")+
+  geom_vline(xintercept = 48, linetype="dashed", color="red")+
+  geom_hline(yintercept=300, linetype="dashed", color="black")+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
+
+plotly::ggplotly(p1)
+```
+
+```{r}
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  ggplot(., aes(breeding_lat, mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  geom_vline(xintercept=42.5, linetype="dashed", color="red")+
+  geom_vline(xintercept = 48, linetype="dashed", color="red")+
+  geom_hline(yintercept=300, linetype="dashed", color="black")+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
+```
+
+2. How long are swans spending overwintering in non-breeding areas?\
+
+```{r}
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+    filter(entire_yr!="2019-2020") %>% 
+  ggplot(., aes(breeding_lat,mig_duration,))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  xlim(40,52)+ # to exclude arkansas winter captures
+  facet_wrap(~entire_yr)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="\nMigration duration (in days)")
+```
+
+I wonder if my rule set is too restrictive. There aren't a ton of data points for the duration of migration because there are a bunch of reasons why swans could get excluded from fall onset or spring arrival parameters.  
+
+A special request by John: Migration duration vs extent
+```{r}
+p_dates %>% 
+  filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
+  ggplot(., aes(mig_duration,mig_extent))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  facet_wrap(~entire_yr)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Migration duration (in days)", y="\nMigration extent (in km)")
+```
+
+
+
+3. What are the dates that swans leave their summer territory in the fall and return in the spring?\
+
+Fall onset:  
+```{r}
+p_dates %>% 
+  filter(!is.na(breeding_status)) %>% 
+      filter(entire_yr!="2019-2020") %>% 
+  ggplot(aes( breeding_lat,fall_mig_onset))+
+  geom_point()+
+  facet_wrap(~fall_yr)+
+  xlim(41,52)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="\nFall Migration Onset")
+```
+
+Spring arrival:  
+```{r}
+p_dates %>% 
+  filter(!is.na(breeding_status)) %>% 
+      filter(entire_yr!="2019-2020") %>% 
+  ggplot(aes( breeding_lat,spring_arrival))+
+  geom_point()+
+    geom_smooth(method="lm")+
+  facet_wrap(~spring_yr)+
+  xlim(41,52)+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="Breeding/Capture latitude", y="\nSpring arrival")
+```
+
+### Breeding status
+
+1. How far are swans moving from summer territories during the non-breeding period?\
+Migration extent: 
+```{r}
+p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  ggplot(., aes(breeding_status, mig_extent, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.2,alpha=0.9)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  ggtitle(label="Migration Extent by Breeding Status")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=14))+
+  labs(x="\nBreeding Status", y="\nExtent of Migration (in km)", fill="Breeding Status")
+```
+
+2. How long are swans spending overwintering in non-breeding areas?\
+
+```{r}
+p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  ggplot(., aes(breeding_status, mig_duration, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.2,alpha=0.9)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=14))+
+  labs(x="\nBreeding Status", y="\nDuration of Migration (in days)", fill="Breeding Status")
+```
+
+3. What are the dates that swans leave their summer territory in the fall and return in the spring?\
+
+Fall onset: 
+```{r}
+p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  ggplot(., aes(breeding_status, fall_mig_onset, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.2,alpha=0.9)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="\nBreeding Status", y="\nDate of Fall Migration Onset")
+```
+
+Spring arrival:
+```{r}
+p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  ggplot(., aes(breeding_status, spring_arrival, fill=breeding_status))+
+  geom_boxplot(width=0.2, outlier.shape = NA)+
+  geom_jitter(width=0.2,alpha=0.9)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=14))+
+  labs(x="\nBreeding Status", y="\nDate of Spring Arrival", fill="Breeding Status")
+```
+

@@ -1,6 +1,6 @@
 # Visualizations for the flyway update on Aug 2022
 # package names
-packages<-c("tidyverse", "here", "lubridate")
+packages<-c("tidyverse", "here", "lubridate", "scales")
 
 # install any packages not previously installed
 installed_packages<-packages %in% rownames(installed.packages())
@@ -47,11 +47,14 @@ p1<-ggplot(sub, aes(jdate, fct_reorder(id, days, .desc=F), color=capture_state))
   theme(axis.text=element_blank())+
   facet_grid(capture_state~., scales="free")
 
+
 # now overlay the dates of fieldwork to orient people of the multiple years
 rect1<-data.frame(xstart=as.Date("2019-07-25"), xend=as.Date("2019-08-29"), col="brown")
 rect2<-data.frame(xstart=as.Date("2020-06-23"), xend=as.Date("2020-09-08"), col="red")
 rect3<-data.frame(xstart=as.Date("2021-07-06"), xend=as.Date("2021-08-22"), col="green")
 rect4<-data.frame(xstart=as.Date("2021-12-15"), xend=as.Date("2021-12-30"), col="blue")
+
+
 
 p2<-p1+geom_rect(data=rect1, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
                              fill="2019"), alpha=0.3, inherit.aes=F)+
@@ -92,5 +95,61 @@ for(i in seq_along(states)){
 # redo text for axes
 # show mortalities
 # show redeployments?
+
+rect1<-data.frame(xstart=as.Date("2019-07-25"), xend=as.Date("2019-08-29"))
+rect2<-data.frame(xstart=as.Date("2020-06-23"), xend=as.Date("2020-09-08"))
+rect3<-data.frame(xstart=as.Date("2021-07-06"), xend=as.Date("2021-08-22"))
+rect4<-data.frame(xstart=as.Date("2021-12-15"), xend=as.Date("2021-12-30"))
+
+p2<-p1+geom_rect(data=rect1, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
+), alpha=0.3, inherit.aes=F)+
+  geom_rect(data=rect2, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
+  ), alpha=0.3, inherit.aes=F)+
+  geom_rect(data=rect3, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
+  ), alpha=0.3, inherit.aes=F)+
+  geom_rect(data=rect4, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
+  ), alpha=0.3, inherit.aes=F)+
+  xlab("Date")+
+  theme(axis.title.y=element_blank())+
+  theme(strip.text.y = element_text(size=14, face="bold"))+
+  theme(strip.background = element_rect(color="black", fill="white"))+
+  guides(colour="none", fill="none")
+###############################################################################################
+sub %>% 
+  group_by(capture_state) %>% 
+  mutate(nums=unique(.$id))
+
+samp_dat<-data.frame(date=max(sub$jdate),
+                     label=)
+
+
+
+new_p<-ggplot(sub, aes(jdate, fct_reorder(id, days, .desc=F), color=capture_state))+
+  geom_point(size=1.5)+
+  theme(axis.text.y=element_blank())+
+  theme(axis.text.x=element_text(size=14, face="bold"))+
+  facet_grid(fct_relevel(capture_state, 'MI', 'MN', 'MB', 'IA', 'OH', 'WI', 'AR')~., scales="free")+
+  geom_rect(data=rect1, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
+), alpha=0.3, inherit.aes=F)+
+  geom_rect(data=rect2, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
+  ), alpha=0.3, inherit.aes=F)+
+  geom_rect(data=rect3, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
+  ), alpha=0.3, inherit.aes=F)+
+  geom_rect(data=rect4, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf, 
+  ), alpha=0.3, inherit.aes=F)+
+  theme(axis.title.y=element_blank())+
+  theme(axis.title.x=element_blank())+
+  theme(strip.text.y = element_text(size=14, face="bold"))+
+  theme(strip.background = element_rect(color="black", fill="white"))+
+  guides(colour="none", fill="none")+
+  scale_x_date(date_breaks = "1 year", date_labels = "%b-%Y")+
+  geom_vline(xintercept = as.numeric(ymd("2020-01-01")), color="black", size=1)+
+  geom_vline(xintercept = as.numeric(ymd("2021-01-01")), color="black", size=1)+
+  geom_vline(xintercept = as.numeric(ymd("2022-01-01")), color="black", size=1)+
+  theme(panel.spacing.y = unit(0, "lines"))
+
+
+ggsave(plot=new_p, filename="active_collar_swan_conference.png")
+
 
 
