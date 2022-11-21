@@ -95,8 +95,9 @@ latent_model<-function(){
   
   # likelihood
   for (i in 1:n_obs){        
-    Y[i] ~ dnorm(mu[i], z[i]*tau1+(1-z[i])*tau2) 
+    Y[i] ~ dnorm(mu[i], tau) 
     # Y[i] ~ dnorm(mu[i], z[i]*tau1+(1-z[i])*tau2) 
+    # extra tau seemed to do much worse
     z[i] ~ dbern(pi)                    # latent parameter
     
     # take either functional form based on value of z[i]
