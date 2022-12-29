@@ -88,6 +88,7 @@ latent_model<-function(){
   #gamma2 ~ dunif(0,300)
   a ~ dnorm(30, 0.001)
   b ~ dunif(0, 30)
+  c ~ dunif(0,100)
   #gamma0 ~ dnorm(10, 0.001)
   #gamma1 ~ dnorm(0, 0.001)
   #gamma2 ~ dunif(0, 500)
@@ -96,53 +97,40 @@ latent_model<-function(){
   tau1 <- 1 / (sigma1*sigma1)
   sigma2 ~ dunif(1,200)
   tau2 <- 1 / (sigma2*sigma2)
-  # sigma1 ~ dunif(1,200)
-  # sigma2 ~ dunif(1,200)
-  # tau1 <- 1 / (sigma1*sigma1)
-  # tau2 <- 1 / (sigma2*sigma2)
-  # the extra error term didn't seem to help anything
   
   # likelihood
   for (i in 1:n_obs){        
     Y[i] ~ dnorm(mu[i], z[i]*tau1+(1-z[i])*tau2) 
-    # Y[i] ~ dnorm(mu[i], z[i]*tau1+(1-z[i])*tau2) 
     z[i] ~ dbern(pi)                    # latent parameter
     
     # take either functional form based on value of z[i]
     mu[i] <- z[i]*(alpha+beta1*x[i])+
-      (1-z[i])*(a*x[i]^b)
-    #log_lik[i]<-log(dnorm(Y[i], mu[i], tau))
-    # not needed
+      (1-z[i])*(c+a*x[i]^b)
   }}
 
 # MCMC settings
-nc <- 3 # number of chains
-ni <- 100000 #number of total iterations
-nb <- 20000 #burn in 
-nt <- 10 # thinning
+# nc <- 3 # number of chains
+# ni <- 100000 #number of total iterations
+# nb <- 20000 #burn in 
+# nt <- 10 # thinning
 
 # JAGS data object
 jags.dat<-(list(x = lats, Y = migs, n_obs=n_obs))
 
 # Parameters and computed values to track
-params <- c("mu","alpha","beta1", "a","b", "sigma1", "sigma2", "z")
+params <- c("mu","alpha","beta1", "a","b", "c", "sigma1", "sigma2", "z", "delta")
 
 # Run jags
 jagsfit <- jags.parallel(data=jags.dat, parameters.to.save=params,
                 model.file=latent_model,
-                n.thin=10, n.chains=3, n.burnin=20000, n.iter=100000) 
+                n.thin=10, n.chains=3, n.burnin=20000, n.iter=200000) 
 
-MCMCsummary(jagsfit, params = c("alpha", "beta1", "a","b", "sigma1", "sigma2"))
+MCMCsummary(jagsfit, params = c("alpha", "beta1", "a","b", "c", "sigma1", "sigma2"))
 
 # out<-data.frame(MCMCsummary(jagsfit))
 # out<-rownames_to_column(out, "param")
-# mus<-out %>% 
-#   filter(grepl("mu", param))
-# zs<-out %>% 
-#   filter(grepl("z", param))
 
-
-betas<-MCMCpstr(jagsfit, params=c("alpha", "beta1", "a","b"), type="chains")
+betas<-MCMCpstr(jagsfit, params=c("alpha", "beta1", "a","b", "c"), type="chains")
 
 lats_pred<-seq(from=min(df$bl2),
                to=max(df$bl2),
@@ -165,7 +153,7 @@ for(i in 1:nlats){
   # Estimate the migration extent for each breeding lat and for 
   #   each MCMC sample of beta0 and beta1
   mig1_hats <- betas$alpha + rep(lats_pred[i], nmcmc)*betas$beta1
-  mig2_hats <- betas$a*rep(lats_pred[i],nmcmc)^betas$b
+  mig2_hats <- betas$c+betas$a*rep(lats_pred[i],nmcmc)^betas$b
    
 
   conf.int1[i,] <- quantile(mig1_hats, prob = c(0.025, 0.975))
@@ -173,7 +161,7 @@ for(i in 1:nlats){
   
 }
 
-betas_hat<-MCMCpstr(jagsfit, params = c("alpha", "beta1", "a", "b", "z"), func=median)
+betas_hat<-MCMCpstr(jagsfit, params = c("alpha", "beta1", "a", "b", "c", "z"), func=median)
 
 df$groupID<-jagsfit$BUGSoutput$mean$z
 
@@ -183,7 +171,7 @@ mu_hats1<-data.frame(est=rep(betas_hat$alpha, nlats)+
                      UCL=conf.int1[,2],
                      latitudes=lats_pred)
 
-mu_hats2<-data.frame(est=betas_hat$a*lats_pred^betas_hat$b,
+mu_hats2<-data.frame(est=betas_hat$c+betas_hat$a*lats_pred^betas_hat$b,
                      LCL=conf.int2[,1],
                      UCL=conf.int2[,2],
                      latitudes=lats_pred)
@@ -202,9 +190,9 @@ ggplot(mu_hats1, aes(latitudes, est))+
   geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
   geom_line()+
   geom_ribbon(data=mu_hats2, aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
-  geom_line(data=mu_hats2, aes(latitudes, est))+
+  #geom_line(data=mu_hats2, aes(latitudes, est))+
   geom_point(data=df, aes(bl2, max_nsd, color=groupID))+
-  geom_line(aes(x=lats_pred, y= betas_hat$a*lats_pred^betas_hat$b))
+  geom_line(aes(x=lats_pred, y=betas_hat$c+betas_hat$a*lats_pred^betas_hat$b))
 
 
 

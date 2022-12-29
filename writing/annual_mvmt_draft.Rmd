@@ -1,7 +1,7 @@
 ---
 title: "Interior Population Trumpeter Swan Annual Movements"
 author: 
-  - David W. Wolfson^[University of Minnesota, Minnesota Cooperative Fish and Wildlife Research Unit], David E. Andersen^[U.S. Geological Survey, Minnesota Cooperative Fish and Wildlife Research Unit], John R. Fieberg^[University of Minnesota]
+  - David W. Wolfson^[University of Minnesota, Minnesota Cooperative Fish and Wildlife Research Unit], John R. Fieberg^[University of Minnesota], Thomas R. Cooper^[U.S. Fish and Wildlife Service], Steven Cordts^[Minnesota Department of Natural Resources], Christine Herwig^[Minnesota Department of Natural Resources], John Moriarty^[Three Rivers Park District], Margaret Smith^[Trumpeter Swan Society], Randall T. Knapik^[Michigan Department of Natural Resources], Anna Buckardt-Thomas^[Iowa Department of Natural Resources], Tyler Harms^[Iowa Department of Natural Resources], Taylor Finger^[Wisconsin Department of Natural Resources], Sumner Matteson^[Wisconsin Department of Natural Resources], Laura Kearns^[Ohio Department of Natural Resources], Tiffany Mayo^[Cleveland Metroparks Zoo], Brian Kiss^[Manitoba Wildlife and Fisheries Branch], Timothy Poole^[Manitoba Wildlife and Fisheries Branch], Drew Fowler^[U.S. Geological Survey, Louisiana Cooperative Fish and Wildlife Research Unit], David E. Andersen^[U.S. Geological Survey, Minnesota Cooperative Fish and Wildlife Research Unit]
 output: 
   bookdown::word_document2:
     fig_caption: yes
@@ -42,7 +42,6 @@ library(bookdown)
 library(rmarkdown)
 library(here)
 library(knitr)
-library(mcp)
 library(tidyverse)
 library(flextable)
 library(lubridate)
@@ -65,31 +64,72 @@ Trumpeter swans (*Cygnus buccinator*) are the largest waterfowl species in North
 Trumpeter swans were nearly extirpated in the lower 48 states and reached an estimated low of 70 individuals in the 1930s due to widespread hunting for meat, skins for powder puffs, and feather quills for writing.
 Critically low numbers of trumpeter swans led to the establishment of Red Rock Lakes National Wildlife Refuge (RRLNWR) in the confluence of Montana, Wyoming, and Idaho (also know as the Tri-State region) in 1935, which was the last vestige of a sizable breeding swan population in the lower 48 states.
 
-As trumpeter swan numbers at RRLNWR started to rise,this flock was used as a source population for many reintroduction efforts.
+As trumpeter swan numbers at RRLNWR started to rise, this flock was used as a source population for many reintroduction efforts.
 Many states translocated trumpeter swans from RRLNWR to augment and boost the abundance and distribution of the Rocky Mountain Population (RMP) or to restore the Interior Population (IP), which had been extirpated.
-As many states pursued reintroduction programs in the 1980s, demand for trumpeter swans outpaced the number available in the Tri-State area and forced managers to search for an alternative source.
-Fortunately, in 1968, aerial surveys of Pacific Coast Population (PCP) swans in Alaska revealed previously undocumented populations that were abundant enough to augment reintroduction efforts, especially those targeting the IP [@matteson1988].
+As reintroduction programs further expanded, demand for trumpeter swans outpaced the number available in the Tri-State area and forced managers to search for an alternative source.
+In 1959, initial aerial surveys in Alaska discovered over a thousand Pacific Coast Population (PCP) swans [@hansen1971].
+Additional surveys in 1968 tallied 2,848 swans, confirming that the population was growing, and that there were sufficient abundance to provide swans for translocations, including to states conducting reintroduction efforts within the IP [@matteson1988].
 An important distinction between these source populations is that PCP swans breeding in Alaska migrate to British Columbia, Washington and Oregon for the winter whereas RMP swans from the Tri-State area are considered non-migratory [@oyler-mccance2007].
 
-The IP has increased dramatically since reintroductions began in the 1960s, and both population size and distribution has expanded significantly (Cite TRUS survey report).
+Estimates of IP abundance have increased dramatically since reintroductions began in the 1960s, and both population size and distribution has expanded significantly (Cite TRUS survey report).
 Trumpeter swans currently breed throughout most of the western Great Lakes region, including in Minnesota, Wisconsin, Michigan, Iowa, Manitoba, Ontario, and Ohio.
-However, beyond estimates of population size and trends, there is relatively little recent information about their ecology, including seasonal movements and migration patterns.
+However, beyond estimates of population size and trends, there is relatively little recent information about their ecology, including seasonal movements and migration patterns, therefore hindering conservation decision-making.
 
 Objectives paragraph
 
-To address current information needs, we marked a sample of IP swans with GPS-GSM transmitters to evaluate the spatio-temporal patterns of this population during the annual cycle.
+To address current information needs, we marked a sample of IP swans with GPS-GSM transmitters to evaluate the spatio-temporal patterns of this population thoughout the annual cycle.
 Specifically, we will quantify 1) migration phenology, 2) the extent and duration of migratory movements, 3) the role of breeding status and breeding location on annual movement patterns, and 4) the degree of individual and population variability in migration patterns.
 
 ## Methods
 
-To quantify migration phenology, we first defined the summer territory by calculating a 95% occurrence distribution for the locations of each marked swan from June 1 - August 1 using the amt and ctmm packages (cite).
-To define the onset of autumn migration and the end of spring migration, we used a spatial threshold to determine if a swan was within its summer territory.
-After visually inspecting graphs of Net-Squared Displacement (NSD) over time, we chose xxx km^2^ as the NSD threshold, but we also performed a sensitivity analysis to demonstrate results were robust to this choice (include in supplemental) **(or try mcp or migrateR approach instead)**.
-Using this threshold, we considered the onset of autumn migration when a swan was \>xxx km from the centroid of its summer territory and the end of spring migration when the swan was \< xxx km from the centroid of the previous year's summer territory
+### Study Area
+
+Our study area for swan captures is approximately the current breeding distribution of IP trumpeter swans with exception of Ontario to the east (Groves 2017).
+We deployed transmitters on IP trumpeter swans as far north and west as southern Manitoba (51.1° N, 99.7° W), as far south as central Arkansas (35.5° N, 91.9° W), and as far east as central Ohio (40.6° N, 82.7° W).
+Capture locations occurred in a mix of Laurentian Mixed Forest, Prairie Parkland, Eastern Broadleaf Forest, and Aspen Parklands [@cleland1997].
+
+### Capture and Handling
+
+We captured most swans during the definitive prebasic molt period when adults are flightless using a combination of jon boats, airboats, step deck transom boats, square-stern canoes, and kayaks.
+We primarily used long-tail mud motors to navigate shallow wetlands where swans were located (Powell Performance Fab, Hutchinson, Minnesota, USA), although some swans were captured using surface-drive motors (Gator-Tail, Loreauville, Louisiana, USA).
+We hand-captured swans using a shepherd's crook pole [@eltringham1978; @hindman2016].
+
+We marked swans with two types of neck collars; 55-g neck collars with GPS-GSM transmitters incorporated into the collar housing (Model OrniTrack-N62 3G, Ornitela, Vilnius, Lithuania) and 140-g GPS transmitters (Model CTT-ES400, Cellular Tracking Technologies, Rio Grande, New Jersey, USA) that were adhered to 64-mm neck collars (Haggie Engraving, Crumpton, Maryland, USA).
+Swans captured in Michigan were fit with CTT collars and all other swans in the study were fit with Ornitela collars.
+All transmitters were programmed to collect GPS locations at 15-min intervals throughout the 24-hr daily period.
+
+Protocols for capturing and marking trumpeter swans in U.S. states have been approved by the University of Minnesota Animal Care and Use Committee (protocol no. 1905-37072A), the Minnesota Department of Natural Resources (Special Permit no. 19017), the Michigan Department of Natural Resources (Threatened and Endangered Species Permit TE 175), the U.S.
+Fish and Wildlife Service (Research & Monitoring Special Use Permit no. K-10-001), and the U.S.
+Geological Survey Bird Banding Laboratory (Federal Bird Banding Permit no. 21631).
+All capture and marking of trumpeter swans in Manitoba was conducted under Federal Scientific Permit to Capture and Band Migratory Birds (no. 10271), Federal Animal Care Committee approval (project 20FB02), Provincial Species at Risk Permit (no. SAR20012), and Provincial Park Permit (no. PP-PHQ-20-016).
+
+### Data Analysis
+
+To quantify migration phenology throughout the annual cycle, we first calculated yearly time-series of Net-Squared Displacement (NSD) values for swan, using July 1 as a cutoff date between years for individuals with multiple years of GPS data, and then condensed the dataset to a single average NSD value for each day.
+After excluding swan-year datasets with less than 30 days of data, we fit a series of 7 piecewise regression models to each time-series using the mcp package, which serves as a wrapper to JAGS, with a burn-in period of 10,000 iterations and then 15,000 sampling iterations [@plummer2003; @lindelov2020].
+The syntax of each model corresponded to an increasing number of intercepts (1-7) for average NSD values throughout the time series separated by breakpoints in time where the intercept values transitioned.
+Scripts were executed in parallel using the future package on a partition of the the Minnesota Supercomputing Institute (MSI) with 24 cores and 50GB RAM [@bengtsson2021].
+We diagnosed MCMC convergence using the Gelman-Rubin statistic and excluded all models containing any parameters that had a R-hat value over 1.1 from further analyses [@gelman1992].
+If all parameters in a model passed the R-hat threshold, we evaluated model fit and predictive performance using leave-one-out cross-validation (LOO-CV) with the Expected Log Predictive Density (ELPD), as estimated by the loo package [@gelman2014; @vehtari2017].
+We used LOO-CV to choose the ideal number of breakpoints (and thereby segments which correspond to migratory periods) for each swan-year dataset by selecting the model with the best ELPD value out of the range of possibilities.
+
+After visually inspecting graphs of Net-Squared Displacement (NSD) over time, we chose xxx km^2^ as the NSD threshold, but we also performed a sensitivity analysis to demonstrate results were robust to this choice (include in supplemental) Using this threshold, we considered the onset of autumn migration when a swan was \>xxx km from the centroid of its summer territory and the end of spring migration when the swan was \< xxx km from the centroid of the previous year's summer territory
 
 ## Results
 
+In 2019, we deployed 19 GPS-GSM transmitters (7 in Minnesota and 12 in Michigan).
+In 2020, we deployed an additional 77 transmitters (10 in Manitoba, 40 in Minnesota, 9 in Iowa, 5 in Wisconsin, 1 in Michigan, 12 in Ohio).
+In 2021, we deployed an additional 28 transmitters, 11 of which were re-deployments (1 in Manitoba, 9 in Minnesota, 2 in Iowa, 4 in Wisconsin, 8 in Ohio, and 4 in Arkansas).
+In 2022 we redeployed 1 transmitter in Iowa.
+
 ## Discussion
+
+-   How our methods are different from others.
+    Our attempt at semi-automated analyses.
+    Trying to consider migration as more of a continuum.
+
+    Net-Squared Displacement has been most commonly used to categorize migration by fitting a small number of non-linear theoretic movement models that represent traditional types of migration and choosing the movement model with the lowest AIC value [@bunnefeld2011; @spitz2017], a relatively straightforward approach, although some studies have shown that it often does not reliably identify migration at an individual level [@cagnacci2016].
+    Despite the prevalence of this approach, increasing evidence has been provided to suggest that the majority of migration doesn't fit into these restrictive categories and that migration should instead be considered along a continuous behavioral gradient [@ball2001; @dingle2007a].
 
 ## Acknowledgements
 

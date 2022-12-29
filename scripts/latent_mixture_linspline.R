@@ -108,16 +108,16 @@ latent_model<-function(){
     
     # take either functional form based on value of z[i]
     mu[i] <- z[i]*(alpha+beta1*x[i])+
-      (1-z[i])*(gamma0+ gamma1*x[i] + step(x[i]-delta)*gamma2*(x[i]-delta))
+      (1-z[i])*(gamma0 + gamma1*x[i] + step(x[i]-delta)*gamma2*(x[i]-delta))
     #log_lik[i]<-log(dnorm(Y[i], mu[i], tau))
     # not needed
   }}
 
 # MCMC settings
-nc <- 3 # number of chains
-ni <- 100000 #number of total iterations
-nb <- 20000 #burn in 
-nt <- 10 # thinning
+# nc <- 3 # number of chains
+# ni <- 100000 #number of total iterations
+# nb <- 20000 #burn in 
+# nt <- 10 # thinning
 
 # JAGS data object
 jags.dat<-(list(x = lats, Y = migs, n_obs=n_obs))
@@ -202,9 +202,11 @@ ggplot(mu_hats1, aes(latitudes, est))+
   geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
   geom_line()+
   geom_ribbon(data=mu_hats2, aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
-  geom_line(data=mu_hats2, aes(latitudes, est))+
-  geom_point(data=df, aes(bl2, max_nsd, color=groupID))+
-  geom_line(aes(x=lats_pred, y= betas_hat$gamma0+betas_hat$gamma2*I(lats_pred-betas_hat$delta>0)*(lats_pred-betas_hat$delta)), col="blue")
+  geom_line(data=mu_hats2, aes(latitudes, est), col='red')+
+  geom_point(data=df, aes(bl2, max_nsd, color=groupID))
+ # geom_line(aes(x=lats_pred, y= betas_hat$gamma0+
+    #              betas_hat$gamma2*I(lats_pred-betas_hat$delta>0)*(lats_pred-betas_hat$delta)), 
+    #        col="blue")
 
 
 

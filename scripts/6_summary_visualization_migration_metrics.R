@@ -14,8 +14,11 @@ if (any(installed_packages == FALSE)) {
 invisible(lapply(packages, library, character.only = TRUE))
 source(here("scripts/ggplot_custom_function.R"))
 
+# first round (for conferences)
+# param_df<-read_csv(here("output/migration_metrics.csv"))
 
-param_df<-read_csv(here("output/migration_metrics.csv"))
+# second round
+param_df<-read_csv(here("output/migration_metrics_2nd.csv"))
 
 # Merge additional info onto dataframe
 ids<-read_csv(here("ids.csv"))
@@ -188,7 +191,7 @@ ggplot(bob, aes(breeding_lat, mig_extent))+
           subtitle="\n Trends are consistent across years")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")+
+  labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
   
   bob<-bob %>% 
   filter(lat_distance>0)
@@ -206,101 +209,42 @@ p_dates %>%
   geom_smooth(method="lm")+
   xlim(40, 53)
 
+p<-p_dates %>% 
+  ggplot(., aes(breeding_lat, mig_extent, color=swan_ID))+
+  geom_point()
+plotly::ggplotly(p)
 
 p<-p_dates %>% 
-  ggplot(., aes(breeding_lat, mig_extent))+
+  ggplot(., aes(breeding_lat, mig_extent, color=as.factor(fall_mig_onset)))+
   geom_point()
 plotly::ggplotly(p)
 
 
+p_dates<-p_dates %>% 
+  mutate(capture_state=ifelse(grepl("[7-9]L", swan_ID)|
+                                grepl("0H_2nd", swan_ID), "AR",
+                              ifelse(grepl("9H_2nd", swan_ID)|
+                                       grepl("2H_2nd", swan_ID)|
+                                       grepl("0N_2nd", swan_ID)|
+                                       grepl("6P", swan_ID), "MN",
+                                     ifelse(grepl("A", swan_ID)|
+                                              grepl("E", swan_ID)|
+                                              grepl("R", swan_ID)|
+                                              grepl("T",swan_ID)|
+                                              grepl("L", swan_ID),"MN",
+                                            ifelse(grepl("M", swan_ID)|
+                                                     grepl("N", swan_ID), "OH",
+                                                   ifelse(grepl("H", swan_ID), "MB",
+                                                          ifelse(grepl("C", swan_ID), "IA",
+                                                                 ifelse(grepl("P", swan_ID), "WI",
+                                                                        ifelse(grepl("J", swan_ID)|
+                                                                                 grepl("K", swan_ID), "MI",
+                                                                               "flag")))))))))
 
-# Convert dataframe from wide to long format for easier ggplotting
-bob<-p_dates %>% 
-  pivot_longer(cols=c(fall_mig_onset,  # Events with specific dates
-                      first_departure, 
-                      furthest_seg_arrival, 
-                      furthest_seg_departure,
-                      spring_arrival),
-               names_to = 'Temporal_Event',
-               values_to = "Date",
-               values_drop_na = T) %>% 
-  pivot_longer(cols=c(mig_extent, 
-                      mig_duration),
-               names_to = "Distance_Measures",
-               values_to = "Distance_Values",
-               values_drop_na = T ) %>% 
-  pivot_longer(cols=c(spring_arrival_comment,
-                      mig_duration_comment,
-                      fall_mig_onset_comment,
-                      num_stops_comment,
-                      first_departure_comment,
-                      mig_extent_comment),
-               names_to = "Comment_Type",
-               values_to = "Comment",
-               values_drop_na = T) %>% 
-  pivot_longer(cols=c(stop1_duration:stop5_duration),
-               names_to = "Stop_durations",
-               values_to = "Duration_Period",
-               values_drop_na = T) %>% 
-  pivot_longer(cols=c(fall_yr, spring_yr),
-               names_to = "Fall/Spring_Year",
-               values_to = "year")
-
-
-
-
-
-
-
-bob %>% 
-  filter(Temporal_Event%in%c("spring_arrival","fall_mig_onset")) %>%
-  ggplot(., aes(as.factor(Temporal_Event),Date))+
-  geom_violin()+
-  geom_point()+
-  coord_flip()
-
-
-bob %>% 
-  filter(Temporal_Event%in%"fall_mig_onset") %>%
-  ggplot(., aes(as.factor(Temporal_Event),Date))+
-  geom_point()+
-  coord_flip()
-
-
-
-p1<-ggplot(p_dates, aes(fall_mig_onset, id_year))+
-  geom_point()+
-  coord_flip()+
-  theme(axis.text.x=element_blank())+
-  ggtitle("Fall Migration Onset")+
-  labs(y="Individual Swans", x="Dates") #exclude those 2 and re-run
-# both of the outliers are not actual fall migrations
-
-plotly::ggplotly(p1)
-
-
-p2<-ggplot(p_dates, aes(spring_arrival, id_year))+
-  geom_point()+
-  coord_flip()+
-  theme(axis.text.x=element_blank())+
-  ggtitle("Spring Arrival")+
-  labs(y="Individual Swans", x="Dates")
-
-plotly::ggplotly(p2)
-
-bob %>% 
-  filter(Temporal_Event%in%"fall_mig_onset") %>%
-  ggplot(., aes(Date, id_year))+
-  geom_point()+
-  coord_flip()+
-  theme(axis.text.x=element_blank())
-
-bob %>% 
-  filter(Temporal_Event=="fall_mig_onset") %>%
-  ggplot(., aes(Date, id_year))+
-  geom_point()+
-  coord_flip()+
-  theme(axis.text.x=element_blank())
+p<-p_dates %>% 
+  ggplot(., aes(breeding_lat, mig_extent, color=id_year))+
+  geom_point()+facet_wrap(~capture_state, scales = "free")
+plotly::ggplotly(p)
 
 
 

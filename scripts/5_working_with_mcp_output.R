@@ -93,7 +93,8 @@ for (i in seq_along(ids)) {
     spring_distance_threshold<-100
     
     # spring return threshold
-    # In order to be considered a return to the breeding/capture site, the animal must be within a certain proximity
+    # In order to be considered a return to the breeding/capture site, the last segment ('presumably return to breeding site') must be 
+    # within a certain distance of the first segment ('presumable breeding site during first summer')
     spring_proximity_threshold<-10   # kilometers
     
     # latest date to be considered fall migration onset/ earliest date to be considered spring return
@@ -370,7 +371,7 @@ for (i in seq_along(ids)) {
     }
 
     # (original param 4 excluded): duration of fall migration
-    # I decided to axe this one because it only would sum the length of time in staging plateaus, which is not
+    # I decided to get rid of this one because it only would sum the length of time in staging plateaus, which is not
     # as accurate as the actual duration of fall migration. Also, for any swan that doesn't have a "proper"
     # staging area fit with an intercept, the duration would come out as 0, which is clearly wrong.
    #################################################################################################################    
@@ -500,14 +501,15 @@ for (i in seq_along(ids)) {
         if(abs(first_int-last_int)<spring_proximity_threshold){    # the spring proximity threshold is satisfied
           num_cp<-length(grep("cp", tmp_yr$name))
           if(tmp_yr[tmp_yr$name==paste0("cp_", num_cp), "mean"]>fall_spring_threshold  && # the last changepoint is during the winter/spring/summer
-             last_int<tmp_yr[tmp_yr$name==paste0("int_", num_ints-1), "mean"] && # last intercept was moving towards the origin
-             abs(max(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)-tail(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean, n=1))>spring_onset_threshold                                                                    # overall migration extent was enough to not be considered resident
+             last_int<tmp_yr[tmp_yr$name==paste0("int_", num_ints-1), "mean"] && # last change in intercepts moved towards the origin
+             abs(max(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)-tail(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean, n=1))>spring_distance_threshold                                                                    # overall migration extent was enough to not be considered resident
              ){    
           out_params["spring_arrival"]<-tmp_yr[tmp_yr$name==paste0("cp_", num_cp), "mean"] # spring arrival is the last changepoint
           }else{
             out_params["spring_arrival"]<-NA
             out_params["spring_arrival_comment"]<-glue::glue("last changepoint not during winter/spring/summer (Dec-July),
-                                                             or last movement away from origin, or migration extent not above {spring_distance_threshold}")
+                                                             or last movement away from origin, or 
+                                                             difference between max and last int not above {spring_distance_threshold} km")
         }
           } else if(abs(first_int-last_int)>spring_proximity_threshold){
           out_params["spring_arrival"]<-NA
@@ -549,5 +551,9 @@ for (i in seq_along(ids)) {
 
 param_df<-master_params %>% bind_rows()
 
-write_csv(param_df, here("output/migration_metrics.csv"))
+#original run
+# write_csv(param_df, here("output/migration_metrics.csv"))
+
+# after including some years that were originally excluded
+write_csv(param_df, here("output/migration_metrics_2nd.csv"))
 

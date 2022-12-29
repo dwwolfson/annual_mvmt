@@ -112,8 +112,8 @@ for(i in seq_along(ids)){
         tryCatch(out_mods[[mm]]<-mcp(model = int_mods[[mm]], 
                                      data = tmp_yr[,c("rescale", "date")],
                                      par_x = "date",
-                                     adapt=10000, # first run was adap=10000
-                                     iter=15000), # first run was default (3000)
+                                     adapt=10000, # amount of burn-in
+                                     iter=15000), # number of MCMC iterations
                  error = function(e) NULL)
       }
       

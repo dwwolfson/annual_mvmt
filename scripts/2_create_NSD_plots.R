@@ -64,7 +64,6 @@ for (i in seq_along(ids)) {
 }
 
 
-# bob <- data.frame(id = unique(nsd_sub$id))
 
 
 
