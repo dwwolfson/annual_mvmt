@@ -68,7 +68,7 @@ int_mod_vec<-c("one_int", "two_int", "three_int", "four_int", "five_int", "six_i
 
 # Create objects to store the results
 res<-data.frame(id=NA, year=NA, name=NA, mean=NA, lower=NA, upper=NA, Rhat=NA, n.eff=NA)
-write_csv(res, here("rerun4_output/best_mod_params.csv"))
+write_csv(res, here("rerun_dec_2022_output/best_mod_params.csv"))
 
 model_comparison<-data.frame(id=NA, year=NA, 
                              one_int_loo=NA, 
@@ -78,7 +78,7 @@ model_comparison<-data.frame(id=NA, year=NA,
                              five_int_loo=NA,
                              six_int_loo=NA,
                              seven_int_loo=NA)
-write_csv(model_comparison, here("rerun4_output/model_comparisons.csv"))
+write_csv(model_comparison, here("rerun_dec_2022_output/model_comparisons.csv"))
 
 
 ###
@@ -136,7 +136,7 @@ for(i in seq_along(ids)){
             loo_list[[nn]]<-out_mods[[nn]]$loo$estimates[[1]]
           }else{
             cat("Skipped model ", years[[j]], int_mod_vec[[k]], "\n",
-                file=here("rerun4_output/skipped_mods.txt"), append=T)
+                file=here("rerun_dec_2022_output/skipped_mods.txt"), append=T)
             loo_list[[nn]]<-(-9999) # this is reflect that it didn't pass rhat check but stay in numeric for which.max
           }}}
       
@@ -146,7 +146,7 @@ for(i in seq_along(ids)){
       # cbind together with id as 1st col and year as 2nd
       mods<-c(ids[[i]], years[[j]],loo_vec)
       # write out to file
-      write_csv(as.data.frame(t(mods)), here("rerun4_output/model_comparisons.csv"), append = T)
+      write_csv(as.data.frame(t(mods)), here("rerun_dec_2022_output/model_comparisons.csv"), append = T)
       
       # pick the best model based on loo
       best_mod<-out_mods[[which.max(loo_list)]]
@@ -155,7 +155,7 @@ for(i in seq_along(ids)){
       # cbind together with id as 1st col and year as 2nd
       params<-cbind.data.frame(id=ids[[i]], year=years[[j]], params)
       # write out to file
-      write_csv(params, here("rerun4_output/best_mod_params.csv"), append = T)
+      write_csv(params, here("rerun_dec_2022_output/best_mod_params.csv"), append = T)
       
       # save out plot of best model
       p<-plot(best_mod, q_fit=T)+
@@ -163,14 +163,14 @@ for(i in seq_along(ids)){
              x = "Date, starting from July 1",
              title = glue::glue("The best model for {years[[j]]} has {length(best_mod$model)} intercepts"))
       
-      ggsave(plot = p, filename = here(glue::glue("rerun4_output/best_mod_plots/{years[[j]]}.png")))
+      ggsave(plot = p, filename = here(glue::glue("rerun_dec_2022_output/best_mod_plots/{years[[j]]}.png")))
       
       # keep track of progress 
       cat("Working on year", j, "out of", length(years), "\n")
     }else{
       # keep track of which swans didn't have enough data to fit a model
       cat("Dataset for ", years[[j]], "skipped because of insufficient sample size.\n",
-          file=here("rerun4_output/skipped_swan_years.txt"), append=T)
+          file=here("rerun_dec_2022_output/skipped_swan_years.txt"), append=T)
     }}
   # keep track of progress
   cat("Working on swan", i, "out of", length(ids), "\n")

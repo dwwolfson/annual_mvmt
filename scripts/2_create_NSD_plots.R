@@ -13,7 +13,7 @@ for (i in 1:length(dependencies)) {
 source(here("scripts/ggplot_custom_function.R"))
 
 # read in full dataset
-df <- read_csv(here("data/full_dataset_6_28_2022/full_w_nsd.csv"))
+df <- read_csv(here("data/full_dataset_12_30_2022/full_w_nsd.csv"))
 
 # create variable for 'swan-year' using summer as endpoints
 df$yr <- year(df$timestamp)
@@ -23,7 +23,7 @@ df <- df %>%
 # removed one more outlier
 
 
-df$yday <- yday(df$timestamp)
+df$julian <- yday(df$timestamp)
 
 df$jdate <- as.Date(paste(as.character(df$yr), as.character(df$yday), sep = "-"), "%Y-%j")
 
@@ -55,12 +55,12 @@ for (i in seq_along(ids)) {
     # geom_hline(yintercept=100, color="red")+
     # geom_hline(yintercept=75, color="blue")+
     # geom_hline(yintercept=50, color="green")+
-    geom_vline(xintercept = as.Date(c("2019-07-01", "2020-07-01", "2021-07-01")), color = "orange") +
+    geom_vline(xintercept = as.Date(c("2019-07-01", "2020-07-01", "2021-07-01", "2022-07-01")), color = "orange") +
     labs(y = "displacement in km", x = "Date", title = paste(ids[[i]], yrs, sep = "-")) +
     theme(plot.title = element_text(size = 22))
 
 
-  ggsave(here(glue::glue("figures/nsd_plots_by_swan/{ids[[i]]}.pdf")))
+  ggsave(here(glue::glue("figures/updated_Dec_2022/nsd_plots_by_swan/{ids[[i]]}.pdf")))
 }
 
 

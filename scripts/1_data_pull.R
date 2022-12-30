@@ -1,5 +1,5 @@
 # Data Pull from Movebank for Annual MVMT analysis
-# 6/28/2022
+# 12/30/2022
 
 library(tidyverse)
 library(lubridate)
@@ -10,9 +10,11 @@ library(here)
 library(amt)
 library(furrr)
 
+# source movebank password from file
+source("movebank_password.R")
 
 # Note, this next line doesn't use my actual password
-login<-movebankLogin(username="wolfs064", password="Poutinecart2!")
+login<-movebankLogin(username=move_usr, password=move_pwd)
 
 main_studyID<-getMovebankID(study = "Interior_Population_Trumpeter_Swans", login=login)
 mi_studyID<-getMovebankID(study="trumpeter_swan_Michigan", login=login)
@@ -129,5 +131,5 @@ df_nsd<-data.frame(id=trk2[[1]], x=trk2[[2]], y=trk2[[3]], timestamp=trk2[[4]],
                      year=trk2[[8]],lon=trk2[[9]], lat=trk2[[10]], nsd=trk2[[11]])
 # 
 # # save out to file
-write_csv(df_nsd, here("data/full_dataset_6_28_2022/full_w_nsd.csv"))
+write_csv(df_nsd, here("data/full_dataset_12_30_2022/full_w_nsd.csv"))
 

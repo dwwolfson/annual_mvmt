@@ -43,3 +43,6 @@ figures/
 
 # MSI junk
 scripts/for_MSI/
+
+# movebank password
+movebank_password.R

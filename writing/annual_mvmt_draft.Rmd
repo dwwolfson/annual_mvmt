@@ -71,13 +71,13 @@ In 1959, initial aerial surveys in Alaska discovered over a thousand Pacific Coa
 Additional surveys in 1968 tallied 2,848 swans, confirming that the population was growing, and that there were sufficient abundance to provide swans for translocations, including to states conducting reintroduction efforts within the IP [@matteson1988].
 An important distinction between these source populations is that PCP swans breeding in Alaska migrate to British Columbia, Washington and Oregon for the winter whereas RMP swans from the Tri-State area are considered non-migratory [@oyler-mccance2007].
 
-Estimates of IP abundance have increased dramatically since reintroductions began in the 1960s, and both population size and distribution has expanded significantly (Cite TRUS survey report).
+Estimates of IP abundance have increased dramatically since reintroductions began in the 1960s, and both population size and distribution has expanded significantly [@groves2017].
 Trumpeter swans currently breed throughout most of the western Great Lakes region, including in Minnesota, Wisconsin, Michigan, Iowa, Manitoba, Ontario, and Ohio.
 However, beyond estimates of population size and trends, there is relatively little recent information about their ecology, including seasonal movements and migration patterns, therefore hindering conservation decision-making.
 
 Objectives paragraph
 
-To address current information needs, we marked a sample of IP swans with GPS-GSM transmitters to evaluate the spatio-temporal patterns of this population thoughout the annual cycle.
+To address current information needs, we marked a sample of IP swans with GPS-GSM transmitters to evaluate the spatio-temporal patterns of this population throughout the annual cycle.
 Specifically, we will quantify 1) migration phenology, 2) the extent and duration of migratory movements, 3) the role of breeding status and breeding location on annual movement patterns, and 4) the degree of individual and population variability in migration patterns.
 
 ## Methods
@@ -106,14 +106,17 @@ All capture and marking of trumpeter swans in Manitoba was conducted under Feder
 ### Data Analysis
 
 To quantify migration phenology throughout the annual cycle, we first calculated yearly time-series of Net-Squared Displacement (NSD) values for swan, using July 1 as a cutoff date between years for individuals with multiple years of GPS data, and then condensed the dataset to a single average NSD value for each day.
-After excluding swan-year datasets with less than 30 days of data, we fit a series of 7 piecewise regression models to each time-series using the mcp package, which serves as a wrapper to JAGS, with a burn-in period of 10,000 iterations and then 15,000 sampling iterations [@plummer2003; @lindelov2020].
-The syntax of each model corresponded to an increasing number of intercepts (1-7) for average NSD values throughout the time series separated by breakpoints in time where the intercept values transitioned.
-Scripts were executed in parallel using the future package on a partition of the the Minnesota Supercomputing Institute (MSI) with 24 cores and 50GB RAM [@bengtsson2021].
-We diagnosed MCMC convergence using the Gelman-Rubin statistic and excluded all models containing any parameters that had a R-hat value over 1.1 from further analyses [@gelman1992].
+After excluding swan-year datasets with less than 30 days of data, we iteratively fit a series of 7 intercept-only piecewise regression models to each time-series.
+The syntax of each model corresponded to an increasing number of intercepts included (1-7) for average NSD values throughout the time series separated by breakpoints in time where the intercept values transitioned, therefore intercepts represent stationary segments in time corresponding to periods of the annual cycle, and breakpoints are the transitions between these segments.
+We fit all piecewise regression models in JAGS [@plummer2003] using the mcp package [@lindelov2020] within the R programming environment [@rcoredevelopmentteam2022], using 15,000 iterations and a burn-in period of 10,000.
+Scripts were executed in parallel using the future package on a partition of the Minnesota Supercomputing Institute (MSI) with 24 cores and 50GB RAM [@bengtsson2021] (**remove MSI part and add to acknowledgements instead?)**.
+We evaluated MCMC chain convergence using the Gelman-Rubin statistic and excluded any model containing a parameter with a value of $\hat{R}$ \>1.1 from further analyses [@gelman1992].
 If all parameters in a model passed the R-hat threshold, we evaluated model fit and predictive performance using leave-one-out cross-validation (LOO-CV) with the Expected Log Predictive Density (ELPD), as estimated by the loo package [@gelman2014; @vehtari2017].
 We used LOO-CV to choose the ideal number of breakpoints (and thereby segments which correspond to migratory periods) for each swan-year dataset by selecting the model with the best ELPD value out of the range of possibilities.
 
-After visually inspecting graphs of Net-Squared Displacement (NSD) over time, we chose xxx km^2^ as the NSD threshold, but we also performed a sensitivity analysis to demonstrate results were robust to this choice (include in supplemental) Using this threshold, we considered the onset of autumn migration when a swan was \>xxx km from the centroid of its summer territory and the end of spring migration when the swan was \< xxx km from the centroid of the previous year's summer territory
+We visually inspected the best fit model for each swan-year dataset and removed any that were obvious poor fits such that information from the breakpoints and intercepts would not be able to describe the annual migration phenology.
+**(link to supplemental materials giving more text on this process and possibly some example figures; come back to this in the discussion re: automated/semi-automated workflows)** For all the models that passed visual inspection, **(make sure to mention the \~90% number in the results)** we extracted parameter values to represent the movement metrics of interest **(reference all of these metrics in a table?)** after first applying a series of criteria thresholds to strengthen the biological connection of the breakpoints and intercept values from the fitted models.
+**(include these in the supplemental as well?)**.
 
 ## Results
 
@@ -125,7 +128,7 @@ In 2022 we redeployed 1 transmitter in Iowa.
 ## Discussion
 
 -   How our methods are different from others.
-    Our attempt at semi-automated analyses.
+    Our attempt at semi-automated analyses; if there is no human component there is an inevitable level of bias, but this can be reduced with a minimalist human component such as visually inspecting model fits and kicking out obviously bad fits.
     Trying to consider migration as more of a continuum.
 
     Net-Squared Displacement has been most commonly used to categorize migration by fitting a small number of non-linear theoretic movement models that represent traditional types of migration and choosing the movement model with the lowest AIC value [@bunnefeld2011; @spitz2017], a relatively straightforward approach, although some studies have shown that it often does not reliably identify migration at an individual level [@cagnacci2016].
