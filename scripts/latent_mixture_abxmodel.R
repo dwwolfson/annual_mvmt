@@ -1,7 +1,8 @@
 # Pull out max displacement by hand for entire swan dataset
 
 # package names
-packages<-c("tidyverse", "here", "lubridate", "R2jags", "rjags", "mcmcplots", "loo", "MCMCvis")
+packages<-c("tidyverse", "here", "lubridate", "R2jags", "rjags", 
+            "mcmcplots", "loo", "MCMCvis", "viridis")
 
 # install any packages not previously installed
 installed_packages<-packages %in% rownames(installed.packages())
@@ -131,6 +132,7 @@ MCMCsummary(jagsfit, params = c("alpha", "beta1", "a","b", "c", "sigma1", "sigma
 # out<-rownames_to_column(out, "param")
 
 betas<-MCMCpstr(jagsfit, params=c("alpha", "beta1", "a","b", "c"), type="chains")
+save(betas, file="output/latent_state_model/fit_jags.Rda")
 
 lats_pred<-seq(from=min(df$bl2),
                to=max(df$bl2),
@@ -162,6 +164,7 @@ for(i in 1:nlats){
 }
 
 betas_hat<-MCMCpstr(jagsfit, params = c("alpha", "beta1", "a", "b", "c", "z"), func=median)
+save(betas_hat, file="output/latent_state_model/posterior_chains.Rda")
 
 df$groupID<-jagsfit$BUGSoutput$mean$z
 
@@ -176,59 +179,40 @@ mu_hats2<-data.frame(est=betas_hat$c+betas_hat$a*lats_pred^betas_hat$b,
                      UCL=conf.int2[,2],
                      latitudes=lats_pred)
 
-ggplot(mu_hats1, aes(latitudes, est))+
-  geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
-  geom_line()+
-  geom_point(data=df, aes(breeding_lat, max_nsd))
+write_csv(mu_hats1, file="output/latent_state_model/mu_hats1.csv")
+write_csv(mu_hats2, file="output/latent_state_model/mu_hats2.csv")
 
-ggplot(mu_hats2, aes(latitudes, est))+
-  geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
-  geom_line()+
-  geom_point(data=df, aes(breeding_lat, max_nsd))
+source(here("scripts/ggplot_custom_function.R"))
+
 
 ggplot(mu_hats1, aes(latitudes, est))+
   geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
   geom_line()+
   geom_ribbon(data=mu_hats2, aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
   #geom_line(data=mu_hats2, aes(latitudes, est))+
-  geom_point(data=df, aes(bl2, max_nsd, color=groupID))+
-  geom_line(aes(x=lats_pred, y=betas_hat$c+betas_hat$a*lats_pred^betas_hat$b))
+  geom_point(data=df, aes(bl2, max_nsd, color=groupID), size=2)+
+  geom_line(aes(x=lats_pred, y=betas_hat$c+betas_hat$a*lats_pred^betas_hat$b))+
+  scale_color_viridis()+
+  labs(x="Breeding/Capture Latitude", 
+       y="Extent of Migration (in km)", 
+       color="Pr (Group 1)")
 
 
+# try to use raw latitude values
+mu_hats1$raw_lats<-mu_hats1$latitudes+min(df$breeding_lat)
+mu_hats2$raw_lats<-mu_hats2$latitudes+min(df$breeding_lat)
 
+fig<-ggplot(mu_hats1, aes(raw_lats, est))+
+  geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
+  geom_line()+
+  geom_ribbon(data=mu_hats2, aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=2)+
+  #geom_line(data=mu_hats2, aes(latitudes, est))+
+  geom_point(data=df, aes(breeding_lat, max_nsd, color=groupID), size=2)+
+  geom_line(aes(x=lats_pred+min(df$breeding_lat), y=betas_hat$c+betas_hat$a*lats_pred^betas_hat$b))+
+  scale_color_viridis()+
+  labs(x="Breeding/Capture Latitude", 
+       y="Extent of Migration (in km)", 
+       color="Pr (Group 1)")
+ggsave(here("figures/latent_state.png"))
 
-#############################################
-# Find a better functional form for the nonlinear model
-
-# first filter to just get those data points
-# 1) migrations under 275 and lat under 46.5
-# 2) migration under 700 and lat over 46.5
-
-dat<-df %>% 
-  filter((breeding_lat<46.5&max_nsd<275)|
-          breeding_lat>46.5&max_nsd<700)
-
-dat %>% ggplot(aes(breeding_lat, max_nsd))+geom_point()
-dat %>% ggplot(aes(breeding_lat, max_nsd))+geom_point()+geom_smooth()
-
-# polynomial
-m1.poly<-lm(max_nsd~poly(breeding_lat, 2, raw = T), data=dat)
-
-# linear spline
-dat$lat_sp1<-ifelse(dat$breeding_lat<43.5, 0, dat$breeding_lat-43.5)
-dat$lat_sp2<-ifelse(dat$breeding_lat<46.5, 0, dat$breeding_lat-46.5)
-
-m2.sp<-lm(max_nsd~breeding_lat+lat_sp1+lat_sp2, data=dat)
-
-dat %>% ggplot(aes(breeding_lat, max_nsd))+
-  geom_point()+
-  geom_smooth(method="lm", formula=y ~ ns(x, 3), se=T)
-
-# natural cubic regression splines
-m3.ns<-lm(max_nsd~ns(breeding_lat, 3), data=dat)
-attr(ns(dat$breeding_lat, 3), "knots")
-
-AIC(m1.poly, m2.sp, m3.ns)
-# cubic spline does the best
-
-
+# use scale_color_continuous(low=red hex, mid=yellow, high=blue)

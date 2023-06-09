@@ -1,14 +1,16 @@
 # Data Pull from Movebank for Annual MVMT analysis
-# 12/30/2022
+# 4/28/2023
 
-library(tidyverse)
-library(lubridate)
-library(sf)
-library(move)
-library(stringr)
-library(here)
-library(amt)
-library(furrr)
+packages<-c('tidyverse', 'lubridate', 'sf', 'move', 'stringr', 'here', 'amt', 'furrr')
+
+# install any packages not previously installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+# load packages
+invisible(lapply(packages, library, character.only = TRUE))
 
 # source movebank password from file
 source("movebank_password.R")
@@ -94,7 +96,7 @@ df$year<-as.factor(year(df$timestamp))
 df <- df %>% distinct 
 
 # Remove outliers with 0,0 coordinates
-df<-df[df$lat>25,] #this should also take care of the longitude coordinates as well
+df<-df[df$lat>25,] #this also fixes longitude outliers
 
 
 # NSD
@@ -125,11 +127,11 @@ trk2<-trk %>% nest(data=-id) %>%
   unnest(cols=c(data, nsd))
 
 
-#don't preserve spatial column becuase already have both sets of coordinates
+#don't preserve spatial column because already have both sets of coordinates
 df_nsd<-data.frame(id=trk2[[1]], x=trk2[[2]], y=trk2[[3]], timestamp=trk2[[4]],
                      capture_state=trk2[[5]], state_ID=trk2[[6]], sex=trk2[[7]], 
                      year=trk2[[8]],lon=trk2[[9]], lat=trk2[[10]], nsd=trk2[[11]])
 # 
 # # save out to file
-write_csv(df_nsd, here("data/full_dataset_12_30_2022/full_w_nsd.csv"))
+write_csv(df_nsd, here("data/full_dataset_4_28_2023/full_w_nsd.csv"))
 

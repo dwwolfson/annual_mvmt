@@ -4,8 +4,9 @@
 packages<-c("tidyverse", "here", "lubridate")
 
 # install any packages not previously installed
-installed_packages<-packages %in% rownames(installed.packages())
-if(any(installed_packages == FALSE)){
+# install any packages not previously installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
   install.packages(packages[!installed_packages])
 }
 
@@ -13,14 +14,14 @@ if(any(installed_packages == FALSE)){
 invisible(lapply(packages, library, character.only = TRUE))
 
 # Import data (pulled from movebank by script #1)
-df<-read_csv(here("data/full_dataset_12_30_2022/full_w_nsd.csv"))
+df<-read_csv(here("data/full_dataset_4_28_2023/full_w_nsd.csv"))
 
 # get in posixct format
 df$timestamp<-as.POSIXct(df$timestamp, format="%Y-%m-%d %H:%M:%OS")
 
 # remove CTT incorrect dates
-# this date is fixed becuase I repulled entire dataset on 12/30/2022
-df<-df %>% filter(timestamp<"2022-12-31 00:00:00")
+# this date is fixed because I repulled entire dataset on 4/28/2023
+df<-df %>% filter(timestamp<"2024-12-31 00:00:00")
 
 # pull off julian day
 df$yday<-yday(df$timestamp)
@@ -42,7 +43,7 @@ df<-df %>%
   distinct(year_day, .keep_all = T)
 
 # write out csv to file for future analyses
-write_csv(df, here("data/full_dataset_12_30_2022/full_daily_nsd.csv"))
+write_csv(df, here("data/full_dataset_4_28_2023/daily_nsd.csv"))
 
 
 

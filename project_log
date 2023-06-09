@@ -1,0 +1,11 @@
+Log of Analysis:
+
+late April/early May 2023:
+- repulled all the data and ran through the workflow again
+- fixed a bug in the mcp fitting script that didn't keep track of the number of intercepts in 
+  models that were skipped becuase R hat values were over 1.1
+- went through and looked at all the models from 2022-2023 in the best mod plots folder to check if the fits were ok and entered them into the mcp_assessment.csv file
+
+TO DO: 
+- update list of swans skipped for dispersing, incomplete years, and arkansaw captures?
+- and filter them out for the timing of fall and spring stuff (but not total extent?, except for Arkansaw?)

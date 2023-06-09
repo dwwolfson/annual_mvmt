@@ -1,71 +1,88 @@
 ﻿ID,year,mcp_fit_well,"prob_tag(1='overall bad fit to data' , 2='missed an obvious plateau' , 3='chasing a single/few points', 4=  'intercept fit to messy mvmt', 5='missed an additional winter plateau', 6='intercept split b/w 2 plateaus' )",enough data to classify migration for entire year,comments
-0A,0A-2020-2021,N,1,Y,
+0A,0A-2020-2021,Y,1,Y,
 0A,0A-2021-2022,N,"2, 4",Y,
+0A,0A-2022-2023,Y,,Y,
 0C,0C-2020-2021,Y,3,N,only half a year of data
 0C_2nd,0C_2nd-2021-2022,Y,,Y,a handful of much further points that may represent significant trips
+0C_2nd,0C_2nd-2022-2023,Y,,N,"only 200 days, no info on spring return"
 0E,0E-2020-2021,Y,,N,"only 200 days, no info on spring return"
-0E_2nd,0E_2nd-2021-2022,N,,N,"too many intercepts, huge data gap, very little data"
-0H,0H-2020-2021,Y,2,Y,"missed spring staging, didn't fit to summer breeding range "
+0E_2nd,0E_2nd-2021-2022,Y,,N,"too many intercepts, huge data gap, very little data"
+0H,0H-2020-2021,Y,,Y,
 0H,0H-2021-2022,Y,3,N,"resident, only 40 days of data"
 0L,0L-2020-2021,Y,5,Y,
 0L_2nd,0L_2nd-2021-2022,Y,,Y,
+0L_2nd,0L_2nd-2022-2023,Y,,Y,
 0M,0M-2020-2021,Y,4,Y,"resident for fall-winter, then disperser in spring of next year"
-0M,0M-2021-2022,N,1,Y,resident with unclear mvmt; bad fit
+0M,0M-2021-2022,Y,1,Y,resident with unclear mvmt; bad fit
+0M,0M-2022-2023,Y,,Y,
 0N,0N-2020-2021,Y,`,N,resident through fall-winter; only 120 days
 0N_2nd,0N_2nd-2021-2022,Y,2,Y,"missed spring staging, didn't fit to summer breeding range "
+0N_2nd,0N_2nd-2022-2023,Y,,Y,
 0P,0P-2020-2021,Y,,Y,
 0P,0P-2021-2022,Y,,N,multiple artifical segments; only half year; likely full migrant
 0R,0R-2020-2021,Y,,Y,"missed spring staging, not that settled in breeding area in the spring"
 0R,0R-2021-2022,Y,,Y,
+0R,0R-2022-2023,Y,,N,only ~200 days
 0T_2nd,0T_2nd-2020-2021,Y,3,Y,resident(w/ short-dist winter migration)
 0T_2nd,0T_2nd-2021-2022,Y,4,Y,barely enough data; resident(w/ short-dist winter migration)
 1A,1A-2020-2021,Y,,Y,1 or 2 superficial segments
 1A,1A-2021-2022,Y,6,Y,missed breeding segment b/c split with other mvmt
+1A,1A-2022-2023,Y,,Y,
 1C,1C-2020-2021,Y,,Y,***  good example of a nice migrant fit ***
-1C,1C-2021-2022,N,"1, 4",Y,resident with messy mvmt in winter/spring
+1C,1C-2021-2022,Y,"1, 4",Y,resident with messy mvmt in winter/spring
+1C,1C-2022-2023,Y,,Y,
 1E,1E-2020-2021,Y,6,Y,resident(w/ short-dist winter migration)
-1E,1E-2021-2022,N,"1,2",Y,
+1E,1E-2021-2022,Y,"1,2",Y,"not great, but the scale is so small (this is a local swan)"
+1E,1E-2022-2023,Y,3,N,"not great, but the scale is so small (this is a local swan)"
 1H,1H-2020-2021,Y,,Y,didn't return to breeding area next spring
 1H,1H-2021-2022,Y,,Y,
 1L,1L-2020-2021,Y,2,Y,missed specific return to capture sport near end of year; resident (w/ short-dist winter migration)
 1L,1L-2021-2022,Y,"1,4",Y,resident
+1L,1L-2022-2023,Y,,Y,
 1M,1M-2020-2021,Y,3,Y,resident; short spike 20km in winter
 1M,1M-2021-2022,Y,4,Y,"very settled in summer, then larger space use in winter/spring/summer"
 1N,1N-2020-2021,Y,1,Y,resident (with some strange stuff)
 1N,1N-2021-2022,Y,1,N,resident (also with some strange stuff)
 1P,1P-2020-2021,N,1,N,huge data gap while swan was at rehab center; a mess
 1P,1P-2021-2022,Y,6,Y,pretty good
+1P,1P-2022-2023,Y,,Y,
 1R,1R-2020-2021,Y,5,Y,
 1T,1T-2020-2021,Y,,Y,one superficial segment
 1T,1T-2021-2022,Y,2,Y,"missed spring staging, didn't fit to summer breeding range "
 2A,2A-2019-2020,Y,,N,missing spring return data
 2C,2C-2020-2021,Y,6,Y,resident(w/ short-dist winter migration)
 2C,2C-2021-2022,Y,3,Y,resident(w/ short-dist winter migration)
+2C,2C-2022-2023,Y,,Y,resident(w/ short-dist winter migration)
 2E,2E-2020-2021,Y,,Y,
 2E,2E-2021-2022,Y,2,Y,missed plateau for breeding area return
 2H,2H-2020-2021,Y,,N,
 2H_2nd,2H_2nd-2021-2022,Y,,Y,
+2H_2nd,2H_2nd-2022-2023,Y,,N,only 150-200 days
 2J,2J-2019-2020,N,"2,4",Y,"*** good example of #4, intercept bad fit to messy subset ***"
 2J,2J-2020-2021,N,6,Y,
 2J,2J-2021-2022,Y,3,Y,"marginal amount of data, ~200 days"
-2K,2K-2019-2020,N,1,Y,mess
+2K,2K-2019-2020,Y,1,Y,"a messy period in early winter, but ok overall fit"
 2K,2K-2020-2021,Y,3,Y,short' distance migrant with return back to breeding territory during winter
 2K,2K-2021-2022,Y,,N,"only 200 days, no info on spring"
 2L,2L-2020-2021,N,"2,3,6",Y,
 2M,2M-2020-2021,Y,"3,4",Y,
-2M,2M-2021-2022,Y,3,Y,
+2M,2M-2021-2022,Y,3,Y,"2nd half of year ok, but first half a mess"
+2M,2M-2022-2023,Y,3,Y,"basically only a resident, but rules should deal with extra intercepts"
 2N,2N-2020-2021,Y,3,Y,resident; segments don't really matter
 2P,2P-2020-2021,Y,,Y,some oddness
 2R,2R-2020-2021,Y,5,Y,good fit
 2T,2T-2020-2021,Y,,Y,
 2T,2T-2021-2022,Y,,Y,"missed spring staging, didn't fit to summer breeding range "
+2T,2T-2022-2023,Y,,Y,"too many intercepts, but CI fits well"
 3A,3A-2019-2020,Y,,N,"only 200 days, no spring data"
 3C,3C-2020-2021,Y,6,Y,
 3C,3C-2021-2022,Y,,Y,fit with 7 intercepts; 4-5 would be best
+3C,3C-2022-2023,Y,,Y,
 3E,3E-2020-2021,Y,,Y,fit with 7 intercepts; 4 would be best
 3E,3E-2021-2022,Y,"2,6",Y,
 3H,3H-2020-2021,Y,,Y,a good test for rules kicking out superficial segments
 3H,3H-2021-2022,Y,6,Y,"missed spring staging, split 2 fall plateaus, didn't get breeding area return"
+3H,3H-2022-2023,Y,6,Y,**Obvious miss of summer return **
 3J,3J-2019-2020,N,"3,4,6",Y,
 3J,3J-2020-2021,Y,3,Y,overfit?
 3K,3K-2019-2020,Y,"2,6",Y,
@@ -74,60 +91,70 @@
 3L,3L-2020-2021,Y,"3,6",Y,"looked up the movement, authentic short trip from Agassiz-Olsen to Detroit Lakes around 11/18 and back; abbreviated b/c 1pt/day"
 3L,3L-2021-2022,Y,5,Y,
 3M,3M-2020-2021,Y,4,N,"not the fault of mcp, just messy data, not any clean plateaus"
-3N,3N-2020-2021,Y,"1,4",N,
+3N,3N-2020-2021,Y,4,Y,
 3N,3N-2021-2022,Y,,N,only 60 days of data
 3P,3P-2020-2021,Y,4,Y,didn't really settle during next spring/summer
 3P,3P-2021-2022,Y,4,Y,didn't really settle during next spring/summer
 3R,3R-2020-2021,Y,,Y,
 3R,3R-2021-2022,Y,,Y,
+3R,3R-2022-2023,Y,,Y,
 3T,3T-2020-2021,N,2,Y,messy mvmt data; non-breeder
 3T,3T-2021-2022,Y,,Y,messy mvmt data; non-breeder; disperser
 4A,4A-2019-2020,Y,,Y,resident; grass lake
 4C,4C-2020-2021,Y,5,Y,
 4C,4C-2021-2022,Y,"2,5,6",Y,
+4C,4C-2022-2023,Y,,N,only 40 days of data
 4E,4E-2020-2021,Y,"5,6",Y,
 4H,4H-2020-2021,Y,,Y,"off on the main winter plateau, good overall, missed some short staging at beginning of spring migration"
 4H,4H-2021-2022,Y,3,N,not even 1/2 a year; resident so far
 4J,4J-2019-2020,Y,4,Y,resident; lack of clear plateaus
 4J,4J-2020-2021,Y,,Y,"weird mvmt, doesn't fit a category"
 4J,4J-2021-2022,Y,6,Y,short-distance migrant with big foray in the spring?
-4K,4K-2019-2020,Y,,Y,migrant with conspicuous return to breeding area
-4K,4K-2020-2021,Y,,Y,"instead of 'normal' staging, quick flights out and back before true migration starts"
+4K,4K-2019-2020,Y,3,Y,migrant with conspicuous return to breeding area
+4K,4K-2020-2021,Y,3,Y,"instead of 'normal' staging, quick flights out and back before true migration starts"
 4K,4K-2021-2022,Y,,Y,
 4L,4L-2020-2021,Y,,Y,
 4L,4L-2021-2022,Y,,Y,"reverse migration' back to breeding, and then back to wintering area"
+4L,4L-2022-2023,Y,,N,extra intercepts but ok fit overall
 4M,4M-2021-2022,Y,4,Y,resident with a bigger foray in the spring
-4N,4N-2020-2021,N,1,Y,resident; a mess
-4N,4N-2021-2022,N,"1,4",Y ,"messy, not mcp's fault"
+4M,4M-2022-2023,Y,,Y,
+4N,4N-2020-2021,Y,1,Y,resident; a mess
+4N,4N-2021-2022,Y,"1,4",Y ,"messy resident, an ok rough approximation"
 4P,4P-2020-2021,Y,,Y,"typical migration, then dispersed in the summer"
 4P,4P-2021-2022,Y,,Y,a weird one; need real eyeballs
 4R,4R-2020-2021,Y,"4,6",Y,unsettled winter mvmt
 4R,4R-2021-2022,Y,,N,incomplete year
 4T,4T-2020-2021,Y,,Y,
 4T,4T-2021-2022,Y,2,Y,missed spring staging area and breeding site return plateau
+4T,4T-2022-2023,Y,,Y,
 5A,5A-2019-2020,Y,,N,incomplete year
 5C,5C-2020-2021,Y,,Y,reverse migration'?
 5C,5C-2021-2022,Y,,Y,
+5C,5C-2022-2023,Y,,Y,missed breeding area
 5E,5E-2020-2021,Y,6,Y,
 5E,5E-2021-2022,Y,,N,incomplete year
 5H,5H-2020-2021,Y,,N,incomplete year
 5H_2nd,5H_2nd-2021-2022,Y,,Y,
+5H_2nd,5H_2nd-2022-2023,Y,,Y,
 5J,5J-2019-2020,Y,4,N,"incomplete year; messy, not mcp's fault"
 5K,5K-2019-2020,Y,3,N,incomplete year; way too many intercepts
 5L,5L-2020-2021,Y,6,Y,big dispersal 2nd summer (Big Rice cyg) up to Hudson Bay
 5L,5L-2021-2022,Y,4,Y,a weird one; need real eyeballs
 5M,5M-2021-2022,Y,4,Y,resident; messy period in winter
+5M,5M-2022-2023,Y,3,Y,gappy data in last third of year
 5N,5N-2020-2021,Y,4,Y,* prominent foray in spring *
 5N,5N-2021-2022,Y,,Y,* prominent foray in spring *
 5P,5P-2021-2022,Y,,Y,
-5R,5R-2020-2021,N,4,Y,"resident; messy period, not mcp's fault; (Swede Lake and Pine river nearby)"
+5R,5R-2020-2021,Y,4,Y,resident; (Swede Lake and Pine river nearby)
 5R,5R-2021-2022,Y,,N,incomplete year
 5T,5T-2020-2021,Y,,Y,too many intercepts
 6A,6A-2019-2020,Y,,Y,"Mandy Lake, wintered on St. Croix"
 6C,6C-2020-2021,Y,4,Y,
 6C,6C-2021-2022,Y,4,Y,
+6C_2nd,6C_2nd-2022-2023,Y,,N,~150 days of data
 6E,6E-2020-2021,Y,,Y,
 6E,6E-2021-2022,Y,,Y,spurious intercepts
+6E,6E-2022-2023,Y,,N,250 days
 6H,6H-2020-2021,Y,,Y,"marginal amount of data, ~250 days"
 6J,6J-2019-2020,Y,4,Y,messy during winter-spring; not mcp's fault
 6J,6J-2020-2021,Y,,N,only 200 days
@@ -137,61 +164,79 @@
 6L,6L-2020-2021,Y,6,Y,* good example * last intercept way off from breeding site because split with spring staging area; otherwise great 
 6L_2nd,6L_2nd-2021-2022,Y,6,Y,* good example * last intercept way off from breeding site because split with spring staging area; otherwise great 
 6M,6M-2021-2022,Y,,Y,disperser next summer?
+6M,6M-2022-2023,Y,,Y,year started with high NSD for summer dispersal
 6N,6N-2020-2021,Y,4,Y,"messy winter, spring foray; resident"
 6N,6N-2021-2022,Y,4,Y,resident; a couple intercepts that aren't meaningfull
 6P,6P-2021-2022,Y,"4,6",Y,"disperser, messy 2nd summer mvmt"
 6R,6R-2020-2021,Y,,N,"only 250 days, still at wintering area"
 6R_2nd,6R_2nd-2021-2022,Y,"3,4",Y,last intercept off from breeding site because split with spring staging area
+6R_2nd,6R_2nd-2022-2023,Y,,Y,
 6T,6T-2020-2021,Y,"3,4",Y,"mcp ok, but data just kinda messy to characterize well with only plateaus"
 6T,6T-2021-2022,Y,,Y,
 7A,7A-2019-2020,Y,3,N,200 days; still on wintering site
 7C,7C-2020-2021,Y,,Y,looks great
 7C,7C-2021-2022,Y,,Y,"fit 7 intercepts when 3 would have been best, but hopefully ruleset can ignore them"
+7C,7C-2022-2023,Y,,Y,
 7E,7E-2020-2021,Y,,Y,"fit 5 intercepts when 3 would have been best, but hopefully ruleset can ignore them"
 7E,7E-2021-2022,Y,"1,4",Y,just super messy data; not mcp's fault
+7E,7E-2022-2023,Y,,Y,"messy spring arrival, so didn't get a tight segment fit"
 7H,7H-2020-2021,Y,,Y,
 7H,7H-2021-2022,N,,Y,spring plateaus not well-fit; obvious staging and breeding plateaus but mcp botched them
 7J,7J-2019-2020,Y,1,Y,resident; increased mvmt in winter
 7J,7J-2020-2021,Y,4,Y,resident; messy after fall
 7J,7J-2021-2022,Y,4,N,data super spotty and only 100 days
 7K,7K-2020-2021,Y,4,Y,"resident with messy mvmt in winter/spring, many areas used, back to clean breeding plateau"
-7K,7K-2021-2022,N,"3,4,6",N,only 200 days
+7K,7K-2021-2022,Y,"3,4,6",N,only 200 days
 7L,7L-2021-2022,Y,,Y," Heber-1, clean fit; only 120 days"
+7L,7L-2022-2023,Y,,Y,
 7M,7M-2021-2022,N,"2,3,6",Y,resident? Really big foray! Dispersed at end of year?
+7M,7M-2022-2023,Y,,N,"Only 90 days, dispersed it's breeding territory at the end of the previous year (to PA)"
 7N,7N-2020-2021,Y,6,Y,"split a stretch of messy winter mvmt, but pretty good fit overall"
 7N,7N-2021-2022,Y,,Y,
+7N,7N-2022-2023,Y,,Y,
 7P,7P-2021-2022,Y,"2, 4",Y,last intercept off from breeding site because split with spring staging area
+7P,7P-2022-2023,Y,,N,very sparse data collection after first 50-100 days
 7R,7R-2020-2021,N,"1,2,3,4",Y,a mess
 7R,7R-2021-2022,Y,"2,4",N,"only 200 days, bad after 150"
 7T,7T-2020-2021,Y,,Y,
 7T,7T-2021-2022,Y,2,Y,spring plateaus not well-fit; obvious staging and breeding plateaus but mcp botched them
+7T,7T-2022-2023,Y,,Y,missed fitting a good segment to breeding area return at the end of the year
 8A,8A-2020-2021,Y,4,Y,"didn't return to breeding area next spring, then dispersed the next summer?"
 8A,8A-2021-2022,Y,,Y,* potential molt migration over 2021 summer? *
 8C,8C-2020-2021,Y,,Y,"fit 7 intercepts when 3 would have been best, but hopefully ruleset can ignore them"
 8C,8C-2021-2022,Y,,Y,
+8C,8C-2022-2023,Y,,Y,
 8E,8E-2020-2021,Y,,Y,
 8E_2nd,8E_2nd-2021-2022,Y,,Y,didn't return to breeding site the next summer
+8E_2nd,8E_2nd-2022-2023,Y,,Y,
 8H,8H-2020-2021,Y,,Y,
 8L,8L-2021-2022,Y,,Y,"Heber-2 clean fit, only 1/2 yr"
+8L,8L-2022-2023,Y,,Y,
 8M,8M-2021-2022,Y,4,Y,"super messy, not mcp's fault; resident"
+8M,8M-2022-2023,Y,,N,
 8N,8N-2021-2022,Y,4,Y,** good example of returning to breeding site during winter **
 8P,8P-2021-2022,Y,,Y,"made move in fall, then big dispersal or molt migration the next summer?"
+8P,8P-2022-2023,N,,N,"started year with new summer dispersal, then no data after ~100 days except for 1 location at 200 days"
 8R,8R-2020-2021,Y,4,Y ,"** good example of good fit to messy data **  'resident' in distance moved, but obvious mini-migration during fall-winter-spring"
 8R,8R-2021-2022,Y,4,N,Only 175 days
 8T,8T-2020-2021,Y,5,Y,
-8T,8T-2021-2022,N,"2, 4, 5",N,"about 250, just barely get spring return"
+8T,8T-2021-2022,Y,"2, 4, 5",N,"about 250, just barely get spring return but no segment fit for it"
 9A,9A-2019-2020,Y,,Y,
 9A,9A-2020-2021,Y,4,N,only ~215 days
 9C,9C-2021-2022,Y,"2,6",Y,"only 250 days, but you can see the spring return mvmt"
 9E,9E-2020-2021,Y,6,Y,only just barely get the return back to the breeding area
 9H,9H-2020-2021,Y,,N,"about 200 days of data (deployment in Aug, mort in Feb)"
 9H_2nd,9H_2nd-2021-2022,Y,,Y,
+9H_2nd,9H_2nd-2022-2023,Y,,Y,"winter plateau a bit off, and missed spring staging and breeding area return"
 9J (first deployment),9J (first deployment)-2019-2020,Y,3,N,only 120 days
 9J (swan originally collared as 5J),9J (swan originally collared as 5J)-2020-2021,Y,"1,4",Y,"resident, a little messier fall-winter-spring"
 9J (swan originally collared as 5J),9J (swan originally collared as 5J)-2021-2022,Y,4,N,150 days; glad to see only 1 intercept for resident!
-9L,9L-2021-2022,Y,,N,only ~100 days
+9L,9L-2021-2022,Y,,N,Arkansas capture
+9L,9L-2022-2023,Y,,Y,Arkansas capture
 9M,9M-2021-2022,Y,,N,only 80 days
 9N,9N-2021-2022,Y,,Y,disperser next summer?
+9N,9N-2022-2023,Y,,Y,started year with summer dispersal from the year before; spent winter near original capture location
 9P,9P-2021-2022,Y,"2,6",Y,"missed fall and spring staging, but good fit overall"
 9R,9R-2020-2021,Y,,Y,
 9R,9R-2021-2022,Y,,Y,
+9R,9R-2022-2023,Y,,N,only 200 days of data

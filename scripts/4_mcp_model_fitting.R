@@ -3,11 +3,13 @@
 # package names
 packages<-c("tidyverse", "here", "mcp", "lubridate", "loo", "doFuture")
 
+
 # install any packages not previously installed
-installed_packages<-packages %in% rownames(installed.packages())
-if(any(installed_packages == FALSE)){
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
   install.packages(packages[!installed_packages])
 }
+
 
 # load packages
 invisible(lapply(packages, library, character.only = TRUE))
@@ -135,7 +137,7 @@ for(i in seq_along(ids)){
           }else{
              cat("Skipped model ", years[[j]], int_mod_vec[[nn]], "\n",
                  file=here("rerun4_output/skipped_mods.txt"), append=T)
-             loo_list[[nn]]<-(-9999) # this is reflect that it didn't pass rhat check but stay in numeric for which.max
+             loo_list[[nn]]<-(-9999) # this is to reflect that it didn't pass rhat check but stay in numeric for which.max
           }
           }}
       

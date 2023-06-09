@@ -13,7 +13,7 @@ my_theme<-function(base_size = 14) {
       
       # Area where the graph is located
       panel.grid.minor = element_blank(),
-      panel.border = element_blank(),
+      # panel.border = element_blank(),
       
       # The axes
       axis.title = element_text(size = rel(0.85), face = "bold"),

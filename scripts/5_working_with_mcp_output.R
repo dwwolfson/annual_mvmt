@@ -3,19 +3,14 @@
 # package names
 packages <- c("tidyverse", "here")
 
-# install any packages not previously installed
-installed_packages <- packages %in% rownames(installed.packages())
-if (any(installed_packages == FALSE)) {
-  install.packages(packages[!installed_packages])
-}
-
 # load packages
 invisible(lapply(packages, library, character.only = TRUE))
 
 ###################################################################################################
 # Exclude years with incomplete info (e.g. only summer/fall migration data)
 # This is the entire dataset (n=125) condensed to one record for day with averaged NSD
-nsd_df<-read_csv(here("data/full_dataset_6_28_2022/full_daily_nsd.csv"))
+nsd_df<-read_csv(here("data/full_dataset_4_28_2023/daily_nsd.csv"))
+
 
 # split years up each summer
 nsd_df <- nsd_df %>%
@@ -555,5 +550,9 @@ param_df<-master_params %>% bind_rows()
 # write_csv(param_df, here("output/migration_metrics.csv"))
 
 # after including some years that were originally excluded
-write_csv(param_df, here("output/migration_metrics_2nd.csv"))
+# write_csv(param_df, here("output/migration_metrics_2nd.csv"))
+
+# after adding in the 3rd year of migration data
+ write_csv(param_df, here("output/migration_metrics_3rd.csv"))
+
 

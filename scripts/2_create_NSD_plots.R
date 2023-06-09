@@ -1,31 +1,31 @@
 # Filter down to 1 average NSD value per day and create individual plots
 
-dependencies <- c("lubridate", "dplyr", "here", "readr", "ggplot2")
-for (i in 1:length(dependencies)) {
-  if (dependencies[i] %in% installed.packages() == FALSE) {
-    install.packages(dependencies[i])
-    require(dependencies[i], character.only = TRUE)
-  } else {
-    require(dependencies[i], character.only = TRUE)
-  }
+packages <- c("lubridate", "dplyr", "here", "readr", "ggplot2")
+# install any packages not previously installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
 }
+
+# load packages
+invisible(lapply(packages, library, character.only = TRUE))
 
 source(here("scripts/ggplot_custom_function.R"))
 
 # read in full dataset
-df <- read_csv(here("data/full_dataset_12_30_2022/full_w_nsd.csv"))
+df <- read_csv(here("data/full_dataset_4_28_2023/full_w_nsd.csv"))
 
 # create variable for 'swan-year' using summer as endpoints
 df$yr <- year(df$timestamp)
 
 df <- df %>%
-  filter(yr < 2023)
+  filter(yr < 2024)
 # removed one more outlier
 
 
 df$julian <- yday(df$timestamp)
 
-df$jdate <- as.Date(paste(as.character(df$yr), as.character(df$yday), sep = "-"), "%Y-%j")
+df$jdate <- as.Date(paste(as.character(df$yr), as.character(df$julian), sep = "-"), "%Y-%j")
 
 df <- df %>%
   group_by(id) %>%
@@ -60,7 +60,7 @@ for (i in seq_along(ids)) {
     theme(plot.title = element_text(size = 22))
 
 
-  ggsave(here(glue::glue("figures/updated_Dec_2022/nsd_plots_by_swan/{ids[[i]]}.pdf")))
+  ggsave(here(glue::glue("figures/updated_Apr_2023/nsd_plots_by_swan/{ids[[i]]}.pdf")))
 }
 
 

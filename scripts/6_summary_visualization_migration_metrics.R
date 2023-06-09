@@ -4,12 +4,6 @@
 # package names
 packages <- c("tidyverse", "here", "lubridate")
 
-# install any packages not previously installed
-installed_packages <- packages %in% rownames(installed.packages())
-if (any(installed_packages == FALSE)) {
-  install.packages(packages[!installed_packages])
-}
-
 # load packages
 invisible(lapply(packages, library, character.only = TRUE))
 source(here("scripts/ggplot_custom_function.R"))
@@ -17,8 +11,12 @@ source(here("scripts/ggplot_custom_function.R"))
 # first round (for conferences)
 # param_df<-read_csv(here("output/migration_metrics.csv"))
 
-# second round
-param_df<-read_csv(here("output/migration_metrics_2nd.csv"))
+# second round (pre-apr/may 2023) 
+# param_df<-read_csv(here("output/migration_metrics_2nd.csv"))
+
+# third round (post apr/may 2023)
+param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
+
 
 # Merge additional info onto dataframe
 ids<-read_csv(here("ids.csv"))
@@ -177,11 +175,13 @@ p1<-p_dates %>%
         plot.subtitle = element_text(hjust=0.5, size=12))+
   labs(x="Breeding/Capture latitude", y="Migration extent (in km)")
 
-p1+geom_line(data=bob, aes(x=lat_distance, y=mig_extent))
+
 
 bob<-p_dates %>% 
   filter(id_year!="9N-2021-2022" & id_year!="6M-2021-2022") %>% 
   filter(entire_yr!="2019-2020")
+p1+geom_line(data=bob, aes(x=lat_distance, y=mig_extent))
+
 ggplot(bob, aes(breeding_lat, mig_extent))+
   geom_point()+
   geom_smooth(method="lm")+
@@ -197,9 +197,6 @@ ggplot(bob, aes(breeding_lat, mig_extent))+
   filter(lat_distance>0)
   ggplot(data=bob, aes(x=lat_distance, y=mig_extent))+geom_point()
 
-  d<-data.frame(a=seq(0,1230), b=seq(0,1230))
-  geom_line(data=data.frame(a,b), mapping=aes(x=a, y=b))
-    ggplot(d, aes(a,b))+geom_point()
   
   
 
@@ -218,6 +215,9 @@ p<-p_dates %>%
   ggplot(., aes(breeding_lat, mig_extent, color=as.factor(fall_mig_onset)))+
   geom_point()
 plotly::ggplotly(p)
+
+# check out 4H (super brief data period), 7L, 8L, 9L,(all L's Arkansas captures), 6M, 9N (Ohio dispersers)
+
 
 
 p_dates<-p_dates %>% 
@@ -248,13 +248,16 @@ plotly::ggplotly(p)
 
 
 
-ggplot(p_dates, aes(first_departure, year))+
+ggplot(p_dates, aes(first_departure, id_year))+
   geom_point()+
   coord_flip()+
+  theme_classic()+
   theme(axis.text.x=element_blank())+
   ggtitle("Fall Migration Onset")+
   labs(y="Individual Swans", x="Dates")
 
+# There is a clear split where there were no first departures during the summer, but there are 
+# some Jan-May (that are just local movements)
 
 # Number of stops vs breeding
 
@@ -279,11 +282,11 @@ p_dates %>%
   geom_smooth(method="lm")+
   xlim(40,52)+ # to exclude arkansas winter captures
   facet_wrap(~entire_yr)+
-  ggtitle(label="Duration of Migration",
-          subtitle="\n Somewhat contingent on the year (winter severity?) \n mostly 120-140 in 2020-2021 \n mostly 100-120 in 2020-2021")+
+  ggtitle(label="Number of stops",
+          subtitle="\n ")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="Breeding/Capture latitude", y="\nMigration duration (in days)")
+  labs(x="Breeding/Capture latitude", y="\nNumber of stops during migration")
 
 
 # first departure vs latitude
