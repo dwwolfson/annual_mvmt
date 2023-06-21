@@ -1,0 +1,89 @@
+---
+title: "Annual Movements Supplemental"
+author: "David Wolfson"
+date: "`r Sys.Date()`"
+output: html_document
+header-includes:
+  - \usepackage{booktabs}
+---
+```{r chunk-setup-options, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message=FALSE,
+                      warning=FALSE,
+                      fig.cap=TRUE,
+                      out.width = '100%',
+                      ft.keepnext=FALSE)
+```
+
+```{r flextable-settings, include=FALSE}
+flextable::set_flextable_defaults(
+    font.family = "New Times Roman",
+    font.size = 12,
+    text.align='center'
+  )
+```
+
+<!--- this is how to write a comment that won't knit--->
+
+<!--- --->
+
+```{r install packages}
+library(bookdown)
+library(rmarkdown)
+library(here)
+library(knitr)
+library(tidyverse)
+library(flextable)
+library(lubridate)
+```
+
+
+## Supplemental Methods
+
+Text Sections:
+
+Rule-based thresholds chosen:  
+- Minimum distance between 2 potential segments: 2 kilometers  
+- Minimum time difference between 2 potential change points: 2 days  
+- Minimum distance moved between breeding/capture location and the furthest segment in order to consider onset of fall migration: 100 kilometers  
+- Minimum distance moved between the furthest segment and the segment representing return to spring territory: 100 kilometers  
+- Maximum distance between the spring return segment and the breeding/capture territory in order to consider a spring migration arrival: 10 kilometers  
+- Latest date to be considered a fall migration onset / earliest date to be considered a spring return onset: December 1st  
+
+
+Tables:
+```{r}
+df<-read_csv(here("output/migration_metrics_3rd.csv"))
+df %>% flextable() %>% 
+    set_header_labels(values=list("swan_ID" = "Swan ID", 
+                       "year" = "Swan Year-ID", 
+                      "fall_mig_onset" = "Fall Migration Onset (julian date)",
+                      "first_departure" = "First Territory Departure (julian date)",
+                      "num_intercepts" = "Number of Piecewise Regression Intercepts",
+                      "num_stops" = "Number of Migration Segments",
+                      "mig_extent" = "Furthest Extent of Migration (km)",
+                      "furthest_seg_arrival" = "Arrival on Furthest Migration Segment (julian date)",
+                      "furthest_seg_departure" = "Departure from Furthest Migration Segment (julian date)",
+                      "spring_arrival" = "Arrival on Breeding/Capture Territory in Spring (julian date)",
+                      "spring_arrival_comment" = "Spring Arrival Comment",
+                      "mig_duration" = "Duration of Migration (# of days)",
+                      "mig_duration_comment" = "Migration Duration Comment",
+                      "fall_mig_onset_comment" = "Fall Migration Onset Comment",
+                      "stop1_duration" = "Duration on First Stop (# of days)",
+                      "stop2_duration" = "Duration on Second Stop (# of days)",
+                      "stop3_duration" = "Duration on Third Stop (# of days)",
+                      "furthest_seg_duration" = "Duration on Furthest Segment (# of days)",
+                      "num_stops_comment" = "Number of Migration Stops Comment",
+                      "stop4_duration" = "Duration on Fourth Stop (# of days)",
+                      "first_departure_comment" = "Date of First Depature Comment",
+                      "mig_extent_comment" = "Furthest Extent of Migration Comment",
+                      "stop5_duration" = "Duration on Fifth Stop (# of days)")) %>% 
+  set_caption(caption = "Insert caption for migration metric table here...") %>% 
+  border_outer() %>% 
+  vline(part="header") %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>%  
+  set_table_properties(layout="autofit") %>% 
+  colformat_num(digits = 2)
+  
+```

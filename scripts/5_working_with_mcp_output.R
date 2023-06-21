@@ -49,53 +49,53 @@ assess<-read_csv(here("mcp_assessment.csv"))
 
 for (i in seq_along(ids)) {
   
-    # filter dataset for each swan
+  # filter dataset for each swan
   tmp <- mod_df %>%
     filter(id == ids[[i]])
-
+  
   years <- unique(tmp$year)
   for (j in seq_along(years)) {
     # check to see that mcp fit reasonably well from visual check 
     if(assess[assess$year==years[[j]],"mcp_fit_well"]=="Y"){
-    
-    tmp_yr <- tmp %>%
-      filter(year == years[[j]])
-
-    out_params <- list()
-    
-    # Data requirement: individuals have to have a full year of data
-    out_params["swan_ID"]<-ids[[i]]
-    out_params["year"]<-years[[j]]
-    
-    ######################################################################
-    ## Thresholds ###
-    
-    # rule 1: segments must be at least 2 km from each other in displacement      
-    dist_threshold<-2  #kilometers
-    
-    # rule 2: segments must be at least 2 days separate from each other in time   
-    time_threshold<-2 #days
-    
-    # fall migration onset threshold
-    # In order for 'traditional' fall migration to start, 
-    # the animal must move a certain distance between breeding/capture zone and the furthest eventual segment.
-    # This is to exclude the movements of locally resident animals from those of migrants
-    fall_onset_threshold<-100    # kilometers
-    
-    # spring migration onset threshold
-    # similar to fall, I want to exclude locally resident animals from registering spring arrivals
-    # this is the minimum distance between the max segment and the segment considered spring return
-    spring_distance_threshold<-100
-    
-    # spring return threshold
-    # In order to be considered a return to the breeding/capture site, the last segment ('presumably return to breeding site') must be 
-    # within a certain distance of the first segment ('presumable breeding site during first summer')
-    spring_proximity_threshold<-10   # kilometers
-    
-    # latest date to be considered fall migration onset/ earliest date to be considered spring return
-    fall_spring_threshold<-150  #translates to about December 1
-    
-    ######################################################################
+      
+      tmp_yr <- tmp %>%
+        filter(year == years[[j]])
+      
+      out_params <- list()
+      
+      # Data requirement: individuals have to have a full year of data
+      out_params["swan_ID"]<-ids[[i]]
+      out_params["year"]<-years[[j]]
+      
+      ######################################################################
+      ## Thresholds ###
+      
+      # rule 1: segments must be at least 2 km from each other in displacement      
+      dist_threshold<-2  #kilometers
+      
+      # rule 2: segments must be at least 2 days separate from each other in time   
+      time_threshold<-2 #days
+      
+      # fall migration onset threshold
+      # In order for 'traditional' fall migration to start, 
+      # the animal must move a certain distance between breeding/capture zone and the furthest eventual segment.
+      # This is to exclude the movements of locally resident animals from those of migrants
+      fall_onset_threshold<-100    # kilometers
+      
+      # spring migration onset threshold
+      # similar to fall, I want to exclude locally resident animals from registering spring arrivals
+      # this is the minimum distance between the max segment and the segment considered spring return
+      spring_distance_threshold<-100
+      
+      # spring return threshold
+      # In order to be considered a return to the breeding/capture site, the last segment ('presumably return to breeding site') must be 
+      # within a certain distance of the first segment ('presumable breeding site during first summer')
+      spring_proximity_threshold<-10   # kilometers
+      
+      # latest date to be considered fall migration onset/ earliest date to be considered spring return
+      fall_spring_threshold<-150  #translates to about December 1
+      
+      ######################################################################
 
     # parameter 1: when do individuals leave the initial breeding area intercept (to initiate migration)
     # I'm going to consider this in the context of 'traditional' long-distance migration

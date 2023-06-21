@@ -143,7 +143,7 @@ summaries<-p_dates %>%
             average_first_depart=mean(as.POSIXct(first_departure),na.rm=T),
             average_stops=mean(num_stops, na.rm=T),
             average_stop_duration=mean(c(stop1_duration, stop2_duration, 
-                                       stop3_duration, stop4_duration, stop5_duration), na.rm=T),
+                                         stop3_duration, stop4_duration, stop5_duration), na.rm=T),
             num_spr_arrivals=sum(!is.na(spring_arrival)),
             average_spr_arrival=mean(as.POSIXct(spring_arrival), na.rm=T),
             prop_with_spring_arrival=sum(!is.na(spring_arrival))/n())

@@ -207,14 +207,14 @@ p_dates %>%
   xlim(40, 53)
 
 p<-p_dates %>% 
-  ggplot(., aes(breeding_lat, mig_extent, color=swan_ID))+
+  ggplot(., aes(lat_distance, mig_extent, color=swan_ID))+
   geom_point()
 plotly::ggplotly(p)
 
 p<-p_dates %>% 
   ggplot(., aes(breeding_lat, mig_extent, color=as.factor(fall_mig_onset)))+
   geom_point()
-plotly::ggplotly(p)
+plotly::ggplotly(dist_plot)
 
 # check out 4H (super brief data period), 7L, 8L, 9L,(all L's Arkansas captures), 6M, 9N (Ohio dispersers)
 

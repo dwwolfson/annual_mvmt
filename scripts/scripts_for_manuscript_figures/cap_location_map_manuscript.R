@@ -2,8 +2,7 @@
 
 
 # package names
-packages<-c("tidyverse", "here", "lubridate", "sf", 
-            # "leaflet", "tmap",
+packages<-c("tidyverse", "here", "lubridate", "sf",
             "ggmap", "ggspatial", "osmdata", "ggsn")
 
 # install any packages not previously installed
@@ -42,7 +41,7 @@ df<-read_csv(here("data/capture_coordinates.csv"))
 
 
 # Exclude the Arkansas swans because they aren't in the annual movements analysis anyway
-box<-make_bbox(c(-101,-79), c(52,39))
+box<-make_bbox(c(-101,-79), c(52,34))
 
 background<-get_map(location=box, 
              source = "stamen",
@@ -57,29 +56,30 @@ my_map<-ggmap(background)+
   
 my_map<-my_map+
   ggsn::scalebar(x.min=-101, x.max=-96,
-                 y.min=39, y.max=40,
+                 y.min=34, y.max=35,
                  location="bottomleft",
-                 dist=200, height=0.2,
-                 st.dist=0.3, transform=T,
+                 dist=200, height=0.3,
+                 st.dist=0.4, transform=T,
                  dist_unit="km", model="WGS84")
+# 
+# my_map+
+#   ggspatial::annotation_scale(
+#     location = "bl",
+#     bar_cols = c("grey60", "white"),
+#     text_family = "ArcherPro Book"
+#   ) +
+#   ggspatial::annotation_north_arrow(
+#     location = "bl", which_north = "true",
+#     pad_x = unit(0.4, "in"), pad_y = unit(0.4, "in"),
+#     style = ggspatial::north_arrow_nautical(
+#       fill = c("grey40", "white"),
+#       line_col = "grey20",
+#       text_family = "ArcherPro Book"
+#     ))
 
-my_map+
-  ggspatial::annotation_scale(
-    location = "bl",
-    bar_cols = c("grey60", "white"),
-    text_family = "ArcherPro Book"
-  ) +
-  ggspatial::annotation_north_arrow(
-    location = "bl", which_north = "true",
-    pad_x = unit(0.4, "in"), pad_y = unit(0.4, "in"),
-    style = ggspatial::north_arrow_nautical(
-      fill = c("grey40", "white"),
-      line_col = "grey20",
-      text_family = "ArcherPro Book"
-    ))
 
-
-north2(my_map, symbol = 3, x=0.25, y=0.25, scale=0.12)
+north2(my_map, symbol = 3, x=0.26, y=0.24, scale=0.12)
+ggsave(here("figures/figs_for_manuscript/capture_locations_with_ar.tiff"))
 # see symbols with ggsn::northSymbols()
   
   # annotation_scale(location = "bl", width_hint = 0.4) +

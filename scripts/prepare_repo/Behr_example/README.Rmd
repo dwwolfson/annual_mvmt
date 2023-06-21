@@ -1,0 +1,178 @@
+---
+title: "README"
+output: html_document
+---
+
+The following is a description of the workflow and files required to reproduce the results in "Higher mortality is not a universal cost of dispersal: A case study in African wild dogs", accepted by the *American Naturalist* and authored by Dominik M. Behr, Florian H. Hodel, Gabriele Cozzi, John W. McNutt, and Arpat Ozgul.
+
+# Software versions and used packages
+
+All parameter calculations and statistical analyses were performed in *R* version 4.0.2 and *C++* version C++20. In *R*, the following packages were used: `msm`, `Rcpp`, `dplyr`, `purrr`, `magrittr`, `snowfall`
+
+# Workflow
+
+To fit the Bayesian model in *R*, proceed as follows:
+
+1. Open the file **input.R** in which you can specify all input parameters, such as priors, 
+starting values, and MCMC settings. 
+
+2. Follow the instructions outlined in the file **input.R** and make sure the current working 
+directory is set to the directory where **input.R** and all other files (see file structure below) are located. 
+
+3. Once you are ready to run the code, save the file **input.R** and execute the command `source("run.R")` in *R*. Note that the code may generate warnings depending on your system configurations; however, these warnings do not affect parameter estimation. 
+
+# Code files
+
+* `input.R`: Contains all input parameters, such as priors, starting values, and MCMC settings. 
+
+* `run.R`: Sources the files listed below and does this in a loop for as many restarts
+as requested.
+
+* `functions.R` contains all functions to reformat the data set, calculate 
+cumulative hazards, likelihoods and posteriors, and to run the MCMC sampler.
+
+* `prepare_read_input.R`: Checks the input and converts it to a matrix format.
+
+* `prepare_collect_precalc.R`: Re-formats the data set and calculates additional information
+from the data. Also sets the indicators (sex, unknown dispersal, unknown breakup)
+
+* `prepare_parallel.R`: Sets up the parallel environment, and starts the calculations.
+Saves results after niter steps and repeats the process, nruns times.
+
+# Data files
+
+Please contact [Dominik M. Behr](mailto:dominik.behr@uzh.ch) and [John W. McNutt](mailto:predatorconservation@gmail.com) if you would like to use these data for publication.
+
+* `animals.RData`: Contains the empirical data in the form of an *R*-list, where each list entry corresponds to an individual animal. For each individual, the list contains the variables described in the next section. For a more universal access of the data, the content of this file is converted into separate csv data files, which are listed below. 
+
+* `individuals.csv`: For each individual (identified by the unique identification number *ind_id*), this file contains the variables 1--20, which are described in the next section.
+
+* `xR_left.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 21 of the next section.
+
+* `xR_right.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 22 of the next section.
+
+* `xR_mean.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 23 of the next section.
+
+* `xD_left.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 24 of the next section.
+
+* `xD_right.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 25 of the next section.
+
+* `xD_mean.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 26 of the next section.
+
+* `tau.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 27 of the next section.
+
+* `n_break_to_disp.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 28 of the next section.
+
+* `isResident.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 29 of the next section.
+
+* `intLengthMon.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 30 of the next section.
+
+* `xNatalDisp_start.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 31 of the next section.
+
+* `xNatalDisp_end.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 32 of the next section.
+
+* `z_left.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 33 of the next section.
+
+* `z_right.csv`: For each individual (identified by *ind_id*), this file contains the variable described in point 34 of the next section.
+
+* `matCovMortRes_a1.csv`: For each individual (identified by *ind_id*), this file contains the matrix described in point 35 of the next section.
+
+* `matCovMortRes_b1.csv`: For each individual (identified by *ind_id*), this file contains the matrix described in point 36 of the next section.
+
+* `matCovMortDis.csv`: For each individual (identified by *ind_id*), this file contains the matrix described in point 37 of the next section.
+
+* `matCovNatalDis.csv`: For each individual (identified by *ind_id*), this file contains the matrix described in point 38 of the next section.
+
+* `matCovDispBreakup.csv`: For each individual (identified by *ind_id*), this file contains the matrix described in point 39 of the next section.
+
+* `temperature.csv`: Contains the raw data on ambient temperature (in °C) as daily maximum temperature (*Tmax*), daily minimum temperature (*Tmin*), and daily average temperature (*Tavg*) recorded at a weather station at Maun airport, roughly 30 km from the study area boundary.
+
+* `precipitation.csv`: Contains the raw data on cumulative monthly rainfall (in mm) for the spatial extent of our study area obtained from gridded rainfall maps that were created from satellite imagery and interpolated weather station data.
+
+* `habitat.csv`: Contains the proportion of mopane (*Colophospermum mopane*) woodland (*prop_mopane*) within each resident pack’s annual home range. For a detailed description of how this habitat variable was estimated, refer to *Supporting Information Appendix S1*.  
+
+* `wild_dog_images_1_to_10.jpg`: The selected images provide a representation of the range of image quality and content in the photographs that we used for opportunistic monitoring of uncollared wild dogs.
+
+# Description of variables
+
+In the following, the variables contained in the above data files are briefly described. For a more detailed description of each variable, please refer to Table 1 in [Hodel et al. (2023)](https://doi.org/10.1111/2041-210X.14069):
+
+1. `xl_start`: Age (in years) at last observation 
+
+2. `xl_end`: Hypothetical age (in years) when individual *i* was first recorded as absent from the study 
+
+3.  `xf`: Age (in years) at first observation 
+
+4. `sex`: Sex (1=female, 0=male)
+
+5. `obsNatalDisp`: Indicator stating whether natal dispersal was observed (1) or not (0)
+
+6. `obsNatalDispStayed`: Indicator stating whether the individual left the study area as a result of natal dispersal (1) or not (0)
+
+7. `obsDispBreakup`: Indicator stating whether dispersing coalition breakup was observed (1) or not (0)
+
+8. `obsBreakStayed`: Indicator stating whether the individual left the study area as a result of dispersing coalition breakup (1) or not (0)
+
+9. `obsDeath`: Indicator stating whether death was observed (1) or not (0)
+
+10. `obsIm`: Indicator stating whether the individual immigrated into the study area as an adult (1) or not (0)
+
+11. `obsFateNatal`: Indicator stating whether the fate of the individual at its last observation with the natal pack was known (1) or not (0)
+
+12. `obsFateDisp `: Indicator stating whether the fate of the individual at its last observation during dispersal was known (1) or not (0)
+
+13. `obsRightCens `: Indicator stating whether the individual was right-censored (1) or not (0)
+
+14. `unsexed`: Indicator stating whether the sex of the individual was determined (1) or not (0)
+
+15. `potNatalDisp`: Indicator stating whether the individual was a potential natal disperser (1) or not (0)
+
+16. `potDispBreakup`: Indicator stating whether the individual was eligible for a dispersing coalition breakup (1) or not (0)
+
+17. `dispLastObs`: Indicator stating whether the individual was dispersing at the age of last observation (1) or not (0)
+
+18. `probDispNat`: Prior for the probability of natal dispersal
+
+19. `probDispBreakUp`: Prior for the probability of dispersing coalition breakup
+
+20. `probFem`: Prior for the probability of being a female
+
+21. `xR_left`: Left boundary of age interval during which the individual became resident
+
+22. `xR_right`: Right boundary of age interval during which the individual became resident
+
+23. `xR_mean`: Mean of `xR_left` and `xR_right`
+
+24. `xD_left`: Left boundary of age interval during which the individual started dispersing
+
+25. `xD_right`: Right boundary of age interval during which the individual started dispersing
+
+26. `xD_mean`: Mean of `xD_left` and `xD_right`
+
+27. `tau`: Vector of update times, that is, discrete ages of the individual at which time-varying covariates were recorded
+
+28. `n_break_to_disp`: Vector with as many elements as there are dispersal events and each element is the cumulative sum of the number of `z`'s in each dispersal event
+
+29. `isResident`: Vector indicating whether the individual was resident (1) or dispersing (0) at ages in `tau`
+
+30. `intLengthMon`: Length of the time interval (in months) between consecutive `tau`'s
+
+31. `xNatalDisp_start`: Left boundary of age interval during which the individual dispersed from the natal pack
+
+32. `xNatalDisp_end`: Right boundary of age interval during which the individual dispersed from the natal pack
+
+33. `z_left`: Vector containing left boundaries of age intervals at which the individual separated from the dispersing coalition
+
+34. `z_right`: Vector containing right boundaries of age intervals at which the individual separated from the dispersing coalition
+
+35. `matCovMortRes_a1`: Matrix containing z-scored covariates (columns) used to estimate the parameter `a_1` in the mortality hazard for resident individuals. Rows represent covariate values for different update times `tau`. For a detailed description of each covariate, refer to *Supporting Information Table S4*. 
+
+36. `matCovMortRes_b1`: Matrix containing z-scored covariates (columns) used to estimate the parameter `b_1` in the mortality hazard for resident individuals. Rows represent covariate values for different update times `tau`. For a detailed description of each covariate, refer to *Supporting Information Table S4*. 
+
+37. `matCovMortDis`: Matrix containing z-scored covariates (columns) used to estimate the mortality hazard for dispersing individuals. Rows represent covariate values for different update times `tau`. For a detailed description of each covariate, refer to *Supporting Information Table S6*. 
+
+38. `matCovNatalDis`: Matrix containing z-scored covariates (columns) used to estimate natal dispersal. Rows represent covariate values for different update times `tau`. For a detailed description of each covariate, refer to *Supporting Information Appendix S5*. 
+
+39. `matCovDispBreakup`: Matrix containing z-scored covariates (columns) used to estimate dispersing coalition breakup. Rows represent covariate values for different update times `tau`. For a detailed description of each covariate, refer to *Supporting Information Appendix S6*. 
+
+
