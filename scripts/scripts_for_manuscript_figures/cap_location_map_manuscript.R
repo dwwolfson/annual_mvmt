@@ -86,3 +86,39 @@ ggsave(here("figures/figs_for_manuscript/capture_locations_with_ar.tiff"))
   # annotation_north_arrow(location = "bl", which_north = "true", 
   #                        pad_x = unit(0.0, "in"), pad_y = unit(0.2, "in"),
   #                        style = north_arrow_fancy_orienteering)
+
+
+
+
+
+
+
+#########################
+# taken from manuscript .Rmd chunk
+
+# 
+# df<-read_csv(here("data/capture_coordinates.csv"))
+# 
+# # Exclude the Arkansas swans because they aren't in the annual movements analysis anyway
+# box<-make_bbox(c(-101,-79), c(52,39))
+# 
+# background<-get_map(location=box,
+#              source = "stamen",
+#              maptype = "terrain-background")
+# 
+# my_map<-ggmap(background)+
+#   geom_point(data=df,
+#                aes(x=Longitude, y=Latitude),
+#                alpha=0.4,
+#                color="darkred",
+#                size=2)
+# 
+# my_map<-my_map+
+#   ggsn::scalebar(x.min=-101, x.max=-96,
+#                  y.min=39.5, y.max=40.5,
+#                  location="bottomleft",
+#                  dist=200, height=0.2,
+#                  st.dist=0.3, transform=T,
+#                  dist_unit="km", model="WGS84")
+# 
+# north2(my_map, symbol = 3, x=0.22, y=0.2, scale=0.12)

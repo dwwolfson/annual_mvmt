@@ -1,5 +1,5 @@
 ---
-title: "Relearning migration: patterns of annual movement for a reintroduced long-lived avian species"
+title: "Re-establishment of annual movement trends for a reintroduced long-lived avian species"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 author: 
   - David W. Wolfson^[University of Minnesota, Minnesota Cooperative Fish and Wildlife Research Unit], Randall T. Knapik^[Michigan Department of Natural Resources], Anna Buckardt-Thomas^[Iowa Department of Natural Resources], ,  Brian Kiss^[Manitoba Wildlife and Fisheries Branch], Steven Cordts^[Minnesota Department of Natural Resources], Laura Kearns^[Ohio Department of Natural Resources], Tyler Harms^[Iowa Department of Natural Resources], Taylor Finger^[Wisconsin Department of Natural Resources], Sumner Matteson^[Wisconsin Department of Natural Resources], Tiffany Mayo^[Cleveland Metroparks Zoo], Timothy Poole^[Manitoba Wildlife and Fisheries Branch], John Moriarty^[Three Rivers Park District], Margaret Smith^[Trumpeter Swan Society], Christine Herwig^[Minnesota Department of Natural Resources], Drew Fowler^[U.S. Geological Survey, Louisiana Cooperative Fish and Wildlife Research Unit], Thomas R. Cooper^[U.S. Fish and Wildlife Service], John R. Fieberg^[University of Minnesota], David E. Andersen^[U.S. Geological Survey, Minnesota Cooperative Fish and Wildlife Research Unit]
@@ -53,48 +53,28 @@ library(patchwork)
 options(scipen = 999)
 ```
 
-```{r theme_ggplot, include=FALSE}
-# ggplot theme
-# 
-# library(ggplot2)
-# my_theme<-function(base_size = 14) {
-#   theme_bw(base_size = base_size,
-#            base_family="serif") %+replace%
-#     theme(
-#       # The whole figure
-#       plot.title = element_text(size = rel(1), face = "bold",
-#                                 margin = margin(0,0,5,0), hjust = 0.5),
-#       
-#       # Area where the graph is located
-#       panel.grid.minor = element_blank(),
-#       panel.border = element_blank(),
-#       
-#       # The axes
-#       axis.title = element_text(size = rel(0.85), face = "bold"),
-#       axis.text = element_text(size = rel(0.70), face = "bold"),
-#       axis.line = element_line(color = "black"),
-#       
-#       # The legend
-#       legend.title = element_text(size = rel(0.85), face = "bold"),
-#       legend.text = element_text(size = rel(0.70), face = "bold"),
-#       legend.key = element_rect(fill = "transparent", colour = NA),
-#       legend.key.size = unit(1.5, "lines"),
-#       legend.background = element_rect(fill = "transparent", colour = NA),
-#       
-#       # The labels in the case of facetting
-#       strip.background = element_rect(fill = "#17252D", color = "#17252D"),
-#       strip.text = element_text(size = rel(0.85), face = "bold",
-#                                 color = "white", margin = margin(5,0,5,0))
-#     )
-# }
-# # Change the default theme
-# theme_set(my_theme())
-
-```
-
 ## Abstract
 
 ## Introduction
+
+### Biological intro to migration in long-lived avian species
+
+Migration is a common behavioral mechanism widely used by all major vertebrate groups (e.g. birds, fish, mammal, herpetofauna) that allows individuals to optimize seasonal availability of resources, thereby increasing long-term fitness [@fryxell1988; @milner-gulland2011; @barker2022]. Despite its prevalence as an ecological process and a large amount of research studies involving migration, the establishment of population-level migratory traditions is not well understood [@abrahms2021b]. Reasons for this discrepancy include the challenges of making population-level inference from observations of individuals, quantifying migratory movements along a continuum of variability, and the relative scarcity of successful reintroductions of formerly endangered migratory species [@mueller2011a; @senner2020a]. 
+
+Once established, the mechanisms that underlie transmission of migratory information between generations can be influenced both genetically and through social learning [@akesson2020].
+For some species with short lifespans (e.g. songbirds), migration is considered innate and primarily due to genetics based on observations of individuals that complete their first migrations independently without parents or other conspecifics to guide them [@berthold1991].
+For many species with long generation times and high levels of parental care, migration behavior is considered to be primarily passed on through social learning, although the amount of time required for information transfer is not well understood across species [@mueller2013].
+Collective knowledge has been shown to accumulate over generations to drive migration patterns and improve efficiency in flocking species with socially learned migration behaviors, [@sasaki2017] although in reintroduced populations of Whooping Cranes (Grus americana) that were initially trained (i.e., learned) to migrate by following aircraft, migratory efficiency of flocks rapidly increased when older individuals were present [@mueller2013].
+
+Similar to other large, long-lived avian species such as geese, cranes and storks, adult swans take care of their young for the first year of life, providing food, protections, and guiding them on their first migration cycle [@chernetsov2004a; @mueller2013a].
+As a consequence, cultural transmission during the first year is thought to be the primary mechanism that dictates the learned migration patterns used in subsequent years [@sutherland1998].
+
+Although this transfer of information is an effective mechanism for preserving migratory patterns through generations, it is unclear how these trends become established when a formerly extirpated population has been reintroduced on a landscape.
+@jesmer2018 found that newly translocated populations initially lost their migratory tendencies and that it took many generations to re-establish such patterns.
+
+**Need anything more in a transition to trumpeter swans?**
+**-Add in other examples of populations that have re-established migratory practices?**
+**Potential examples are Northern Bald Ibis and Asian Houbara**
 
 ### History of IP TRUS decline in NA
 
@@ -106,36 +86,31 @@ Critically low numbers of trumpeter swans led to the establishment of Red Rock L
 
 As trumpeter swan numbers at RRLNWR started to rise, this flock was used as a source population for reintroduction efforts in other parts of the historical breeding range.
 Many states translocated trumpeter swans from RRLNWR to augment and boost the abundance and distribution of the diminished Rocky Mountain Population (RMP) or to restore the Interior Population (IP), which had been completely extirpated [@shea2002].
-[[As reintroduction programs further expanded, demand for trumpeter swans outpaced the number available at RRLNWR, and forced managers to search for an alternative source.
+As reintroduction programs further expanded, demand for trumpeter swans outpaced the number available at RRLNWR, and forced managers to search for an alternative source.
 In 1959, initial aerial surveys in Alaska discovered over a thousand Pacific Coast Population (PCP) swans [@hansen1971].
 Additional surveys in 1968 tallied 2,848 swans, confirming that the population was growing, and that there were sufficient abundance to provide swans for translocations, including to states conducting reintroduction efforts within the IP [@matteson1988].
-An important distinction between these source populations is that PCP swans breeding in Alaska migrate to British Columbia and the northwestern United States each winter, but RMP swans from the Tri-State area have lost their migratory tradition, likely through a process of artificial selection, in which migrants that left the protected area were hunted but swans that became resident were not [@baskin1993; @oyler-mccance2007].[[ (Are the sentences in brackets necessary historical context, or does it seem off-topic? I think I'd like to come back to the different in migratory history during the discussion to point the way for a comparison with genetics as a next step after this paper.)
+An important distinction between these source populations is that PCP swans breeding in Alaska migrate to British Columbia and the northwestern United States each winter, but RMP swans from the Tri-State area have lost their migratory tradition [@baskin1993; @oyler-mccance2007].
 
 ### Current IP conditions
 
 Estimates of IP abundance have increased dramatically since reintroductions began in the 1960s, and both population size and distribution has expanded significantly [@groves2017].
 Trumpeter swans currently breed throughout most of the western Great Lakes region, including in Minnesota, Wisconsin, Michigan, Iowa, Manitoba, Ontario, and Ohio.
 However, beyond estimates of population size and trends, there is relatively little recent information about their ecology, including seasonal movements and migration patterns, therefore hindering conservation decision-making.
-Current knowledge gaps include the proportion of the IP that remains resident on their breeding range during the winter, the extent **(say distance instead?)** of movement for those swans that do leave their territories, the timing of the migratory periods (onset in the fall, settlement during winter, arrival in the spring), and how much intra- and inter-individual variability there is among the population (is this the best wording to use to say how much are swans changing trends between years and how much differences are there among swans?).
-**(overly repetitive to mention these here and also separately as objectives later on?)**
+Current knowledge gaps include the proportion of the IP that remains resident on their breeding range during the winter, the extent (i.e. distance) of movement for those swans that do leave their territories, the timing of the migratory periods (onset in the fall, settlement during winter, arrival in the spring), and how much intra- and inter-individual variability there is in the population.
 
 ### Drivers/Why to migrate (or not)
 
-Many factors may influence the decision to leave the summer territory during the non-breeding season, and how far to migrate for those that leave, including energetics of flight, life history requirements, and knowledge transfer of migratory traditions (cite a bunch).
-Swans are one of the heaviest avian species that migrate despite the high energetic cost of long-distance flight (cite).
-Conversely, as such a large bird, swans have more thermal tolerance to withstand harsh winter conditions than other waterfowl, though they do require unfrozen water to access food (cite).
-Additionally, due to the novelty of persisting in relatively unfamiliar landscapes and the high energetic demand of migration, the non-breeding period typically has the lowest survival rates throughout the annual cycle (cite).
-On the flip side, migrating to a more temperate area during the wintering period can provide accessible food and resources that allow trumpeter swans to avoid the harshness of winter in the breeding territory (cite).
+Many factors may influence the decision to leave the breeding territory during the non-breeding season, and how far to migrate for those that leave, and why there may be high among-individual variability even for those breeding at similar locations, including energetics of flight, life history requirements, and knowledge transfer of migratory traditions [@alerstam2003; @dingle2007 @chapman2011].
+The energetic cost of migration for a given distance traveled increases non-linearly with the overall weight of the bird, and therefore swans, one of the heaviest avian species to migrate, do so at considerable expense [@pennycuick1989; @berthold2001; @newton2010].
+Conversely, according to the 'Thermal Tolerance' or 'Body Size' hypothesis, greater body mass conveys both a higher basal metabolic rate ability to fast, therefore better withstanding harsh winter conditions, and the tendency to migration should decrease with increasing body size [@ketterson1976; @fudickar2013].
+Additionally, due to the novelty of persisting in relatively unfamiliar landscapes and the high energetic demand of migration, the non-breeding period typically has the lowest survival rates throughout the annual cycle [@sillett2002; @rushing2017].
+Alternatively, migrating to a more temperate area during the wintering period can provide access to food and other resources that allow trumpeter swans to avoid the harshness of winter in the breeding territory [@somveille2015].
 
 Differences in migratory habits may also be due to breeding status, which conveys unique life history requirements, such as early arrival in the spring to defend a breeding territory, lay and incubate eggs, and to stay on the territory late enough in the fall that the young of the year can develop enough to migrate south for the winter; all requirements that non-breeding swans will not experience.
 
-Similar to other large, long-lived avian species such as geese, cranes and storks, adult swans take care of their young for the first year of life, providing food, protections, and guiding them on their first migration cycle [@chernetsov2004a; @mueller2013a].
-As a consequence, cultural transmission during the first year is thought to be the primary mechanism that dictates the learned migration patterns used in subsequent years [@sutherland1998].
-Although this transfer of information is an effective mechanism for preserving migratory patterns through generations, it is unknown how flexible large-scale population migration patterns can be in response to a population-level perturbations such as reintroduction on a new landscape, and this is an understudied aspect of migration (cite).
-@jesmer2018 found that newly translocated populations initially lost their migratory tendencies and that it took many generations to re-establish such patterns.
-
-It is also likely that the drivers of migration vary within the IP based the location of a swan's summer territory.
-Swans that spend the summer at different latitudes will experience different environmental conditions such as timing of vegetative greenness **(don't mention if I"m not adding this to the manuscript?)** and freeze-up of water on shallow wetlands **(same)**.
+It is also likely that the drivers of migration vary within the IP based the location of a swan's breeding territory.
+Cues for migration can include declines in available food resources, which may also be affected by density-dependent intra-specific competition [@rappole2013].
+Swans that spend the summer at different latitudes will experience varying environmental conditions, such as timing of vegetative greenness or the freeze-up of water on shallow wetlands, which blocks access to submerged vegetation.
 The 'push' to avoid the harsh elements of winter will vary substantially throughout different portions of the IP breeding range, and we'd expect the consequences on movement trends to vary concurrently.
 
 ### Objectives
@@ -153,71 +128,40 @@ We deployed transmitters on IP trumpeter swans as far north and west as southern
 Capture locations occurred in a mix of Laurentian Mixed Forest, Prairie Parkland, Eastern Broadleaf Forest, and Aspen Parklands [@cleland1997].
 
 ```{r capture-map, fig.align="left", fig.cap="Insert caption for capture location map here..."}
- # # package names
- # packages<-c("tidyverse", "here", "lubridate", "sf",
- #             "ggmap", "ggspatial", "osmdata", "ggsn")
- # 
- # 
- # # load packages
- # invisible(lapply(packages, library, character.only = TRUE))
- # 
- # df<-read_csv(here("data/capture_coordinates.csv"))
- # 
- # # Exclude the Arkansas swans because they aren't in the annual movements analysis anyway
- # box<-make_bbox(c(-101,-79), c(52,39))
- # 
- # background<-get_map(location=box,
- #              source = "stamen",
- #              maptype = "terrain-background")
- # 
- # my_map<-ggmap(background)+
- #   geom_point(data=df,
- #                aes(x=Longitude, y=Latitude),
- #                alpha=0.4,
- #                color="darkred",
- #                size=2)
- # 
- # my_map<-my_map+
- #   ggsn::scalebar(x.min=-101, x.max=-96,
- #                  y.min=39.5, y.max=40.5,
- #                  location="bottomleft",
- #                  dist=200, height=0.2,
- #                  st.dist=0.3, transform=T,
- #                  dist_unit="km", model="WGS84")
- # 
- # north2(my_map, symbol = 3, x=0.22, y=0.2, scale=0.12)
+
  knitr::include_graphics(here("figures/figs_for_manuscript/capture_locations_with_ar.tiff"))
 ```
 
 ### Capture and Handling
 
-We captured most**either take out most or also add in description of arkansas captures?** swans during the definitive prebasic molt period when adult swans replace remiges, and are therefore flightless, using a combination of jon boats, airboats, step deck transom boats, square-stern canoes, and kayaks.
-We primarily used long-tail mud motors to navigate shallow wetlands where swans were located (Powell Performance Fab, Hutchinson, Minnesota, USA), although some swans were captured using surface-drive motors (Gator-Tail, Loreauville, Louisiana, USA).**need to mention? I would've found it useful before starting..** We hand-captured swans using a shepherd's crook pole [@eltringham1978; @hindman2016].
+We captured most **either take out most or also add in description of arkansas captures?** swans during the definitive prebasic molt period when adult swans replace remiges, and are therefore flightless, using a combination of jon boats, airboats, step deck transom boats, square-stern canoes, and kayaks.
+We primarily used long-tail mud motors (Powell Performance Fab, Hutchinson, Minnesota, USA) to navigate shallow wetlands where swans were located although some swans were captured using surface-drive motors (Gator-Tail, Loreauville, Louisiana, USA).
+We hand-captured swans using a shepherd's crook pole [@eltringham1978; @hindman2016].
 We predominantly targeted adult swans, which have higher survival rates than juveniles, to maximize the longevity of telemetry data collection **citation we can use from other swan population?**.
 
-We marked swans with two types of neck collars; 55-g neck collars with GPS-GSM transmitters incorporated into the collar housing (Model OrniTrack-N62 3G, Ornitela, Vilnius, Lithuania) and 140-g GPS transmitters (Model CTT-ES400, Cellular Tracking Technologies, Rio Grande, New Jersey, USA) that were adhered to 64-mm neck collars (Haggie Engraving, Crumpton, Maryland, USA).
+We marked swans with two types of neck collars; 55-g neck collars with GPS-GSM transmitters incorporated into the collar housing (Model OrniTrack-N62 3G, Ornitela, Vilnius, Lithuania) and 140-g GPS transmitters (Model CTT-ES400, Cellular Tracking Technologies, [CTT], Rio Grande, New Jersey, USA) that were adhered to 64-mm neck collars (Haggie Engraving, Crumpton, Maryland, USA).
 Both types of neck collars contained a unique alpha-numeric code for visual identification.
-Swans captured in Michigan were fit with Cellular Tracking Technologies collars and all other swans in the study were fit with Ornitela collars.
+Swans captured in Michigan were fit with CTT collars and all other swans in the study were fit with Ornitela collars.
 All transmitters were programmed to collect GPS locations at 15-min intervals throughout the 24-hr daily period.
 We leg-banded each swan with a U.S.
 Geological Survey butt-end aluminum band.
 
-Protocols for capturing and marking trumpeter swans in U.S. states have been approved by the University of Minnesota Animal Care and Use Committee (protocol no. 1905-37072A), the Minnesota Department of Natural Resources (Special Permit no. 19017), the Michigan Department of Natural Resources (Threatened and Endangered Species Permit TE 175), the U.S.
+Protocols for capturing and marking trumpeter swans in U.S. states were approved by the University of Minnesota Animal Care and Use Committee (protocol no. 1905-37072A), the Minnesota Department of Natural Resources (Special Permit no. 19017), the Michigan Department of Natural Resources (Threatened and Endangered Species Permit TE 175), the U.S.
 Fish and Wildlife Service (Research & Monitoring Special Use Permit no. K-10-001), and the U.S.
 Geological Survey Bird Banding Laboratory (Federal Bird Banding Permit no. 21631).
 All capture and marking of trumpeter swans in Manitoba was conducted under Federal Scientific Permit to Capture and Band Migratory Birds (no. 10271), Federal Animal Care Committee approval (project 20FB02), Provincial Species at Risk Permit (no. SAR20012), and Provincial Park Permit (no. PP-PHQ-20-016).**Need permit info from WI, IA, AR, and OH?**
 
 ### Migration Phenology Classification
 
-To quantify migration phenology throughout the annual cycle, we first calculated yearly time-series of Net-Squared Displacement (NSD) values for swan, using July 1 as a cutoff date between years for individuals with multiple years of GPS data, and then condensed the dataset to a single average NSD value for each day.
-After excluding swan-year datasets with less than 30 days of data, we iteratively fit a series of 7 intercept-only piecewise regression models to each time-series.
+To quantify migration phenology throughout the annual cycle, we first calculated yearly time-series of Net-Squared Displacement (NSD) values for each swan, using July 1 as a cutoff date between years for individuals with multiple years of GPS data, and then condensed the dataset to a single average NSD value per day.
+After excluding swan-year datasets with less than 30 days of data, we iteratively fit a series of 7 intercept-only piecewise regression models to each time-series [@wolfson2022].
 The syntax of each model corresponded to an increasing number of intercepts included (1-7) for average NSD values throughout the time series separated by breakpoints in time where the intercept values transitioned, therefore intercepts represent stationary segments in time corresponding to periods of the annual cycle, and breakpoints are the transitions between these segments.
 We fit all piecewise regression models in JAGS [@plummer2003] using the mcp package [@lindelov2020] in Program R version 4.0.2 [@rcoredevelopmentteam2022], using 15,000 iterations and a burn-in period of 10,000.
 We ran all scripts in parallel using the future package on a partition of the Minnesota Supercomputing Institute (MSI) with 48 cores and 50GB RAM per core [@bengtsson2021].
 We evaluated MCMC chain convergence via the Gelman-Rubin convergence diagnostic and excluded any model containing a parameter with a value of $\hat{R}$ \>1.1 from further analyses [@brooks1998].
 If all parameters in a model passed the $\hat{R}$ threshold, we evaluated model fit and predictive performance using leave-one-out cross-validation (LOO-CV) with Pareto smoothed importance sampling to estimate the Expected Log Predictive Density (ELPD), using the loo package [@gelman2014; @vehtari2017].
 The ELPD values reflect the ability of the model to predict the posterior density of withheld data.
-We used LOO-CV to choose the ideal number of breakpoints (and thereby segments which correspond to migratory periods) for each swan-year dataset by selecting the model with the best ELPD value.
+We used LOO-CV to choose the ideal number of breakpoints (and thereby segments that correspond to migratory periods) for each swan-year dataset by selecting the model with the best ELPD value.
 
 We qualitatively inspected the visual fit of each model chosen by ELPD for each swan-year dataset and removed any that were obvious poor fits such that information from the breakpoints and intercepts would not be able to describe the annual migration phenology.
 **(link to supplemental materials giving more text on this process and possibly some example figures; come back to this in the discussion re: automated/semi-automated workflows)** For all the models that passed visual inspection, **(make sure to mention the \~90% number in the results)** we extracted parameter values to represent the movement metrics of interest **(reference all of these metrics in a table?)** after first applying a series of criteria thresholds to strengthen the biological connection of the breakpoints and intercept values from the fitted models.
@@ -225,9 +169,9 @@ We qualitatively inspected the visual fit of each model chosen by ELPD for each 
 
 ### Summary of Migratory Trends
 
-We devised a flexible workflow that could accommodate a wide breadth of variability in annual movements (because we're fitting to individual years of data from each swan instead of a bigger pooler dataset) but still allow for population-level inference.
-For all swan-year datasets that had \>30 points and had the best-fitting model pass the 'eyeball' test, we pulled out a number of movement metrics to describe the annual movement trends.
-Before pulling out these metrics, we first established a ruleset to exclude erroneous segments and changepoints that didn't represent biologically meaningful transitions between different segments of the annual movement cycle.
+We devised a flexible workflow that could accommodate a wide breadth of variability in annual movements (because we're fitting to individual years of data from each swan instead of a bigger pooled dataset) but still allow for population-level inference.
+For all swan-year datasets that had \>30 points and had the best-fitting model pass visual inspection for **biological relevance**, we derived a number of movement metrics to describe annual movement trends.
+To identify these metrics, we first established a ruleset to exclude erroneous segments and changepoints that didn't represent biologically meaningful transitions between different segments of the annual movement cycle.
 **See supplemental methods for more description of rule-based thresholds**
 
 **Worth mentioning that for the Arkansas swans the coded workflow couldn't work because it was designed for summer-winter-summer time series, so I pulled off the migration metric information 'by hand'?**
@@ -241,7 +185,7 @@ Before pulling out these metrics, we first established a ruleset to exclude erro
 ### Capture/deployment/data stuff
 
 **Collar deployment** We deployed 113 collars with GPS-GSM transmitters on 126 trumpeter swans (including 13 redeployments using collars recovered from mortalities).
-Of these, 78 are female and 48 are male; 73 were breeding adults (cygnets present), 22 are adults with mates present but not cygnets at time of capture, 24 were non-breeding adults captured while in large groups, and 6 were cygnets at the time of capture.
+Of these, 78 were female and 48 were male; 73 were breeding adults (cygnets present), 22 were adults with mates present but not cygnets at time of capture, 24 were non-breeding adults captured while in large groups, and 6 were cygnets at the time of capture.
 
 **Unnecessary level of detail?** In 2019, we deployed 19 transmitters (7 in Minnesota and 12 in Michigan).
 In 2020, we deployed an additional 78 transmitters (10 in Manitoba, 40 in Minnesota, 9 in Iowa, 5 in Wisconsin, 2 in Michigan, 12 in Ohio).
@@ -251,118 +195,56 @@ In 2022 we redeployed 1 transmitter in Iowa.
 We initially had 252 unique 'swan-year' datasets of annual movement data.
 We excluded 11 datasets because they had less than 30 days of locations, and therefore were insufficient to estimate movement trends, and fit mcp models to the remaining 241 swan-year datasets.
 
-After visually inspecting piecewise regression model fit, we excluded an additional 11 swan-year datasets that didn't have a good model fit, bringing the number to 230.
+After visually inspecting the fitted piecewise regression models, we excluded an additional 11 swan-year datasets that didn't have a good model fit, bringing the number to 230.
 
 We then excluded xxx number of swan-year datasets that had large dispersal events during the summer, and therefore didn't conform to the methodology we used to extract info from fitted piecewise regression models.
 
 Include this figure of collar deployments?
 
-```{r deployment-figure, fig.align="left", fig.cap="Insert caption for data deployment figure here..."}
- # # package names
- # packages<-c("tidyverse", "here", "lubridate", "scales", "data.table", "ggpubr")
- # 
- # # load packages
- # invisible(lapply(packages, library, character.only = TRUE))
- # # source(here("scripts/ggplot_custom_function.R"))
- # options(scipen = 999)
- # 
- # # use the most recent dataset (pulled 4/28/2023)
- # df<-fread(here("data/full_dataset_4_28_2023/full_w_nsd.csv"))
- # 
- # # julian date
- # df$yday<-yday(df$timestamp)
- # 
- # # concatenate year and julian date
- # df$jdate<-as.Date(paste(as.character(df$year), as.character(df$yday), sep="-"), "%Y-%j")
- # 
- # # change capture state to factor
- # df$capture_state<-as.factor(df$capture_state)
- # 
- # # remove 1 outlier date
- # df<-df %>% 
- #   filter(year<2024)
- # 
- # sub<-df %>% distinct(jdate, id, capture_state)
- # sub<-sub %>% 
- #   group_by(id) %>% 
- #   mutate(days=n())
- # 
- # sub$id<-factor(sub$id, levels=sort(unique(sub$id[order(sub$days)])))
- # 
- # rect1<-data.frame(xstart=as.Date("2019-07-25"), xend=as.Date("2019-08-29"))
- # rect2<-data.frame(xstart=as.Date("2020-06-23"), xend=as.Date("2020-09-08"))
- # rect3<-data.frame(xstart=as.Date("2021-07-06"), xend=as.Date("2021-08-22"))
- # rect4<-data.frame(xstart=as.Date("2021-12-15"), xend=as.Date("2021-12-30"))
- # 
- # without_annotations<-ggplot(sub, aes(jdate, fct_reorder(id, days, .desc=F), color=capture_state))+
- #   theme_pubr()+
- #   geom_point(size=1.5)+
- #   theme(axis.text.y=element_blank())+
- #   theme(axis.text.x=element_text(size=14, face="bold"))+
- #   facet_grid(fct_relevel(capture_state, 'MI','MN', 'MB', 'IA', 'OH', 'WI', 'AR')~., scales="free")+
- #   geom_rect(data=rect1, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
- #   ), alpha=0.3, inherit.aes=F)+
- #   geom_rect(data=rect2, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
- #   ), alpha=0.3, inherit.aes=F)+
- #   geom_rect(data=rect3, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
- #   ), alpha=0.3, inherit.aes=F)+
- #   geom_rect(data=rect4, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
- #   ), alpha=0.3, inherit.aes=F)+
- #   theme(axis.title.y=element_blank())+
- #   theme(axis.title.x=element_blank())+
- #   theme(strip.text.y = element_text(size=14, face="bold"))+
- #   theme(strip.background = element_rect(color="black", fill="white"))+
- #   guides(colour="none", fill="none")+
- #   scale_x_date(date_breaks = "1 year", date_labels = "%b-%Y")+
- #   geom_vline(xintercept = as.numeric(ymd("2020-01-01")), color="black", size=1)+
- #   geom_vline(xintercept = as.numeric(ymd("2021-01-01")), color="black", size=1)+
- #   geom_vline(xintercept = as.numeric(ymd("2022-01-01")), color="black", size=1)+
- #   geom_vline(xintercept = as.numeric(ymd("2023-01-01")), color="black", size=1)+
- #   theme(panel.spacing.y = unit(0, "lines"))
- # 
- # # try and hard-wire in the annotation of number of deployments
- # deploys<-df %>% 
- #   group_by(capture_state) %>% 
- #   summarize(deployments=n_distinct(id))
- # 
- # deployment_labels<-as_labeller(
- #   c('MI'=paste0("MI", "  n=", deploys[deploys$capture_state=="MI",2]),
- #   'MN'=paste0("MN", "  n=", deploys[deploys$capture_state=="MN",2]), 
- #   'MB'=paste0("MB", "  n=", deploys[deploys$capture_state=="MB",2]),
- #   'IA'=paste0("IA", "  n=", deploys[deploys$capture_state=="IA",2]), 
- #   'OH'=paste0("OH", "  n=", deploys[deploys$capture_state=="OH",2]), 
- #   'WI'=paste0("WI", "  n=", deploys[deploys$capture_state=="WI",2]), 
- #   'AR'=paste0("AR", "  n=", deploys[deploys$capture_state=="AR",2])
- # ))        
- # 
- # 
- # p<-ggplot(sub, aes(jdate, fct_reorder(id, days, .desc=F), color=capture_state))+
- #   theme_pubr()+
- #   geom_point(size=1.5)+
- #   theme(axis.text.y=element_blank())+
- #   theme(axis.text.x=element_text(size=14, face="bold"))+
- #   facet_grid(fct_relevel(capture_state, 'MI','MN', 'MB', 'IA', 'OH', 'WI', 'AR')~., 
- #                           scales="free", labeller=deployment_labels)+
- #   geom_rect(data=rect1, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
- #   ), alpha=0.3, inherit.aes=F)+
- #   geom_rect(data=rect2, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
- #   ), alpha=0.3, inherit.aes=F)+
- #   geom_rect(data=rect3, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
- #   ), alpha=0.3, inherit.aes=F)+
- #   geom_rect(data=rect4, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
- #   ), alpha=0.3, inherit.aes=F)+
- #   theme(axis.title.y=element_blank())+
- #   theme(axis.title.x=element_blank())+
- #   theme(strip.text.y = element_text(size=14, face="bold"))+
- #   theme(strip.background = element_rect(color="black", fill="white"))+
- #   guides(colour="none", fill="none")+
- #   scale_x_date(date_breaks = "1 year", date_labels = "%b-%Y")+
- #   geom_vline(xintercept = as.numeric(ymd("2020-01-01")), color="black", size=1)+
- #   geom_vline(xintercept = as.numeric(ymd("2021-01-01")), color="black", size=1)+
- #   geom_vline(xintercept = as.numeric(ymd("2022-01-01")), color="black", size=1)+
- #   geom_vline(xintercept = as.numeric(ymd("2023-01-01")), color="black", size=1)+
- #   theme(panel.spacing.y = unit(0, "lines"))
- 
+### Main text of results
+
+<!-- # Names of figures: -->
+
+<!-- - deployment-fig -->
+
+<!-- - mig-extent-vs-latitude-fig -->
+
+<!-- - timing-vs-latitude-fig -->
+
+<!-- - timing-vs-breeding-fig -->
+
+<!-- - duration-fig -->
+
+<!-- # Names of tables: -->
+
+<!-- - phenology-summary-table -->
+
+<!-- - full-phenology-table (for supplemental?) -->
+
+<!-- # Figure citation (Fig. @ref(fig:timing-vs-breeding-fig)) -->
+
+<!-- # Table citation (Table \ref(tab:table-name)) -->
+
+Proportion of IP that is migratory, and the extent of migratory distance:\
+Annual movements of IP trumpeter swans were highly variable.
+For swans that underwent long-distance migration, there was a strong correlation between breeding/capture latitude (mostly between 43 and 53 degrees latitude) and the extent of migration during the non-breeding season (Fig. \@ref(fig:mig-extent-vs-latitude-fig)).
+However, many swans with breeding/capture sites between 40 and 48 degrees latitude showed minimal movement during the non-breeding season and can be considered resident or exhibiting short-distance regional movements.
+
+Migration phenology, relationships to breeding and latitude, and variability:\
+Departure dates were highly variable for IP swans that left their territory in the fall (cite phenology summary table).
+Average/median departure date was xxx, (range of dates).
+We found little (or no) evidence of a relationship between breeding latitude and date of fall departure, and although breeders left later, on average, than non-breeders or paired swans, differences were relatively minor.
+The level of individual variability between years was xxxxx.
+
+IP swans arriving back on their territory in the spring had relatively low levels of individual variability within years, and arrival dates correlated highly with their breeding/capture latitude.
+There was also a much greater difference between breeding classes, with successful breeders arriving much earlier on average than non-breeders or paired swans.
+The level of individual variability between years was xxxxx.
+
+```{r deployment-fig, fig.align="left", fig.cap="Insert caption for data deployment figure here..."}
+
+# all code needed to create this plot is present at    here("scripts/scripts_for_manuscript_figures/deployment.R")
+
+
 knitr::include_graphics(here("figures/figs_for_manuscript/deployments.tiff"))
 ```
 
@@ -481,8 +363,12 @@ dist_plot<-p_dates %>%
        y="Furthest Extent of Migration (in km)\n")+
   theme_pubr()
 
-dist_plot
+ # dist_plot
+ # 
+ # ggsave(here("figures/figs_for_manuscript/distances_latitude.tiff"),
+ # dpi=300, compression="lzw")
 
+knitr::include_graphics(here("figures/figs_for_manuscript/distances_latitude.tiff"))
 ```
 
 , 2) migration phenology, 3) the role of breeding status and breeding location on annual movement patterns
@@ -538,7 +424,7 @@ p1<-p_dates %>%
   geom_point(shape=1, color="black", size=2)+
   # geom_rug(aes(y=NULL))+
   geom_smooth(method="lm", alpha=0.25)+
-  stat_cor(aes(label = paste(..rr.label..)), # adds R^2 value
+  stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
            r.accuracy = 0.01,
            size = 4,
            label.x=45, label.y=as.Date("2020-12-15"))+
@@ -573,7 +459,7 @@ p2<-p_dates %>%
   geom_point(shape=1, color="black", size=2)+
   # geom_rug(aes(y=NULL))+
   geom_smooth(method="lm", alpha=0.3)+
-  stat_cor(aes(label = paste(..rr.label..)), # adds R^2 value
+  stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
            r.accuracy = 0.01,
            size = 4,
            label.x=45, label.y=as.Date("2020-04-20"))+
@@ -584,26 +470,108 @@ p2<-p_dates %>%
   guides(color=F)+
   theme_pubr()
 
-timings<-p1+p2+
-  plot_layout(
-    ncol=1
-  )
-timings
+# timings<-p1+p2+
+#   plot_layout(
+#     ncol=1
+#   )
+# timings
 # 
-# ggsave(here("figures/figs_for_manuscript/timings.tiff"),
-#        width=10,
-#        height = 7, units="in", dpi=300)
-
-# ggsave(here("figures/figs_for_manuscript/timings_alt_with_rugs1.tiff"),
-#        width=10,
-#        height = 7, units="in", dpi=300)
-
-# ggsave(here("figures/figs_for_manuscript/timings_no_rugs_edits.tiff"),
-#        width=10,
-#        height = 7, units="in", dpi=300)
+# ggsave(here("figures/figs_for_manuscript/timings_latitude.tiff"),
+#  dpi=300, compression="lzw")
+knitr::include_graphics(here("figures/figs_for_manuscript/timings_latitude.tiff"))
 ```
 
-```{r duration-vs-breeding-fig, fig.align="left", fig.cap="Insert caption for duration vs breeding status figure here..."}
+```{r timing-vs-breeding-fig, fig.align="left", fig.cap="Insert caption for timing vs breeding status figure here..."}
+# third round (post apr/may 2023)
+param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
+
+# Merge additional info onto dataframe
+ids<-read_csv(here("ids.csv"))
+param_df<-param_df %>% 
+  left_join(., ids,
+            by=c("swan_ID" = "id")) %>% 
+  select(-mate_present, -'mass (kg)', -'skull (mm)',-'tarsus (mm)', -comments) %>% 
+  rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
+         id_year=year)
+
+
+# Translate back to dates from julian day
+p_dates<-param_df %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~ifelse(.<186, .+181, .-185)))
+
+# remove a swan with only partial info
+p_dates<-p_dates %>% 
+  filter(!id_year%in%"8P-2021-2022")
+
+p_dates<-p_dates %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~as.Date(., origin="2019-12-31")))
+
+# Add specific years for the fall and spring events (fall_onset and spring_arrival) to track yearly variation
+p_dates<-p_dates %>% 
+  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
+
+# add column for entire year cycle
+p_dates<-p_dates %>% 
+  mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+                         map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
+
+# plot for duration of migration vs breeder/non-breeder/paired
+fall_onset<-p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
+  ggplot(., aes(breeding_status, fall_mig_onset,fill=breeding_status))+
+    scale_x_discrete(labels=c("Breeder", "Paired", "Non Breeder"))+
+  geom_boxplot(outlier.shape = NA)+
+  scale_y_date(date_labels = "%b %d")+
+  geom_jitter(width = 0.1)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  ggtitle(label="Fall Onset")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="\nBreeding Status", y="Date of Fall Migration Onset\n")+
+  theme_pubr()+
+  theme(legend.position = "none", plot.title = element_text(hjust=0.5))
+
+spring_arrival<-p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
+  ggplot(., aes(breeding_status, spring_arrival,fill=breeding_status))+
+      scale_x_discrete(labels=c("Breeder", "Paired", "Non Breeder"))+
+  geom_boxplot(outlier.shape = NA)+
+    scale_y_date(date_labels = "%b %d")+
+  geom_jitter(width = 0.1)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  ggtitle(label="Spring Arrival")+
+  theme(plot.title = element_text(hjust=0.5, size=14),
+        plot.subtitle = element_text(hjust=0.5, size=12))+
+  labs(x="\nBreeding Status", y="Date of Spring Arrival\n")+
+    theme_pubr()+
+  theme(legend.position = "none", plot.title = element_text(hjust=0.5))
+
+# fall_onset+spring_arrival
+
+# breeding_timing<-fall_onset+spring_arrival
+#   plot_layout(
+#     ncol=1
+#   )
+# ggsave(here("figures/figs_for_manuscript/breeding_timing.tiff"),
+#             dpi=300, compression="lzw")
+
+knitr::include_graphics(here("figures/figs_for_manuscript/breeding_timing.tiff"))
+```
+
+```{r duration-fig, fig.align="left", fig.cap="Insert caption for duration vs breeding status figure here..."}
 # third round (post apr/may 2023)
 param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
 
@@ -646,39 +614,57 @@ p_dates<-p_dates %>%
                          map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
 
 # plot for duration of migration vs breeder/non-breeder/paired
-fall_onset<-p_dates %>% 
+
+breeding_duration<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
-  ggplot(., aes(breeding_status, fall_mig_onset,fill=breeding_status))+
-  geom_boxplot(width=0.2)+
-    geom_point()+
-  geom_jitter(width = 0.2)+
+  mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
+  ggplot(., aes(breeding_status, mig_duration,fill=breeding_status))+
+  scale_x_discrete(labels=c("Breeder", "Paired", "Non Breeder"))+
+  geom_boxplot(outlier.shape = NA)+
+  geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
-  ggtitle(label="Fall Migration Onset by Breeding Status")+
+  ggtitle(label="Migration Duration vs Breeding Status")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="\nBreeding Status", y="\nDate of Fall Migration Onset")+
-    theme_pubr()
+  labs(x="\nBreeding Status", y="Migration Duration (# of days)\n")+
+    theme_pubr()+
+  theme(legend.position = "none", plot.title = element_text(hjust=0.5))
 
-spring_arrival<-p_dates %>% 
+migration_latitude<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
-  ggplot(., aes(breeding_status, spring_arrival,fill=breeding_status))+
-  geom_boxplot(width=0.2)+
-    geom_point()+
-  geom_jitter(width = 0.2)+
-  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
-  ggtitle(label="Spring Arrival by Breeding Status")+
+  mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
+  ggplot(., aes(breeding_lat, mig_duration))+
+  geom_point()+
+  geom_smooth(method="lm", alpha=0.3)+
+  stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
+           r.accuracy = 0.01,
+           size = 4)+
+  ggtitle(label="Migration Duration vs Breeding Latitude")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="\nBreeding Status", y="\nDate of Spring Arrival")+
-    theme_pubr()
+  labs(x="\nBreeding Latitude", y="Migration Duration (# of days)\n")+
+    theme_pubr()+
+  theme(legend.position = "none", plot.title = element_text(hjust=0.5))
 
-fall_onset+spring_arrival
 
+# durations<-breeding_duration+migration_latitude+
+#   plot_layout(
+#     nrow=1
+#   )
+# 
+# ggsave(here("figures/figs_for_manuscript/durations.tiff"),
+#             dpi=300, compression="lzw")
+
+knitr::include_graphics(here("figures/figs_for_manuscript/durations.tiff"))
 
 
 ```
 
-```{r timing-vs-breeding-fig, fig.align="left", fig.cap="Insert caption for timing vs breeding status figure here..."}
+4)  the degree of individual and population variability in migration patterns
+
+### Summary tables of migration phenology
+
+```{r combined-fall-table}
 # third round (post apr/may 2023)
 param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
 
@@ -720,23 +706,406 @@ p_dates<-p_dates %>%
   mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
                          map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
 
-# plot for timing of migration vs breeder/non-breeder/paired
+
+# first, show a table with summary stats for fall departure and spring arrival
+# all swans and years, fall departures
+fall_table<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+
+
+fall_table %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "num_swans" = "Number of Swans",
+    "num_swan_years" = "Number of Swan-Years",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Migration phenology of fall departures by long-distance migrants")
 ```
 
-4)  the degree of individual and population variability in migration patterns
+```{r combined-spring-table}
+# third round (post apr/may 2023)
+param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
+
+# Merge additional info onto dataframe
+ids<-read_csv(here("ids.csv"))
+param_df<-param_df %>% 
+  left_join(., ids,
+            by=c("swan_ID" = "id")) %>% 
+  select(-mate_present, -'mass (kg)', -'skull (mm)',-'tarsus (mm)', -comments) %>% 
+  rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
+         id_year=year)
+
+
+# Translate back to dates from julian day
+p_dates<-param_df %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~ifelse(.<186, .+181, .-185)))
+
+
+p_dates<-p_dates %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~as.Date(., origin="2019-12-31")))
+
+# Add specific years for the fall and spring events (fall_onset and spring_arrival) to track yearly variation
+p_dates<-p_dates %>% 
+  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
+
+# add column for entire year cycle
+p_dates<-p_dates %>% 
+  mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+                         map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
+
+
+# all swans and years, spring arrivals
+spring_table<-p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            # median_spring_arrival=format(median(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
+
+spring_table %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "num_swans" = "Number of Swans",
+    "num_swan_years" = "Number of Swan-Years",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Migration phenology of spring arrivals by long-distance migrants")
+```
+
+```{r fall-yearly-table}
+# third round (post apr/may 2023)
+param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
+
+# Merge additional info onto dataframe
+ids<-read_csv(here("ids.csv"))
+param_df<-param_df %>% 
+  left_join(., ids,
+            by=c("swan_ID" = "id")) %>% 
+  select(-mate_present, -'mass (kg)', -'skull (mm)',-'tarsus (mm)', -comments) %>% 
+  rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
+         id_year=year)
+
+
+# Translate back to dates from julian day
+p_dates<-param_df %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~ifelse(.<186, .+181, .-185)))
+
+
+p_dates<-p_dates %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~as.Date(., origin="2019-12-31")))
+
+# Add specific years for the fall and spring events (fall_onset and spring_arrival) to track yearly variation
+p_dates<-p_dates %>% 
+  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
+
+# add column for entire year cycle
+p_dates<-p_dates %>% 
+  mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+                         map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
+
+# Split out by year
+fall_yearly<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  # filter(!fall_yr==2019) %>% 
+  group_by(fall_yr) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+fall_yearly %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "fall_yr" = "Year",
+    "num_swans" = "Number of Swans",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+      set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Fall departures of long-distance migrants by year")
+```
+
+```{r spring-yearly-table}
+# third round (post apr/may 2023)
+param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
+
+# Merge additional info onto dataframe
+ids<-read_csv(here("ids.csv"))
+param_df<-param_df %>% 
+  left_join(., ids,
+            by=c("swan_ID" = "id")) %>% 
+  select(-mate_present, -'mass (kg)', -'skull (mm)',-'tarsus (mm)', -comments) %>% 
+  rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
+         id_year=year)
+
+
+# Translate back to dates from julian day
+p_dates<-param_df %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~ifelse(.<186, .+181, .-185)))
+
+
+p_dates<-p_dates %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~as.Date(., origin="2019-12-31")))
+
+# Add specific years for the fall and spring events (fall_onset and spring_arrival) to track yearly variation
+p_dates<-p_dates %>% 
+  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
+
+# add column for entire year cycle
+p_dates<-p_dates %>% 
+  mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+                         map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
+
+spring_yearly<-p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  group_by(spring_yr) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
+
+spring_yearly %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "spring_yr" = "Year",
+    "num_swans" = "Number of Swans",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Spring arrivals of long-distance migrants by year")
+```
+
+```{r fall-breeding-table}
+# third round (post apr/may 2023)
+param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
+
+# Merge additional info onto dataframe
+ids<-read_csv(here("ids.csv"))
+param_df<-param_df %>% 
+  left_join(., ids,
+            by=c("swan_ID" = "id")) %>% 
+  select(-mate_present, -'mass (kg)', -'skull (mm)',-'tarsus (mm)', -comments) %>% 
+  rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
+         id_year=year)
+
+
+# Translate back to dates from julian day
+p_dates<-param_df %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~ifelse(.<186, .+181, .-185)))
+
+
+p_dates<-p_dates %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~as.Date(., origin="2019-12-31")))
+
+# Add specific years for the fall and spring events (fall_onset and spring_arrival) to track yearly variation
+p_dates<-p_dates %>% 
+  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
+
+# add column for entire year cycle
+p_dates<-p_dates %>% 
+  mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+                         map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
+
+# Split by breeding status
+# Fall
+fall_breeding<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  drop_na(breeding_status) %>% 
+  group_by(breeding_status) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+fall_breeding %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "breeding_status" = "Breeding Status",
+    "num_swans" = "Number of Swans",
+    "num_swan_years" = "Number of Swan-Years",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Fall departures of long-distance migrants by breeding status")
+```
+
+```{r spring-breeding-table}
+# third round (post apr/may 2023)
+param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
+
+# Merge additional info onto dataframe
+ids<-read_csv(here("ids.csv"))
+param_df<-param_df %>% 
+  left_join(., ids,
+            by=c("swan_ID" = "id")) %>% 
+  select(-mate_present, -'mass (kg)', -'skull (mm)',-'tarsus (mm)', -comments) %>% 
+  rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
+         id_year=year)
+
+
+# Translate back to dates from julian day
+p_dates<-param_df %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~ifelse(.<186, .+181, .-185)))
+
+
+p_dates<-p_dates %>% 
+  mutate(across(c(fall_mig_onset, 
+                  first_departure,
+                  furthest_seg_arrival, 
+                  furthest_seg_departure, 
+                  spring_arrival),
+                ~as.Date(., origin="2019-12-31")))
+
+# Add specific years for the fall and spring events (fall_onset and spring_arrival) to track yearly variation
+p_dates<-p_dates %>% 
+  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
+
+# add column for entire year cycle
+p_dates<-p_dates %>% 
+  mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
+                         map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
+
+# Spring
+spring_breeding<-p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  drop_na(breeding_status) %>% 
+  group_by(breeding_status) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
+
+
+spring_breeding %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "spring_yr" = "Year",
+    "num_swans" = "Number of Swans",
+    "num_swan_years" = "Number of Swan-Years",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Spring arrivals of long-distance migrants by breeding status")
+```
 
 ## Discussion
 
 ### Summarize main take-aways and the bigger relevance
 
-1) the proportion of IP that is migratory and the extent of those movements, 
+1)  the proportion of IP that is migratory and the extent of those movements,
 
+2)  migration phenology,
 
-2) migration phenology, 
+3)  the role of breeding status and breeding location on annual movement patterns, and
 
-3) the role of breeding status and breeding location on annual movement patterns, and 
-
-4) the degree of individual and population variability in migration patterns.
+4)  the degree of individual and population variability in migration patterns.
 
 ### Broader significance of IP partial migration
 
