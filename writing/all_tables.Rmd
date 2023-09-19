@@ -1,0 +1,272 @@
+---
+title: "Annual Movement Tables"
+author: "David Wolfson"
+date: "`r Sys.Date()`"
+output: html_document
+---
+```{r chunk-setup-options, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,message=FALSE,warning=FALSE,fig.cap=TRUE,out.width='100%',ft.keepnext=FALSE)
+```
+
+```{r flextable-settings, include=FALSE}
+flextable::set_flextable_defaults(
+    font.family = "New Times Roman",
+    font.size = 12,
+    text.align='center'
+  )
+```
+
+```{r install packages}
+library(bookdown)
+library(rmarkdown)
+library(here)
+library(knitr)
+library(tidyverse)
+library(flextable)
+```
+
+```{r}
+options(scipen = 999)
+```
+
+
+### Summary tables of migration phenology
+
+```{r combined-fall-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# first, show a table with summary stats for fall departure and spring arrival
+# all swans and years, fall departures
+fall_table<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+fall_table %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "num_swans" = "Number of Swans",
+    "num_swan_years" = "Number of Swan-Years",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Migration phenology of fall departures by long-distance migrants")
+```
+\
+\
+
+```{r combined-spring-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# all swans and years, spring arrivals
+spring_table<-p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            # median_spring_arrival=format(median(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
+
+spring_table %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "num_swans" = "Number of Swans",
+    "num_swan_years" = "Number of Swan-Years",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Migration phenology of spring arrivals by long-distance migrants")
+```
+\
+\
+```{r fall-yearly-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# Split out by year
+fall_yearly<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  # filter(!fall_yr==2019) %>% 
+  group_by(fall_yr) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+fall_yearly %>% 
+  flextable() %>% 
+  colformat_num(big.mark="") %>% 
+  set_header_labels(values=list(
+    "fall_yr" = "Year",
+    "num_swans" = "Number of Swans",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+      set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Fall departures of long-distance migrants by year")
+```
+\
+\
+```{r spring-yearly-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+spring_yearly<-p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  group_by(spring_yr) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
+
+spring_yearly %>% 
+  flextable() %>% 
+  colformat_num(big.mark="") %>% 
+  set_header_labels(values=list(
+    "spring_yr" = "Year",
+    "num_swans" = "Number of Swans",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Spring arrivals of long-distance migrants by year")
+```
+\
+\
+```{r fall-breeding-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# Split by breeding status
+# Fall
+p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  drop_na(breeding_status) %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
+  group_by(breeding_status) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d")) %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "breeding_status" = "Breeding Status",
+    "num_swans" = "Number of Swans",
+    "num_swan_years" = "Number of Swan-Years",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Fall departures of long-distance migrants by breeding status")
+```
+\
+\
+```{r spring-breeding-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# Spring
+p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  drop_na(breeding_status) %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
+  group_by(breeding_status) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d")) %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "spring_yr" = "Year",
+    "num_swans" = "Number of Swans",
+    "num_swan_years" = "Number of Swan-Years",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Spring arrivals of long-distance migrants by breeding status")
+```
+\
+\
+```{r repeat-tab}
+# Table from all the previous estimations
+rep_tab<-read_csv(here("output/repeatability/repeatability.csv"))
+
+rep_tab %>% 
+  flextable %>% 
+  set_header_labels(values=list(
+    "migration_metric"="Migration Metric",
+    "swan-years"="Number of Migratory Tracks",
+    "individuals"="Number of Swans",
+    "within-individual_variance (average difference in fall timing within an individual)"=
+      "Within-individual Variance",
+    "within-individual_std (std of individual difference in fall timing)"=
+      "Within-individual Standard Deviation",
+    "among-individual_variance"=
+      "Among-individual Variance",
+    "among-individual_std"=
+      "Among-individual Standard Deviation",
+    "repeatability_estimate"=
+      "Repeatability",
+    "repeatability_SE"=
+      "Repeatability Standard Error",
+    "repeatability_lcl"=
+      "Repeatability Lower Confidence Limit",
+    "repeatability_ucl"=
+      "Repeatability Upper Confidence Limit"
+  )) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header")
+```

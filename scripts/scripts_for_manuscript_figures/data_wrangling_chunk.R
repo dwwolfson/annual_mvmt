@@ -1,18 +1,8 @@
-# Summary and visualization of migration metrics
+# Data wrangling between derived parameter output and figure creation
+# save space in the manuscript Rmd 
 
-
-# package names
-packages <- c("tidyverse", "here", "lubridate")
-
-# load packages
-invisible(lapply(packages, library, character.only = TRUE))
-source(here("scripts/ggplot_custom_function.R"))
-
-# first round (for conferences)
-# param_df<-read_csv(here("output/migration_metrics.csv"))
-
-# second round (pre-apr/may 2023) 
-# param_df<-read_csv(here("output/migration_metrics_2nd.csv"))
+library(here)
+library(tidyverse)
 
 # third round (post apr/may 2023)
 param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
@@ -55,26 +45,5 @@ p_dates<-p_dates %>%
   mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
                          map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
 
-##################################################################
-# Figures
-# max extent of migration
-p<-p_dates %>% 
-  filter(id_year!="9N-2021-2022" & 
-           id_year!="6M-2021-2022" &
-           id_year!="9N-2022-2023" &
-           id_year!="6M-2022-2023" & 
-           id_year!="4H-2021-2022") %>% 
-  ggplot(., aes(breeding_lat,mig_extent, color=id_year))+
-  geom_point()+
-  geom_smooth(method="lm")+
-  xlim(40,52)+ # to exclude arkansas winter captures
-  facet_wrap(~entire_yr)+
-  ggtitle(label="Extent of Displacement from Breeding/Capture Origin throughout the annual cycle",
-          subtitle="\n ")+
-  theme(plot.title = element_text(hjust=0.5, size=14),
-        plot.subtitle = element_text(hjust=0.5, size=12))
-  # geom_hline(yintercept=42.5, linetype="dashed", color="red")+
-  # geom_hline(yintercept = 48, linetype="dashed", color="red")+
-  # geom_vline(xintercept=300, linetype="dashed", color="black")
-
-plotly::ggplotly(p)
+# write out dataset ready for figures and tables in the manuscript
+write_csv(p_dates, here("output/metrics_3rd_round_manuscrip_ready.csv"))

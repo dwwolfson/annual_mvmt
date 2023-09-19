@@ -1,0 +1,28 @@
+---
+title: "Untitled"
+author: "David Wolfson"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# chopped out of the discussion section
+
+### Section on any methodological issues
+Migration Segmentation methods:
+  
+  What others have done: -- Threshold-based (Rely on arbitrary choices, not generalizable to other species) - Date-based time threshold, distance-based spatial threshold, a combination of both -- Model-based (objective, but may not be very accurate) - traditional NSD Bunnefeld curve-fitting approach (and the Spitz migrateR package with slightly more flexibility) -- Hybrid approaches - Visual ID based on k-means clustering of distance and elevation [@lowrey2020; @zuckerman2023]
+
+How our methods are different from others:
+  
+  Our attempt at semi-automated analyses; if there is no human component there is an inevitable level of bias, but this can be reduced with a minimalist human component such as visually inspecting model fits and kicking out obviously bad fits.
+By adopting a compromise between a purely automated and objective approach that may present more bias if asked to accommodate too much biological variability and a more subjective route trying to consider migration as more of a continuum.
+
+Net-Squared Displacement has been most commonly used to categorize migration by fitting a small number of non-linear theoretic movement models that represent traditional types of migration and choosing the movement model with the lowest AIC value [@bunnefeld2011; @spitz2017], a relatively straightforward approach, although some studies have shown that it often does not reliably identify migration at an individual level [@cagnacci2016].
+
+Despite the prevalence of this approach, increasing evidence has been provided to suggest that the majority of migration doesn't fit into these restrictive categories and that migration should instead be considered along a continuous behavioral gradient [@ball2001; @dingle2007].
+**Add comparison of our approach with [@vandekerk2021]**
+
+### Random ending notes:
+- While we focused a lot on the long-distance migrants in this paper, birds that leave the breeding grounds during the winter but move relatively short distances are not well studied and fine-scale temporally-dynamic environmental data (lake ice, temp, snow, etc) but reveal how these swans are meeting their needs during the winter without the energetic requirements of long-distance migration.
+- More work is needed to investigate drivers of IP migration, especially relationships to weather and environmental conditions, and also tying to genetic population structure.
+- Lots of variation in migration strategies may give the IP more capacity to adapt to climate change-related environmental shifts.

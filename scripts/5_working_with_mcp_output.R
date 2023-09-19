@@ -121,7 +121,7 @@ for (i in seq_along(ids)) {
                    ){  out_params["fall_mig_onset"] <- tmp_yr[tmp_yr$name == "cp_2", "mean"]   #skip 1st segment
       } else {
         out_params["fall_mig_onset"]<-NA
-        out_params["fall_mig_onset_comment"]<-"no onset because swan didn't fly far enough away, wasn't moving away from origin, or movment wasn't during fall"
+        out_params["fall_mig_onset_comment"]<-"no onset because swan didn't fly far enough away, wasn't moving away from origin, or movement wasn't during fall"
         #I'm going to assume that there aren't legit fall departures to grab if both the 1st and 2nd segments break rules.....
         }}else if (length(grep("int", tmp_yr$name))==1){
       out_params["fall_mig_onset"] <-NA

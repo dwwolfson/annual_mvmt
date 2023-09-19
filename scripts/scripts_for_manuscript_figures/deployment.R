@@ -86,7 +86,9 @@ p<-ggplot(sub, aes(jdate, fct_reorder(id, days, .desc=F), color=capture_state))+
   theme(axis.text.y=element_blank())+
   theme(axis.text.x=element_text(size=14, face="bold"))+
   facet_grid(fct_relevel(capture_state, 'MI','MN', 'MB', 'IA', 'OH', 'WI', 'AR')~., 
-                          scales="free", labeller=deployment_labels)+
+                          scales="free", 
+             #labeller=deployment_labels
+             )+
   geom_rect(data=rect1, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
   ), alpha=0.3, inherit.aes=F)+
   geom_rect(data=rect2, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
@@ -108,5 +110,5 @@ p<-ggplot(sub, aes(jdate, fct_reorder(id, days, .desc=F), color=capture_state))+
   theme(panel.spacing.y = unit(0, "lines"))
 
 # write to file
-ggsave(filename = here("figures/figs_for_manuscript/deployments.tiff"),
+ggsave(filename = here("figures/figs_for_manuscript/deployments_reduced_labels.tiff"),
        plot = p, compression = "lzw")
