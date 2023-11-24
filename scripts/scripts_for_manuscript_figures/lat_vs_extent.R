@@ -3,101 +3,73 @@ library(tidyverse)
 library(lubridate)
 
 
-# third round (post apr/may 2023)
-param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
+# most updated version of dataset
+df<-read_csv(here("data/full_dataset_4_28_2023/daily_nsd.csv"))
+# 126 separate collar deployments
 
-# Merge additional info onto dataframe
+# split years up each summer
+df <- df %>%
+  group_by(id) %>%
+  mutate(swan_yr = ifelse(yday < 182, paste(id, year - 1, year, sep = "-"),
+                          paste(id, year, year + 1, sep = "-")
+  )) # 182 is julian day for july 1
+
+df<-df %>% 
+  group_by(swan_yr) %>% 
+  mutate(num_days=n())
+
+# filter out swans that had years with less than 90 days
+df<-df %>% 
+  filter(num_days>90)
+
+# filtered out 21 swan-years with less than 90 days; 231 swan-year combinations
+
+# Convert NSD to simple displacement in kilometers
+df$sqrt<-sqrt(df$nsd_daily_mean)
+df$rescale<-df$sqrt/1000
+
+#########################################################################
+
+# Pull out the maximum displacement value for each swan-year
+df<-df %>% 
+  group_by(swan_yr) %>% 
+  mutate(max_nsd=max(rescale)) %>% 
+  select(id, capture_state, state_ID, sex, swan_yr, max_nsd, num_days) %>% 
+  distinct()
+
+
+# arkansas data separate from the overall mcp fit
+# ark<-read_csv(here("output/arkansas_migration_metrics_salvaged.csv"))
+# The numbers that I pulled off from AR swans actually agrees pretty closely with 
+# what mcp got from the batch run, so I'll leave it for now (8/18/2023).
+
+# others to exclude
+exclude<-c(
+  "1P-2020-2021", # taken into custody, year all screwy
+  "9J (swan originally collared as 5J)-2021-2022", # collar died before winter
+  "5L-2020-2021" ,"5L-2021-2022", # the cygnet that went up to Hudson Bay
+  "6M-2021-2022", "6M-2022-2023", # Ohio disperser
+  "7M-2021-2022", # Dropped 7M because it made a big movement NE into Pennsylvania (and then back to territory)
+  "8P-2021-2022", # big summer dispersal N and then collar died
+  "9N-2021-2022", # big summer dispersal
+  "9N-2022-2023"  # big summer dispersal
+)
+
+# add in breeding lat and other info
 ids<-read_csv(here("ids.csv"))
-param_df<-param_df %>% 
-  left_join(., ids,
-            by=c("swan_ID" = "id")) %>% 
-  select(-mate_present, -'mass (kg)', -'skull (mm)',-'tarsus (mm)', -comments) %>% 
+df<-df %>% 
+  left_join(., ids) %>% 
+  select(-comments) %>% 
   rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
-         id_year=year)
+         mass='mass (kg)', skull='skull (mm)')
+
+df<-df %>% 
+  filter(!swan_yr%in%exclude)
+# excluded 10 more swan-year datasets, from 231 to 221
 
 
-# Translate back to dates from julian day
-p_dates<-param_df %>% 
-  mutate(across(c(fall_mig_onset, 
-                  first_departure,
-                  furthest_seg_arrival, 
-                  furthest_seg_departure, 
-                  spring_arrival),
-                ~ifelse(.<186, .+181, .-185)))
-
-
-p_dates<-p_dates %>% 
-  mutate(across(c(fall_mig_onset, 
-                  first_departure,
-                  furthest_seg_arrival, 
-                  furthest_seg_departure, 
-                  spring_arrival),
-                ~as.Date(., origin="2019-12-31")))
-
-# Add specific years for the fall and spring events (fall_onset and spring_arrival) to track yearly variation
-p_dates<-p_dates %>% 
-  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
-         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
-
-# add column for entire year cycle
-p_dates<-p_dates %>% 
-  mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
-                         map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
-
-
-
-p_dates<-p_dates %>% 
-  mutate(capture_state=ifelse(grepl("[7-9]L", swan_ID)|
-                                grepl("0H_2nd", swan_ID), "AR",
-                              ifelse(grepl("9H_2nd", swan_ID)|
-                                       grepl("2H_2nd", swan_ID)|
-                                       grepl("0N_2nd", swan_ID)|
-                                       grepl("6P", swan_ID), "MN",
-                                     ifelse(grepl("A", swan_ID)|
-                                              grepl("E", swan_ID)|
-                                              grepl("R", swan_ID)|
-                                              grepl("T",swan_ID)|
-                                              grepl("L", swan_ID),"MN",
-                                            ifelse(grepl("M", swan_ID)|
-                                                     grepl("N", swan_ID), "OH",
-                                                   ifelse(grepl("H", swan_ID), "MB",
-                                                          ifelse(grepl("C", swan_ID), "IA",
-                                                                 ifelse(grepl("P", swan_ID), "WI",
-                                                                        ifelse(grepl("J", swan_ID)|
-                                                                                 grepl("K", swan_ID), "MI",
-                                                                               "flag")))))))))
-
-# Filter out swans that:
-# - had incomplete years  (6/7 of 1st yr MN collars)
-# I'll consider a swan-year incomplete if it doesn't make it through Jan (unless there is already a settled winter plateau)
-incomplete<-c("OC_2nd-2022-2023",
-              "0H-2021-2022" ,
-              "1P-2020-2021", 
-              "3N-2021-2022",
-              "4H-2021-2022", 
-              "5E-2021-2022",
-              "7P-2022-2023",
-              "9J (first deployment)-2019-2020",
-              "9J (swan originally collared as 5J)-2021-2022")
-
-# - made big summer dispersal movements  n=5? (5L, 6M, 9N, 4P, 8P, 7M)
-# 4P did make big movements during the summer, but they were equivalent in distance to it's winter movements, so retain
-# Dropped 7M because it made a big movement NE into Pennsylvania (and then back to territory)
-dispersers<-c("6M-2021-2022", "6M-2022-2023",
-              "5L-2020-2021" ,"5L-2021-2022",
-              "7M-2021-2022", 
-              "8P-2021-2022", 
-              "9N-2021-2022", "9N-2022-2023")
-
-filt_vec<-c(incomplete, dispersers)
-
-
-p_dates<-p_dates %>% 
-  filter(!id_year%in%filt_vec)
-
-dist_plot<-p_dates %>% 
-  filter(fall_yr!=2019) %>% 
-  ggplot(aes(breeding_lat,mig_extent))+
+dist_plot<-df %>% 
+  ggplot(aes(breeding_lat,max_nsd))+
   geom_point()+
   # geom_hline(yintercept = quantile(p_dates$mig_extent, 0.5, na.rm=T), 
   #            lty=2, color="red")+
@@ -115,7 +87,7 @@ labs(x="\nBreeding/Capture Latitude",
      y="Furthest Extent of Migration (in km)\n")+
   theme_pubr()
 
-# dist_plot
-# 
-# ggsave(here("figures/figs_for_manuscript/distances_latitude.tiff"),
-# dpi=300, compression="lzw")
+dist_plot
+
+ggsave(here("figures/figs_for_manuscript/distances_latitude.tiff"),
+dpi=300, compression="lzw")

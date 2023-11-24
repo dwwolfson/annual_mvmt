@@ -77,6 +77,7 @@ id,breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet
 5T,breeder,y,4,F,9.8,200,125,20.3,45.399181,-93.344731,
 6A,breeder,y,3,F,10.4,208,153,NA,46.54242,-93.491985,
 6C,breeder,y,4,M,11.6,206.1,128.5,34,43.2719248,-94.32537,
+6C_2nd,breeder,Y,1,M,12,200.4,127.4,136.4,41.77764,-94.32537,
 6E,non_breeder,n,0,M,14.2,212,142,66.2,46.634439,-92.776876,1 of 6 cygnets in group; no skull length; tarsus seems to big for cygnet
 6H,breeder,n,0,M,13,200,132.1,NA,49.17177,-95.480271,1 of 6 cygnets in group; no skull length; tarsus seems to big for cygnet
 6J,breeder,y,2,M,12.7,212,123,NA,42.9482565,-85.1445124,1 of 6 cygnets in group; no skull length; tarsus seems to big for cygnet
