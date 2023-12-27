@@ -1,7 +1,7 @@
 # logit latent state model
 
 # package names
-packages<-c("tidyverse", "here", "lubridate", "R2jags", "rjags", 
+packages<-c("tidyverse", "here", "lubridate", "R2jags", 
             "mcmcplots", "loo", "MCMCvis", "viridis")
 options(mc.cores=7)
 
@@ -131,12 +131,6 @@ latent_model<-function(){
     mu[i] <- z[ind_index[i]]*(alpha+beta1*x[i])+
       (1-z[ind_index[i]])*(c+a*x[i]^exp)
   }}
-
-# MCMC settings
-# nc <- 3 # number of chains
-# ni <- 100000 #number of total iterations
-# nb <- 20000 #burn in 
-# nt <- 10 # thinning
 
 # JAGS data object
 jags.dat<-(list(x = lats, Y = migs, n_obs=n_obs, n_inds=n_inds, ind_index=ind_index))

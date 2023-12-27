@@ -43,9 +43,10 @@ df<-read_csv(here("data/capture_coordinates.csv"))
 # Exclude the Arkansas swans because they aren't in the annual movements analysis anyway
 box<-make_bbox(c(-101,-79), c(52,34))
 
-background<-get_map(location=box, 
-             source = "stamen",
-             maptype = "terrain-background")
+background<-get_stadiamap(box, 
+             maptype = "stamen_terrain")
+# this is big, so save it to file
+save(background, file=here("output/maps/stadia_stamen_terrain.rda"))
 
 my_map<-ggmap(background)+
   geom_point(data=df,

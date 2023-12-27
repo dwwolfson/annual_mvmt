@@ -24,24 +24,41 @@ param_df<-param_df %>%
   filter(breeding_status%in%c("breeder", "non_breeder", "paired"))
 
 # lmer models for checking random effects
-# spring_lmer<-lmer(spring_arrival~sex+breeding_status+
+spring_lmer<-lmer(spring_arrival~sex+breeding_status+
+                  (1|swan_ID),
+                data=param_df)
+random_spr<-merTools::REsim(spring_lmer, n.sims=500)
+merTools::plotREsim(random_spr)
+s1<-broom.mixed::tidy(spring_lmer)
+
+d4_lmer<-lmer(mig_duration~(1|swan_ID),
+              data=param_df)
+rand1_dur<-REsim(d4_lmer, n.sims=500)
+plotREsim(rand1_dur)
+qqnorm(residuals(d4_lmer))
+
+
+
+
+# fall departure
+# all combinations of fixed and random effects came out as singular models
+# fall_lmer<-lmer(fall_mig_onset~sex+
 #                   (1|swan_ID),
 #                 data=param_df)
-# random_spr<-REsim(spring_lmer, n.sims=500)
-# plotREsim(random_spr)
-# s1<-broom.mixed::tidy(spring_lmer)
-# 
-# d4_lmer<-lmer(mig_duration~(1|swan_ID),
-#               data=param_df)
-# rand1_dur<-REsim(d4_lmer, n.sims=500)
-# plotREsim(rand1_dur)
-# qqnorm(residuals(d4_lmer))
+# fall2<-lmer(fall_mig_onset~1+
+#               (1|swan_ID),
+#             data=param_df)
+# fall3<-lmer(fall_mig_onset~breeding_status+
+#               (1|swan_ID),
+#             data=param_df)
+# f4<-lm(fall_mig_onset~1, 
+#        data=param_df)
+# f5<-lm(fall_mig_onset~breeding_status,data=param_df)
+f6<-lm(fall_mig_onset~breeding_status+sex,data=param_df)
 
 
 
 
-# fall duration
-# all combinations of fixed and random effects came out as singular models
 
 sm1<-rpt(spring_arrival~sex+breeding_status+
            (1|swan_ID),
@@ -65,6 +82,7 @@ dm4<-rpt(mig_duration~(1|swan_ID),
          nboot=1000,
          ratio=T,
          ncores=7)
+summary(dm4$mod)
 
 # To get variability info for fall departure, I can pull off a non-model-based option
 # within-individual: difference in timing for an individual between consecutive years 

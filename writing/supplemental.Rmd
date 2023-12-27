@@ -35,6 +35,7 @@ library(knitr)
 library(tidyverse)
 library(flextable)
 library(lubridate)
+library(ggpubr)
 ```
 
 
@@ -51,39 +52,361 @@ Rule-based thresholds chosen:
 - Latest date to be considered a fall migration onset / earliest date to be considered a spring return onset: December 1st  
 
 
-Tables:
-```{r}
-df<-read_csv(here("output/migration_metrics_3rd.csv"))
-df %>% flextable() %>% 
-    set_header_labels(values=list("swan_ID" = "Swan ID", 
-                       "year" = "Swan Year-ID", 
-                      "fall_mig_onset" = "Fall Migration Onset (julian date)",
-                      "first_departure" = "First Territory Departure (julian date)",
-                      "num_intercepts" = "Number of Piecewise Regression Intercepts",
-                      "num_stops" = "Number of Migration Segments",
-                      "mig_extent" = "Furthest Extent of Migration (km)",
-                      "furthest_seg_arrival" = "Arrival on Furthest Migration Segment (julian date)",
-                      "furthest_seg_departure" = "Departure from Furthest Migration Segment (julian date)",
-                      "spring_arrival" = "Arrival on Breeding/Capture Territory in Spring (julian date)",
-                      "spring_arrival_comment" = "Spring Arrival Comment",
-                      "mig_duration" = "Duration of Migration (# of days)",
-                      "mig_duration_comment" = "Migration Duration Comment",
-                      "fall_mig_onset_comment" = "Fall Migration Onset Comment",
-                      "stop1_duration" = "Duration on First Stop (# of days)",
-                      "stop2_duration" = "Duration on Second Stop (# of days)",
-                      "stop3_duration" = "Duration on Third Stop (# of days)",
-                      "furthest_seg_duration" = "Duration on Furthest Segment (# of days)",
-                      "num_stops_comment" = "Number of Migration Stops Comment",
-                      "stop4_duration" = "Duration on Fourth Stop (# of days)",
-                      "first_departure_comment" = "Date of First Depature Comment",
-                      "mig_extent_comment" = "Furthest Extent of Migration Comment",
-                      "stop5_duration" = "Duration on Fifth Stop (# of days)")) %>% 
-  set_caption(caption = "Insert caption for migration metric table here...") %>% 
-  border_outer() %>% 
-  vline(part="header") %>% 
-  bg(part="header", bg="#dbdbdb") %>% 
-  bold(part="header") %>%  
-  set_table_properties(layout="autofit") %>% 
-  colformat_num(digits = 2)
-  
+Figures:
+```{r mig-extent-vs-latitude-fig, fig.align="left", fig.cap="Breeding/capture latitude versus extent of migration (furthest distance from breeding territory during the nonbreeding season) for 221 'swan-year' datasets representing annual migration cycles."}
+
+df<-read_csv(here("data/full_dataset_4_28_2023/daily_nsd.csv"))
+# 126 separate collar deployments
+
+# split years up each summer
+df <- df %>%
+  group_by(id) %>%
+  mutate(swan_yr = ifelse(yday < 182, paste(id, year - 1, year, sep = "-"),
+                          paste(id, year, year + 1, sep = "-")
+  )) # 182 is julian day for july 1
+
+df<-df %>% 
+  group_by(swan_yr) %>% 
+  mutate(num_days=n())
+
+# filter out swans that had years with less than 90 days
+df<-df %>% 
+  filter(num_days>90)
+
+# filtered out 21 swan-years with less than 90 days; 231 swan-year combinations
+
+# Convert NSD to simple displacement in kilometers
+df$sqrt<-sqrt(df$nsd_daily_mean)
+df$rescale<-df$sqrt/1000
+
+#########################################################################
+
+# Pull out the maximum displacement value for each swan-year
+df<-df %>% 
+  group_by(swan_yr) %>% 
+  mutate(max_nsd=max(rescale)) %>% 
+  select(id, capture_state, state_ID, sex, swan_yr, max_nsd, num_days) %>% 
+  distinct()
+
+
+# arkansas data separate from the overall mcp fit
+# ark<-read_csv(here("output/arkansas_migration_metrics_salvaged.csv"))
+# The numbers that I pulled off from AR swans actually agrees pretty closely with 
+# what mcp got from the batch run, so I'll leave it for now (8/18/2023).
+
+# others to exclude
+exclude<-c(
+  "1P-2020-2021", # taken into custody, year all screwy
+  "9J (swan originally collared as 5J)-2021-2022", # collar died before winter
+  "5L-2020-2021" ,"5L-2021-2022", # the cygnet that went up to Hudson Bay
+  "6M-2021-2022", "6M-2022-2023", # Ohio disperser
+  "7M-2021-2022", # Dropped 7M because it made a big movement NE into Pennsylvania (and then back to territory)
+  "8P-2021-2022", # big summer dispersal N and then collar died
+  "9N-2021-2022", # big summer dispersal
+  "9N-2022-2023"  # big summer dispersal
+)
+
+# add in breeding lat and other info
+ids<-read_csv(here("ids.csv"))
+df<-df %>% 
+  left_join(., ids) %>% 
+  select(-comments) %>% 
+  rename(breeding_status="breeding_status(if cygnets=breeder; if mate=paired;else non-breeder or cygnet)",
+         mass='mass (kg)', skull='skull (mm)')
+
+df<-df %>% 
+  filter(!swan_yr%in%exclude)
+# excluded 10 more swan-year datasets, from 231 to 221
+
+
+dist_plot<-df %>% 
+  ggplot(aes(breeding_lat,max_nsd))+
+  geom_point()+
+  # geom_hline(yintercept = quantile(p_dates$mig_extent, 0.5, na.rm=T), 
+  #            lty=2, color="red")+
+  # geom_text(aes(52, quantile(p_dates$mig_extent, 0.5, na.rm=T),
+  #               label="50% quantile", vjust=-1), size=5, color="red")+
+  # geom_hline(yintercept = quantile(p_dates$mig_extent, 0.25, na.rm=T), 
+  #            lty=2, color="blue")+
+  #  geom_text(aes(52, quantile(p_dates$mig_extent, 0.25, na.rm=T),
+  #               label="25% quantile", vjust=-1), size=5, color="blue")+
+  # geom_hline(yintercept = quantile(p_dates$mig_extent, 0.75, na.rm=T), 
+  #            lty=2, color="darkgreen")+
+  #  geom_text(aes(52, quantile(p_dates$mig_extent, 0.75, na.rm=T),
+#               label="75% quantile", vjust=-1), size=5, color="darkgreen")+
+labs(x="\nBreeding/Capture Latitude",
+     y="Furthest Extent of Migration (in km)\n")+
+  theme_pubr()
+
+dist_plot
 ```
+
+
+Tables:
+
+```{r combined-fall-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# first, show a table with summary stats for fall departure and spring arrival
+# all swans and years, fall departures
+fall_table<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+# retain the total number of tracked swans (not just those that fit the rules for fall departure)
+total_tracked<-data.frame(total_tracked=length(unique(p_dates$swan_ID)))
+
+fall_table<-cbind.data.frame(total_tracked, fall_table)
+
+fall_table %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "total_tracked"="Total Swans Tracked",
+    "num_swans" = "Number of Long-Distance Migrants",
+    "num_swan_years" = "Number of Fall Departure Events",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Compiled migration phenology of all fall departures from 2019-2022. Fall departure timing was quantified from swans that traveled >100km from breeding/capture territories by December 1.")
+```
+
+---
+
+
+```{r fall-yearly-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# Split out by year
+fall_yearly<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  # filter(!fall_yr==2019) %>% 
+  group_by(fall_yr) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+# retain the total number of tracked swans (not just those that fit the rules for fall departure)
+tracked_by_year<-p_dates %>% 
+  group_by(fall_yr) %>% 
+  summarize(tracked_swans=length(unique(swan_ID)))
+
+fall_yearly<-cbind.data.frame(tracked_by_year, fall_yearly[,2:6])
+
+fall_yearly %>% 
+  flextable() %>% 
+  colformat_num(big.mark="") %>% 
+  set_header_labels(values=list(
+    "tracked_swans"="Total Swans Tracked",
+    "fall_yr" = "Year",
+    "num_swans" = "Number of Long-Distance Migrants",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+      set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Yearly summaries of migration phenology of fall departures from 2019-2022. Fall departure timing was quantified from swans that traveled >100km from breeding/capture territories by December 1.")
+```
+
+---
+
+```{r combined-spring-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# all swans and years, spring arrivals
+spring_table<-p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
+
+# retain the total number of tracked swans (not just those that fit the rules for fall departure)
+total_tracked<-data.frame(total_tracked=length(unique(p_dates$swan_ID)))
+
+spring_table<-cbind.data.frame(total_tracked, spring_table)
+
+spring_table %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "total_tracked"="Total Swans Tracked",
+    "num_swans" = "Number of Long-Distance Migrants",
+    "num_swan_years" = "Number of Spring Arrival Events",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Compiled migration phenology of all spring arrivals from 2020-2023. Spring arrival timing was quantified from swans that traveled >100km from the breeding/capture territory during the non-breeding season and that returned within 10 km of their previous summer territory.")
+```
+
+---
+
+
+```{r spring-yearly-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+spring_yearly<-p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  group_by(spring_yr) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
+
+# retain the total number of tracked swans (not just those that fit the rules for fall departure)
+tracked_by_year<-p_dates %>% 
+  group_by(spring_yr) %>% 
+  summarize(tracked_swans=length(unique(swan_ID)))
+
+spring_yearly<-cbind.data.frame(tracked_by_year, spring_yearly[,2:6])
+
+spring_yearly %>% 
+  flextable() %>% 
+  colformat_num(big.mark="") %>% 
+  set_header_labels(values=list(
+    "spring_yr" = "Year",
+    "tracked_swans" = "Total Swans Tracked",
+    "num_swans" = "Number of Long-Distance Migrants",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Yearly summaries of migration phenology of spring arrivals from 2020-2023. Spring arrival timing was quantified from swans that traveled >100km from the breeding/capture territory during the non-breeding season and that returned within 10 km of their previous summer territory.")
+```
+
+---
+
+```{r fall-breeding-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# retain the total number of tracked swans (not just those that fit the rules for fall departure)
+tracked_by_breeding<-p_dates %>% 
+  drop_na(breeding_status) %>% 
+  group_by(breeding_status) %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%    #drop cygnets
+  summarize(tracked_swans=length(unique(swan_ID)))
+
+# Split by breeding status
+# Fall
+fall_breeding<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  drop_na(breeding_status) %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
+    mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>% 
+  group_by(breeding_status) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+fall_breeding<-cbind.data.frame(tracked_by_breeding, fall_breeding[,2:7])
+
+
+fall_breeding %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "breeding_status" = "Breeding Status",
+    "tracked_swans" = "Total Swans Tracked",
+    "num_swans" = "Number of Long-Distance Migrants",
+    "num_swan_years" = "Number of Fall Departure Events",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Fall departures of long-distance migrants by breeding status")
+```
+
+
+
+```{r spring-breeding-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# retain the total number of tracked swans (not just those that fit the rules for fall departure)
+tracked_by_breeding<-p_dates %>% 
+  drop_na(breeding_status) %>% 
+  group_by(breeding_status) %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%    #drop cygnets
+  summarize(tracked_swans=length(unique(swan_ID)))
+
+# Split by breeding status
+# Spring
+spring_breeding<-p_dates %>% 
+  drop_na(spring_arrival) %>% 
+  drop_na(breeding_status) %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
+  mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>% 
+  group_by(breeding_status) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
+            stan_dev_spring_arrival=signif(sd(spring_arrival), digits =0),
+            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
+            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
+
+
+
+spring_breeding<-cbind.data.frame(tracked_by_breeding, spring_breeding[,2:7])
+
+spring_breeding %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "breeding_status" = "Breeding Status",
+    "tracked_swans" = "Total Swans Tracked",
+    "num_swans" = "Number of Long-Distance Migrants",
+    "num_swan_years" = "Number of Spring Arrival Events",
+    "average_spring_arrival" = "Average Spring Arrival",
+    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
+    "earliest_spring_arrival" = "Earliest Arrival",
+    "latest_spring_arrival" = "Latest Arrival")) %>%  
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Fall departures of long-distance migrants by breeding status")
+```
+
+

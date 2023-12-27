@@ -1,4 +1,4 @@
-# latitude vs migration timing
+# breeding status vs migration timing
 
 library(here)
 library(tidyverse)
@@ -52,51 +52,63 @@ p_dates<-p_dates %>%
 
 # Or, just load this instead
 # third round (post apr/may 2023)
-#p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
-
-# remove a swan with only partial info
-p_dates<-p_dates %>% 
-  filter(!id_year%in%"8P-2021-2022")
+# p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv")) %>% 
+#   filter(!id_year%in%"8P-2021-2022")
 
 
 # plot for timing of migration vs breeder/non-breeder/paired
-fall_onset<-p_dates %>% 
+autumn_depts<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  filter(fall_yr!=2019) %>% 
   mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
-  ggplot(., aes(breeding_status, fall_mig_onset,fill=breeding_status))+
-  scale_x_discrete(labels=c("Breeder", "Paired", "Non Breeder"))+
-  geom_boxplot(outlier.shape = NA)+
+  ggplot(., aes(breeding_lat, fall_mig_onset, color=fall_yr))+
   scale_y_date(date_labels = "%b %d")+
-  geom_jitter(width = 0.1)+
-  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
-  ggtitle(label="Fall Onset")+
-  theme(plot.title = element_text(hjust=0.5, size=14),
-        plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="\nBreeding Status", y="Date of Fall Migration Onset\n")+
+  geom_point()+
+  geom_smooth(method="lm", alpha=0.3)+
+  stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
+           r.accuracy = 0.01,
+           label.x.npc="middle",
+           label.y=as.Date("2020-12-10"),
+           size = 5)+
+  labs(x="", y="\nDate of Autumn Departure\n")+
+  scale_x_continuous(breaks = seq(42,52, 2),limits=c(41,53)) +
   theme_pubr()+
-  theme(legend.position = "none", plot.title = element_text(hjust=0.5))
+  theme(legend.position = "none",
+        text=element_text(size=16),
+        strip.text.x = element_text(size=16))+
+  facet_wrap(~fall_yr)
+
 
 spring_arrival<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  filter(spring_yr!=2020) %>% 
   mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
-  ggplot(., aes(breeding_status, spring_arrival,fill=breeding_status))+
-  scale_x_discrete(labels=c("Breeder", "Paired", "Non Breeder"))+
-  geom_boxplot(outlier.shape = NA)+
+  ggplot(., aes(breeding_lat, spring_arrival, color=spring_yr))+
   scale_y_date(date_labels = "%b %d")+
-  geom_jitter(width = 0.1)+
-  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
-  ggtitle(label="Spring Arrival")+
-  theme(plot.title = element_text(hjust=0.5, size=14),
-        plot.subtitle = element_text(hjust=0.5, size=12))+
-  labs(x="\nBreeding Status", y="Date of Spring Arrival\n")+
+  geom_point()+
+  geom_smooth(method="lm", alpha=0.3)+
+  stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
+           r.accuracy = 0.01,
+           label.x.npc="middle",
+           label.y=as.Date("2020-04-24"),
+           size = 5)+
+  labs(x="\nBreeding\\Capture Latitude", y="Date of Spring Arrival\n")+
+  scale_x_continuous(breaks = seq(42,52, 2),limits=c(41,53)) +
   theme_pubr()+
-  theme(legend.position = "none", plot.title = element_text(hjust=0.5))
+  theme(legend.position = "none",
+        text=element_text(size=16),
+        strip.text.x = element_text(size=16))+
+  facet_wrap(~spring_yr)
 
-# fall_onset+spring_arrival
 
-# breeding_timing<-fall_onset+spring_arrival
-#   plot_layout(
-#     ncol=1
-#   )
+
+
+
+ breeding_timing<-autumn_depts/spring_arrival
 # ggsave(here("figures/figs_for_manuscript/breeding_timing.tiff"),
 #             dpi=300, compression="lzw")
+
+
+
+
+

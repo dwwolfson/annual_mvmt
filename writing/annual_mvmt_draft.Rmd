@@ -9,7 +9,7 @@ output:
     reference_docx: StylesTemplate.docx
     always_allow_html: true
 bibliography: "Annual_MVMT_manuscript.bib"
-csl: http://www.zotero.org/styles/the-journal-of-wildlife-management
+csl: http://www.zotero.org/styles/movement-ecology
 link-citations: yes
 editor_options: 
   markdown: 
@@ -17,7 +17,7 @@ editor_options:
 ---
 
 ```{r chunk-setup-options, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE,message=FALSE,warning=FALSE,fig.cap=TRUE,out.width='100%',ft.keepnext=FALSE)
+knitr::opts_chunk$set(echo = FALSE,message=FALSE,warning=FALSE,fig.cap=TRUE,out.width="100%",ft.keepnext=FALSE)
 ```
 
 ```{r flextable-settings, include=FALSE}
@@ -65,7 +65,36 @@ Break abstract into the above sections specifically.
 Also, between Abstract and Intro include 3-10 keywords
 --->
 ```
-## Background
+### Background
+
+Population-level migration may include a continuum of individual movement trends that optimize overall fitness over time.
+Trumpeter swans were historically widespread throughout North America prior to European settlement, but unregulated market hunting decimated trumpeter swan abundance to near extirpation in the lower 48 states.
+The Interior Population (IP) of trumpeter swans were reintroduced in eastern North America, but their current annual movements are not well understood.
+Our goal was to quantify the proportion of the IP that is migratory, the extent and phenology (e.g., typical departure and arrival dates) of those movements, the associations between movement patterns and breeding status and breeding location, and the degree of individual and population variability in migration patterns.
+
+### Methods
+
+We deployed 113 GPS-GSM transmitters on IP trumpeter swans in 6 U.S. states and one Canadian province across the current IP breeding range to quantify annual movement trends.
+Using data from 252 unique 'swan-years', we first segmented the annual cycle by fitting piecewise regression models to yearly time-series of displacement from the breeding site, and then extracting dates of migration events.
+We also fit a latent state model to characterize the relationship between breeding latitude and maximum extent of migration into two migration categories, and linear mixed models to estimate variability in migration phenology and duration.
+
+### Results
+
+Annual movements of IP trumpeter swans were highly variable.
+For the 60% of swans undergoing long-distance migration (defined as moving \>100km from the breeding site) there was a strong association between breeding latitude and the extent of migration.
+The remaining portion of the population had very local movements during the non-breeding season except those breeding at higher latitudes that showed greater movement.
+Breeding latitude had no association with fall departure, but a strong correlation with spring arrival.
+Successfull breeders and paired swans left later in the fall than non-breeders and arrived earlier in the spring.
+Spring arrival dates had higher repeatability than fall departure, indicating within-individual variation has a stronger role in migration timing at this time of year.
+
+### Conclusion
+
+IP trumpeter swans are a partial migrant population, with a continuum of strategies each year including from residency and local movement to long-distance migration.
+Much of the variability in movement patterns was related to factors tied to natural history demands and response to environmental conditions such as breeding status and breeding location.
+
+------------------------------------------------------------------------
+
+## Introduction
 
 ```{=html}
 <!--- 
@@ -73,29 +102,24 @@ Also, between Abstract and Intro include 3-10 keywords
 The Background section should explain the background to the study, its aims, a summary of the existing literature and why this study was necessary or its contribution to the field.
 --->
 ```
-### Biological intro to migration in long-lived avian species
 
 Migration is a behavioral mechanism widely used by all major vertebrate groups (e.g. birds, fish, mammal, herpetofauna) that allows individuals to optimize seasonal availability of resources to increase short-term survival, and by optimizing migration phenology, maximize long-term fitness [@fryxell1988; @milner-gulland2011; @winger2019; @barker2022].
 Despite its prevalence as an ecological process and a large body of research involving migration, how population-level migratory traditions are established is not well understood [@abrahms2021b].
-In part, that lack of understanding is hindered by the difficulty of making population-level inference from observations of individuals, quantifying migratory movements along a continuum of variability, and the relative scarcity of successful reintroductions of formerly scarce migratory species [@mueller2011a; @senner2020a].
+In part, that lack of understanding is hindered by the difficulty of making population-level inference from observations of individuals, quantifying migratory movements along a continuum of variability, and the relative scarcity of successful reintroductions of formerly scarce migratory species [@mueller2011a; @senner2020].
 
 Similar to other large, long-lived avian species such as geese, cranes and storks, adult swans take care of their young for the first year of life, providing food and protection, and guiding them on their first migration cycle [@chernetsov2004a; @mueller2013].
 As a consequence, cultural transmission during the first year is thought to be the primary mechanism that dictates the learned migration patterns used in subsequent years [@sutherland1998].
 
 Although this transfer of information is an effective mechanism for preserving migratory patterns through generations, it is unclear how these trends become established when a population has been re-established on a landscape from which it had been extirpated.
-@jesmer2018 found that newly translocated populations initially lost their migratory tendencies and that it took many generations to re-establish such patterns.
-
-### History of Trumpeter Swans in North America
+Jesmer et al. [@jesmer2018] found that newly translocated populations initially lost their migratory tendencies and that it took many generations to re-establish such patterns.
 
 Trumpeter swans (*Cygnus buccinator*), the largest waterfowl species in North America, were widespread throughout the continent prior to European colonization during the $19^{th}$ century [@alison1975].
 Due to widespread hunting for meat, skins for powder puffs, and feather quills for writing instruments, trumpeter swans were nearly extirpated in the lower 48 U.S. states and southern Canada and reached an estimated low of 70 individuals in the 1930s [@banko1960].
 Low numbers of trumpeter swans led to the establishment of Red Rock Lakes National Wildlife Refuge (RRLNWR) in the confluence of Montana, Wyoming, and Idaho in 1935, which was the last vestige of a breeding swan population in the U.S. (outside of Alaska) and Canada [@shea2002].
-As intensive management efforts to protect swans at RRLNWR resulted in increased abundance, managers used this flock as a source population for reintroduction efforts in other parts of the historical breeding range.
-Many states translocated trumpeter swans from RRLNWR to augment and boost the abundance and distribution of the diminished Rocky Mountain Population (RMP) or to restore the Interior Population (IP), which had been completely extirpated [@shea2002].
-In 1959, aerial surveys in central Alaska revealed abundant numbers Pacific Coast Population (PCP) swans ,and this Alaskan flock subsequently provided the majority of swans used for reintroductions within the IP [@hansen1971; @matteson1988].
+As trumpeter swan numbers at RRLNWR started to rise, this flock became a source population for reintroduction efforts in other parts of the historical breeding range of trumpeter swans.
+Trumpeter swans from RRLNWR were translocated to several U.S. states to augment and increase the abundance and distribution of the diminished Rocky Mountain Population (RMP) in the inter-Mountain West and to restore the Interior Population (IP), which had been completely extirpated, in the Great Lakes region of North America [@shea2002].
+In 1959, aerial surveys in central Alaska revealed abundant numbers of swans in the Pacific Coast Population (PCP), and this group subsequently provided the majority of swans used for reintroductions within the IP [@hansen1971; @matteson1988].
 An important distinction between these source populations is that PCP swans breeding in Alaska migrate to British Columbia and the northwestern United States each winter, but RMP swans from RRLNWR are non-migratory [@baskin1993; @oyler-mccance2007].
-
-### Current IP conditions
 
 Estimates of IP abundance have increased dramatically since reintroductions began in the 1960s, and both population size and distribution has expanded significantly [@groves2017].
 Trumpeter swans currently breed throughout most of the western Great Lakes region, including in Minnesota, Wisconsin, Michigan, Iowa, Manitoba, Ontario, and Ohio.
@@ -103,14 +127,13 @@ Beyond estimates of population size and trends, however, there is relatively lit
 For example, it is not known what proportion of the IP remains resident on their breeding range during the winter, the extent (i.e., distance) of movement for those swans that do leave their breeding territories, the timing of migratory periods (onset in the fall, settlement during winter, arrival in the spring), and the magnitude of intra- and inter-individual variability in migration behavior.
 A better comprehensive understanding of where IP swans move throughout the annual cycle (especially the non-breeding season) and when movements occur will better inform wintering area habitat requirements, optimal study design for surveys to index abundance, and differences in migration trends relating to breeding status and location.
 
-### Drivers/Why to migrate (or not)
-
-Many factors likely influence a swan's decision to leave its breeding territory during the non-breeding season, how far migrating individuals travel, and the degree of among-individual variability in movements for birds breeding at similar locations; these factors include, energetics of flight, life history requirements, and knowledge transfer of migratory traditions [@alerstam2003; @dingle2007; @chapman2011].
+Many factors likely influence a swan's decision to leave its breeding territory during the non-breeding season, how far migrating individuals travel, and the degree of among-individual variability in movements for birds breeding at similar locations; these factors include energetics of flight, life history requirements, and knowledge transfer of migratory traditions [@alerstam2003; @dingle2007; @chapman2011].
 The energetic cost of migration for a given distance traveled increases non-linearly with the mass of the bird, and therefore swans, one of the heaviest avian species to migrate, do so at considerable expense [@pennycuick1989; @berthold2001; @newton2010].
 Furthermore, 'Thermal Tolerance' or 'Body Size' hypothesis implies greater body mass conveys increased abilities to fast due to a lower basal metabolic rate.
 Therefore, larger individuals should be better able to withstand harsh winter conditions, and the tendency to migrate should decrease with increasing body size [@ketterson1976; @fudickar2013].
 Survival rates of migrating individuals are typically lowest during the non-breeding period of the annual cycle due to challenges associated with navigating relatively unfamiliar landscapes and the high energetic demand of migration [@sillett2002; @rushing2017].
 Yet, by migrating to a more temperate area during the wintering period, swans can increase their access to food and other resources that allow them to avoid harsh winter conditions in their breeding territories [@somveille2015].
+For many populations, partial migration, which have a mixture of resident and migratory individuals, allow a flexible mix of migratory strategies, and thus result in higher overall fitness [@chapman2011].
 
 Breeding status may also influence migratory behaviors due to the unique life history requirements of breeding individuals.
 Arriving early in the spring allows individuals to re-establish and defend a breeding territory and lay and incubate eggs.
@@ -119,23 +142,24 @@ Similarly, there are advantages to staying on breeding territories longer in the
 It is likely that the drivers of migration vary within the IP based on the location of a swan's breeding territory.
 Cues for migration can include declines in food availability, which may also be affected by density-dependent intra-specific competition [@rappole2013].
 Swans that spend the summer at different latitudes experience varying environmental conditions that may influence arrival in spring, such as the timing of ice melt and vegetative greenness [@lasorte2014; @lasorte2021], as well as departure in the fall, such as ice formation on shallow wetlands and plant senescence [@schummer2010; @xu2019a].
-The 'push' to avoid the harsh elements of winter varies substantially throughout the IP breeding range, with concurrent implications for decisions related to migration.
-
-### Objectives
+Swans breeding further from the equator contend with shorter growing seasons and greater pressures for offspring to sufficiently develop to flight stage before environmental conditions dictate migrating south for the winter [@stafford2014a].
+The 'push' to avoid the harsh elements of winter varies substantially throughout the IP breeding range, with concurrent implications for decisions related to migration timing.
 
 To better understand current movement ecology of the re-established IP trumpeter swans, we marked a sample of swans with GPS-GSM transmitters and monitored their movements over multiple annual cycles.
 Specifically, our objectives were to quantify 1) the proportion of IP that is migratory and the extent of those movements, 2) migration phenology (e.g., typical departure and arrival dates) 3) associations between annual movement patterns and breeding status and breeding location, and 4) the degree of individual and population-level variability in migration patterns.
 Ours is primarily a descriptive study of how a re-established population of trumpeter swans uses a novel landscape.
 
+------------------------------------------------------------------------
+
 ## Methods
 
 ### Study Area
 
-We captured IP swans throughout their current breeding distribution (Groves 2017) and during the breeding period, except for 4 swans captured during winter in Arkansas (Fig. \@ref(fig:capture-map)) .
+We captured IP swans throughout their current breeding distribution [@groves2017] and during the breeding period, except for 4 swans captured during winter in Arkansas (Fig. \@ref(fig:capture-map)) .
 We deployed transmitters on IP trumpeter swans as far north and west as southern Manitoba (51.1° N, 99.7° W), as far south as central Arkansas (35.5° N, 91.9° W), and as far east as central Ohio (40.6° N, 82.7° W).
 Capture locations occurred in a mix of Laurentian Mixed Forest, Prairie Parkland, Eastern Broadleaf Forest, and Aspen Parklands [@cleland1997].
 
-```{r capture-map, fig.align="left", fig.cap="Capture locations for Interior Population trumpeter swans collared with GPS-GSM transmitters from July 2019–January 2022."}
+```{r capture-map, fig.align="left", fig.width=6, fig.cap="Capture locations for Interior Population trumpeter swans collared with GPS-GSM transmitters from July 2019–January 2022."}
 
  knitr::include_graphics(here("figures/figs_for_manuscript/capture_locations_with_ar.tiff"))
 ```
@@ -161,25 +185,28 @@ All capture and marking of trumpeter swans in Manitoba was conducted under Feder
 
 ### Migration Phenology Classification
 
-To quantify migration phenology throughout the annual cycle, we used a model-driven approach considering how far each swan moves throughout an entire year and segmenting stationary time periods.
-We first calculated yearly time-series of Net-Squared Displacement (NSD) values for each swan, using 1 July as a cutoff date between years for individuals with multiple years of GPS data, and then condensed the dataset to a single average NSD value per day.
-After excluding swan-year datasets with \<30 days of data, we iteratively fit a series of 7 intercept-only piecewise regression models to each time-series [@wolfson2022].
-The syntax of each model corresponded to an increasing number of intercepts included (1-7) for average NSD values throughout the time series separated by breakpoints in time where the intercept values transitioned; therefore intercepts represent stationary segments in time corresponding to periods of the annual cycle, and breakpoints are the transitions between these segments.
+Accurate classification of migration phenology is a key objective to this study, but due to the size of the telemetry dataset (\~6M locations over 252 swan-years), we needed an efficient workflow to segment location data into periods of the annual cycle and estimate migration metrics. Many migration segmentation approaches are based on spatiotemporal criteria that require subjective species-specific decisions, reducing reproducibility and limiting the potential to generalize to other studies, especially given the complexity of migratory behaviors many species exhibit [@soriano-redondo2020; @vandekerk2021].  
+
+To quantify migration phenology, we used a model-driven approach considering displacement throughout the year and segmenting the annual cycle into stationary time periods that correspond with breeding, stopover, and wintering areas.
+We first calculated yearly time-series of Net-Squared Displacement (NSD) values for each swan, using 1 July as a cutoff date between years for individuals with multiple years of GPS data, and then condensed the dataset to a single average displacement value per day.
+After excluding 11 swan-year datasets with \<30 days of data, we iteratively fit a series of 7 intercept-only piecewise regression models to each time-series [@wolfson2022].
+The syntax of each model corresponded to an increasing number of intercepts included (1-7) for average displacement values throughout the time series separated by breakpoints in time where the intercept values transitioned; therefore intercepts represent stationary segments in time corresponding to periods of the annual cycle, and breakpoints are the transitions between these segments that provide information on the timing of migration events such as fall departure and spring arrival (Fig. \@ref(fig:nsd-piecewise)).
+
+```{r nsd-piecewise, fig.align="left", fig.cap="An example of extracting migration phenology metrics from a fitted piecewise regression model of an annual time-series of displacement values for an individual trumpeter swan."}
+
+ knitr::include_graphics(here("figures/figs_for_manuscript/nsd_piecewise.tif"))
+```
+
 We fit all piecewise regression models in JAGS [@plummer2003] using the mcp package [@lindelov2020] in Program R version 4.0.2 [@rcoredevelopmentteam2022], using 15,000 iterations and a burn-in period of 10,000.
-We ran all scripts in parallel using the future package on a partition of the Minnesota Supercomputing Institute (MSI) with 48 cores and 50GB RAM per core [@bengtsson2021].
-We evaluated MCMC chain convergence via the Gelman-Rubin convergence diagnostic and excluded models containing any parameters with a value of $\hat{R}$ \>1.1 from further consideration [@brooks1998].
+We used the future R package to run all scripts in parallel on the Minnesota Supercomputing Institute (MSI) using a partition with 24 cores and 50GB RAM per core [@bengtsson2021].
+We evaluated MCMC chain convergence via the Gelman-Rubin convergence diagnostic and excluded models containing any parameters with a value of $\hat{R}$ \>1.1 from further consideration [@brooks1998]. Through extensive testing, we found that models with MCMC samples that failed to converge in distribution after 15,000 samples were typically associated with poorly fitting models (i.e., fitting a single intercept despite multiple migration periods or fitting multiple breakpoints during a stationary period).
 If all parameters in a model passed the $\hat{R}$ threshold, we evaluated model fit and predictive performance using leave-one-out cross-validation (LOO-CV) with Pareto smoothed importance sampling to estimate the Expected Log Predictive Density (ELPD), using the loo package [@gelman2014; @vehtari2017].
 The ELPD values reflect the ability of the model to predict the posterior density of withheld data.
 We used LOO-CV to choose the ideal number of breakpoints (and thereby segments that correspond to migratory periods) for each swan-year data partition.
 
-We qualitatively inspected the visual fit of each model best-supported by ELPD for each swan-year dataset and removed 11 (out of 241 total datasets) that were obvious poor fits such that information from the breakpoints and intercepts would not adequately describe the annual migration phenology (link to Supplemental Materials).
-For models that passed visual inspection (230 out of 241), we extracted parameter values to represent the movement metrics of interest **(reference all of these metrics in a table?)** after first applying a series of criteria thresholds to strengthen the biological connection of the breakpoints and intercept values from the fitted models.
-**(include these in the supplemental as well?)**.
+We qualitatively inspected the visual fit of each model best-supported by ELPD for each swan-year dataset and removed 11 (out of 241 total datasets) that were obvious poor fits such that information from the breakpoints and intercepts would not adequately describe the annual migration phenology.
 
-### Summary of Migratory Trends
-
-We devised a flexible workflow that could accommodate a wide breadth of variability in annual movements but still allow for population-level inference.
-We derived a number of movement metrics from each swan-year dataset to describe annual movement trends by creating an algorithm to exclude erroneous segments and changepoints that didn't represent biologically meaningful transitions between different segments of the annual movement cycle.
+For models that passed visual inspection (230 out of 241), we extracted parameter values to represent the movement metrics of interest after first applying a series of criteria thresholds to exclude erroneous changepoints that didn't represent biologicially meaningful transitions within the annual cycle.
 We excluded all segments \<2 km from the previous segment and all changepoints \<2 days from the previous changepoint.
 We extracted fall departure dates for individuals that moved \>100 km from breeding/capture territories by 1 December.
 We extracted spring arrival dates for individuals that moved \>100 km from breeding/capture territories during the non-breeding season and that returned within 10 km of their previous summer territory.
@@ -187,20 +214,15 @@ We estimated migration duration as the difference in time between fall departure
 
 ### Latent State Model for Migration Extent
 
-Exploratory data analysis annual movement suggested that IP swans may use multiple migration strategies; one where annual distance moved is linearly related to the swan's breeding latitude, and a second strategy where swans largely remain resident, but move shorter distances at higher latitudes.
-To further investigate this trend, we modeled the relationship between breeding latitude and migration extent (defined as max displacement from breeding territory during the non-breeding season) using a state-space formulation for assignment in one of two migration 'strategy' categories, either a linear relationship between breeding latitude or a nonlinear relationship in which swans at lower latitudes do not travel long distances but make greater movements at higher latitudes.
-We excluded 6 swan-year datasets that had large dispersal movements during the summer because our focus was on movements during the non-breeding season.
+Exploratory data analysis annual movement suggested that IP swans may use multiple migration strategies; one where the migration extent (defined as max displacement from breeding territory during the non-breeding season) is linearly related to the swan's breeding latitude, and a second strategy where most swans are resident, but those breeding at higher latitudes make regional movements during the nonbreeding season.
+To further investigate this trend, we modeled the relationship between breeding latitude and migration extent using a state-space formulation for assignment in one of two migration 'strategy' categories, either a linear relationship between breeding latitude or a nonlinear relationship in which swans at lower latitudes do not travel long distances but make greater movements at higher latitudes.
 The underlying latent migration strategy for each individual was modeled as:
 
 $$z_i\sim Bernoulli(\pi_{i})$$
 
-$$Logit(\pi_{i}) = \bar{\beta} + b_{i}$$ where $z_i$ is the latent state (0 or 1) for assignment to a migration strategy, $\bar{\beta}$ is the overall mean of $\pi$ ($\bar\beta \sim\mathcal{N}(0, 1/3)$)and $b_{i}$ is an individual-specific random effect ($b \sim\mathcal{N}(0, \tau_{b})$) with precision $\tau_{b}$ ($\tau_b = 1/\sigma_b^2, \sigma_b \sim Uniform(0,200)$).
+$$Logit(\pi_{i}) = \bar{\beta} + b_{i}$$ where $z_i$ is the latent state (0 or 1) for assignment to a migration strategy, $\bar{\beta}$ is the overall mean of $\pi$ ($\bar\beta \sim\mathcal{N}(0, 1/3)$), and $b_{i}$ is an individual-specific random effect ($b \sim\mathcal{N}(0, \tau_{b})$) with precision $\tau_{b}= 1/\sigma_b^2$, ($\sigma_b \sim Uniform(0,200)$).
 The model likelihood is as follows:
 
-```{=html}
-<!---
-# $$Y_i\sim\mathcal{N}(\mu_i, z_i\cdot\tau_1+(1-z_i\cdot\tau_2))$$--->
-```
 $$
 Y_j\sim
 \begin{cases}
@@ -208,8 +230,6 @@ Y_j\sim
 \mathcal{N}(\mu_i, \tau_2) & \text{ if } z_{i} = 0 
 \end{cases}
 $$
-
-<!---# $$\mu_i=z_i*(\alpha+\beta\cdot x_i)+(1-z_i)*(c+\gamma\cdot x_i^\delta)$$ --->
 
 $$
 \mu_{j}=
@@ -219,20 +239,20 @@ c+\gamma\cdot x_{ij}^\delta & \text{ if } z_{i} = 0
 \end{cases}
 $$
 
-where $Y_j$ is the extent of migration for individual $i$ in year $j$, $\tau_1$ and $\tau_2$ are separate precision parameters for each latent state, $\tau_1=\frac{1}{\sigma_1^2}$, $\tau_2=\frac{1}{\sigma_2^2}$, $\alpha$ and $\beta$ are the intercept and slope for the linear model, $x_ij$ is the breeding latitude for individual $i$ in year $j$, and $c$, $\gamma$, and $\delta$ are the parameters in the non-linear model when $z=0$.
+where $Y_j$ is the extent of migration for individual $i$ in year $j$, $\tau_1$ and $\tau_2$ are separate precision parameters for each latent state, $\tau_1=\frac{1}{\sigma_1^2}$, $\tau_2=\frac{1}{\sigma_2^2}$, $\alpha$ and $\beta$ are the intercept and slope for the linear model, $x_{ij}$ is the breeding latitude for individual $i$ in year $j$, and $c$, $\gamma$, and $\delta$ are the parameters in the non-linear model when $z=0$.
 We used normal priors for $\alpha \sim\mathcal{N}(400,0.001)$, $\beta \sim\mathcal{N}(150, 0.001)$, and $\gamma \sim\mathcal{N}(30, 0.001)$.
 We used uniform priors for $c \sim Uniform(0,100$), $\delta \sim Uniform(0,30)$, $\sigma_1 \sim Uniform(1,200)$, and $\sigma_2 \sim Uniform(1,200)$.
-We implemented the model in JAGS via the rjags R package using 3 MCMC chains with 20,000 iterations, a burn-in of 10,000, and a thinning rate of 10 [@plummer2003; @su2021b].
+We implemented the model in JAGS via the R2jags package using 3 MCMC chains with 20,000 iterations, a burn-in of 10,000, and a thinning rate of 10 [@plummer2003; @su2021b].
 We determined convergence of chains by assessing trace plots and using the Gelman-Rubin statistic with $\hat{R}$ \<1.1[@brooks1998].
 
 ### Variability in Annual Movements
 
-We estimated the consistency of migration phenology by calculating among-individual variation, within-individual variation, and repeatability (defined as the proportion of the total variance accounted for by differences among groups) of fall departure dates, spring arrival dates, and migration duration using two analytical approaches.
-When possible, we fit a linear mixed model (LMM) with restricted maximum likelihood, which is robust to unbalanced designs and accounts for repeated measures [@nakagawa2010].
-If fit LMMs were singular, we quantified summary statistics of migration metrics using simple sample means and variances.
+We estimated the consistency of migration trends by calculating among- and within-individual variation and repeatability of fall departure dates, spring arrival dates, and migration duration.
+Repeatability (R), also referred to as the intra-class correlation coefficient, quantifies the degree of consistency in each individual's response by comparing the proportion of the total variance accounted for by difference among groups [@nakagawa2010].
+When possible, we fit a linear mixed model (LMM) with restricted maximum likelihood, which is robust to unbalanced designs and accounts for repeated measures, and added in covariates for breeding status and sex to control for confounding effects that otherwise inflate the total phenotypic variance [@matuschek2017; @bates2018].
 
 For each of three migration phenology response terms, we fit separate models in which $y_{ij}$ are the observations of the migration metric (e.g. spring arrival date) for the $i$th individual ($i=1,...,k$) during the $j$th year, $\beta_0$ is the overall population mean, $\alpha_i$ is a random effect for individuals, and $\epsilon_{ij}$ is a random within-individual error term.
-When there was sufficient variability in the variance-covariance structure of random effects to avoid model singularity, we also included $\gamma_{ij}$ as a vector of covariates for individual $i$ and year $j$ that include breeding status and sex to control for confounding effects that will otherwise inflate the total phenotypic variance [@matuschek2017; @bates2018].
+When there was sufficient variability in the variance-covariance structure of random effects to avoid model singularity, we also included $\gamma_{ij}$ as a vector of covariates for individual $i$ and year $j$ that include breeding status and sex.
 
 $$y_{ij}=\beta_0+\gamma_{ij}+\alpha_i+\epsilon_{ij}$$ $$\alpha\sim \mathcal{N}(0,\sigma_{\alpha}^2)$$ $$\epsilon_{ij}\sim \mathcal{N}(0,\sigma_{\epsilon}^2)$$
 
@@ -242,14 +262,16 @@ Repeatability, $R_M$, is defined as the proportion of total phenotypic variance 
 
 $$R_M=\frac{\sigma_{\alpha}^2}{\sigma_{\alpha}^2+\sigma_{\epsilon}^2}$$
 
-We fit LMMs with restricted maximum likelihood estimation using the lme4 R package and conducted parametric bootstrapping with 1000 iterations to quantify the uncertainty in adjusted repeatability estimates using the rptR R package [@bates2015; @stoffel2017].
-For any metrics that produced singular fits using LMMs, we were not able to estimate repeatability.
-We instead estimated variability in timing for a migration metric and reporting the population average and standard deviation, and estimated among-individual variability by calculating the time spans for each year for a given migration metric and reporting the average across years with a standard deviation.
+We fit LMMs with restricted maximum likelihood estimation using the lme4 R package and conducted parametric bootstrapping with 1000 iterations to quantify the uncertainty in adjusted repeatability estimates using the rptR R package [@bates2014; @stoffel2017].
+
+If the $\sigma_{\alpha}^2$ term of a LMM was 0, implying the random effects structure is too complex to be supported by the data, we were unable to partition the among- and within-individual variation required to estimate repeatability.
+In those cases, we removed the random intercept term for individual and fit a linear model with breeding status and sex as covariates to estimate the within-individual variation.
+
+------------------------------------------------------------------------
 
 ## Results
 
-We deployed 113 collars with GPS-GSM transmitters on 126 trumpeter swans (including 13 redeployments using collars recovered from mortalities).
-Of these, 78 were female and 48 were male; 73 were breeding adults (cygnets present), 22 were adults with mates present but no cygnets at time of capture, 24 were non-breeding adults captured while in large groups, and 6 were cygnets at the time of capture.
+We deployed 113 collars with GPS-GSM transmitters on 126 trumpeter swans (including 13 redeployments using collars recovered from mortalities), resulting in 252 unique 'swan-year' telemetry datasets. Of the 126 swans, 78 were female and 48 were male; 73 were breeding adults (cygnets present), 22 were adults with mates present but no cygnets at time of capture, 24 were non-breeding adults captured while in large groups, and 6 were cygnets at the time of capture.
 
 ```{=html}
 <!-- **Potentially cut out this paragraph or stick in an appendix/supplemental** In 2019, we deployed 19 transmitters (7 in Minnesota and 12 in Michigan).
@@ -257,8 +279,6 @@ In 2020, we deployed an additional 78 transmitters (10 in Manitoba, 40 in Minnes
 In 2021, we deployed an additional 28 transmitters, 11 of which were re-deployments (1 in Manitoba, 9 in Minnesota, 2 in Iowa, 4 in Wisconsin, 8 in Ohio, and 4 in Arkansas).
 In 2022 we redeployed 1 transmitter in Iowa. -->
 ```
-We collected 252 unique 'swan-year' telemetry datasets.
-We excluded 19 datasets due to insufficient temporal data coverage and 11 datasets due to non-standard trajectories that were poorly described by typical migration strategies that could be inferred using our piecewise regression approach.
 
 ```{r deployment-fig, fig.align="left", out.width=100, fig.cap="An overview of GPS telemetry data received from all collared IP trumpeter swans. Each line represents the period of data collection from a single collared swan. The grey regions indicate periods of collar deployment. The black lines are 1 January of each year. Number of deployments (including redeployments) by state/province are: Michigan (n=14), Minnesota (n=56), Manitoba (n=11), Iowa (n=12), Ohio (n=20), Wisconsin (n=9), and Arkansas (n=4)."}
 
@@ -300,25 +320,10 @@ We excluded 6 swan-year datasets that had large dispersal events during the summ
 
 <!-- # Table citation (Table @ref(tab:table-name)) -->
 
-Annual movements of IP trumpeter swans were highly variable.
-For the 59%(131 out of 221) of swans that underwent long-distance migration on a given year, there was a strong association between breeding latitude (mostly between 43 and 53 degrees latitude) and the extent of migration (Fig. \@ref(fig:mig-extent-vs-latitude-fig)).
+Annual movements of IP trumpeter swans were highly variable. After filtering out datasets with incomplete coverage to estimate annual trends, IP swans underwent long-distance migration (>100km) at a frequency of 59% (131 of 221 swan-years). For those long-distance migrants, there was a strong association between breeding latitude (mostly between 43 and 53 degrees latitude) and the extent of migration (Fig. \@ref(fig:latent-state-fig)).
 Many swans with breeding sites between 40 and 48 degrees latitude, however, exhibited minimal movement during the non-breeding period and we considered these to be resident individuals, though most of these swans left their summer territory or increased their overall space use during the winter, likely to increase access to ice-free open water or food availability.
 
-```{r mig-extent-vs-latitude-fig, fig.align="left", fig.cap="Breeding/capture latitude versus extent of migration (furthest distance from breeding territory during the nonbreeding season) for 221 'swan-year' datasets representing annual migration cycles."}
-
-# all code used to produce this figure lives here:
-# here("scripts/scripts_for_manuscript_figures/lat_vs_extent.R")
-
-
-knitr::include_graphics(here("figures/figs_for_manuscript/distances_latitude.tiff"))
-```
-
-#### Latent-state model:
-
-**What text to add about the latent state model that adds to what is shown from the figure?** Show a histogram of the state assignment probabilities to show that it's very bimodal?
-Posterior predictive checks of the model?
-
-```{r latent-state-fig, fig.align="left", fig.cap="Breeding/capture latitude versus extent of migration datasets color coded by the probability of assignment to one of 2 migration strategies as determined by a latent state model with 2 functional forms to model the relationship between latitude and migratino extent. Grey areas are the 95% credible interval posteriors for the fit of each latent state."}
+```{r latent-state-fig, fig.align="left", fig.cap="Breeding/capture latitude versus extent of migration with color indicating the probability of assignment to one of 2 migration strategies as determined by a latent state model with 2 functional forms to model the relationship between latitude and migration extent. Grey areas depict the 95% credible intervals for each strategy."}
 
 # all code used to produce this figure from latest latent model main script:
 # here("scripts/logistic_latent_sep_2023.R")
@@ -326,81 +331,8 @@ Posterior predictive checks of the model?
 knitr::include_graphics(here("output/updated_latent_state_aug2023/logistic_pubclean.tiff"))
 ```
 
-#### Migration phenology, relationships to breeding and latitude, and variability:
+Average departure date among years from breeding territories in the fall by long-distance migrants (\>100 km) was 1 November with a standard deviation of 20 days, and yearly averages ranged from 25 October to 7 November (**add link for supplemental tables for all fall dept combined and split by years**). There was little evidence of a relationship between breeding latitude and date of fall departure (Fig. \@ref(fig:timing-vs-latitude-fig)), but breeders left later, on average, than non-breeders or paired swans, and non-breeders had higher variability in timing than all other breeding categories (s.d.=30 days for non-breeders and s.d.=10 days for other categories; Fig. \@ref(fig:timing-vs-breeding-fig), **add link for supplemental fall dep vs breeding table**).
 
-##### Fall departure:
-
-Dates of departure from breeding territories in the fall by long-distance migrants (\>100km) were variable, with the overall average departure date across years on November 1st with a standard deviation of 20 days (Table \@ref(tab:combined-fall-table)), and yearly averages ranged from October 25 to November 7 (Table \@ref(tab:fall-yearly-table)).
-
-```{r combined-fall-table}
-# third round (post apr/may 2023)
-p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
-
-# first, show a table with summary stats for fall departure and spring arrival
-# all swans and years, fall departures
-fall_table<-p_dates %>% 
-  drop_na(fall_mig_onset) %>% 
-  summarize(num_swans=length(unique(swan_ID)),
-            num_swan_years=n(),
-            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
-            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
-            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
-            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
-            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
-
-fall_table %>% 
-  flextable() %>% 
-  set_header_labels(values=list(
-    "num_swans" = "Number of Swans",
-    "num_swan_years" = "Number of Swan-Years",
-    "average_fall_depart" = "Average Fall Departure",
-    "stan_dev_fall_depart" = "Standard Deviation (in days)",
-    "earliest_fall_depart" = "Earliest Departure",
-    "latest_fall_depart" = "Latest Departure")) %>% 
-  set_table_properties(layout="autofit") %>% 
-  vline(part="header") %>% 
-  align(align ='center', part = 'all') %>% 
-  bg(part="header", bg="#dbdbdb") %>% 
-  bold(part="header") %>% 
-  set_caption("Migration phenology of fall departures by long-distance migrants. 'Swan-year' datasets were only considered if individuals moved >100km from breeding/capture territories by December 1.")
-```
-
-```{r fall-yearly-table}
-# third round (post apr/may 2023)
-p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
-
-# Split out by year
-fall_yearly<-p_dates %>% 
-  drop_na(fall_mig_onset) %>% 
-  # filter(!fall_yr==2019) %>% 
-  group_by(fall_yr) %>% 
-  summarize(num_swans=length(unique(swan_ID)),
-            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
-            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
-            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
-            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
-            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
-
-fall_yearly %>% 
-  flextable() %>% 
-  colformat_num(big.mark="") %>% 
-  set_header_labels(values=list(
-    "fall_yr" = "Year",
-    "num_swans" = "Number of Swans",
-    "average_fall_depart" = "Average Fall Departure",
-    "stan_dev_fall_depart" = "Standard Deviation (in days)",
-    "earliest_fall_depart" = "Earliest Departure",
-    "latest_fall_depart" = "Latest Departure")) %>% 
-      set_table_properties(layout="autofit") %>% 
-  vline(part="header") %>% 
-  align(align ='center', part = 'all') %>% 
-  bg(part="header", bg="#dbdbdb") %>% 
-  bold(part="header") %>% 
-  set_caption("Fall departures of long-distance migrants by year. 'Swan-year' datasets were only considered if individuals moved >100km from breeding/capture territories by December 1.")
-```
-
-We did not find evidence of a relationship between breeding latitude and date of fall departure (Fig. \@ref(fig:timing-vs-latitude-fig)), but breeders and cygnets left later, on average, than non-breeders or paired swans, and non-breeders had much higher variability in timing than the other breeding categories (s.d.=30 for non-breeders and s.d.=10 for each other category) (Fig. \@ref(fig:timing-vs-breeding-fig), Table \@ref(tab:fall-breeding-table)).
-**Should we not report variability in this way given that there is the other methods on it now?**
 
 ```{r timing-vs-latitude-fig, fig.align="left", fig.cap="The timing of fall departure and spring arrival facetted by year. Grey areas show 95% confidence intervals of linear models fit with latitude as the independent variable and date as the dependent variable. R-squared values indicating the amount of variance in timing dates explained by latitude is superimposed for each plot."}
 
@@ -410,7 +342,7 @@ We did not find evidence of a relationship between breeding latitude and date of
 knitr::include_graphics(here("figures/figs_for_manuscript/timings_latitude.tiff"))
 ```
 
-```{r timing-vs-breeding-fig, fig.align="left", fig.cap="Insert caption for timing vs breeding status figure here..."}
+```{r timing-vs-breeding-fig, fig.align="left", fig.cap="Migration phenology by breeding status (breeder, paired, and non-breeder) facetted by season. Boxplots show 75% inter-quartile range, black lines are median values for each category, and points indicate individual swan-year datasets."}
 
 # For the code used to make this figure see this script:
 # here("scripts/scripts_for_manuscript/breeding_vs_timing.R")
@@ -418,128 +350,20 @@ knitr::include_graphics(here("figures/figs_for_manuscript/timings_latitude.tiff"
 knitr::include_graphics(here("figures/figs_for_manuscript/breeding_timing.tiff"))
 ```
 
-```{r fall-breeding-table}
-# third round (post apr/may 2023)
-p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+Dates of spring arrival for swans that traveled \>100 km during the nonbreeding period and returned to within 10 km of their previous summer territory were more consistent than fall departure dates, with the overall average spring arrival date of 5 March and yearly averages ranging from 2 March to 7 March (Fig. \@ref(fig:timing-vs-latitude-fig), Fig. \@ref(fig:timing-vs-breeding-fig)).
 
-# Split by breeding status
-# Fall
-p_dates %>% 
-  drop_na(fall_mig_onset) %>% 
-  drop_na(breeding_status) %>% 
-  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
-  group_by(breeding_status) %>% 
-  summarize(num_swans=length(unique(swan_ID)),
-            num_swan_years=n(),
-            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
-            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
-            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
-            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
-            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d")) %>% 
-  flextable() %>% 
-  set_header_labels(values=list(
-    "breeding_status" = "Breeding Status",
-    "num_swans" = "Number of Swans",
-    "num_swan_years" = "Number of Swan-Years",
-    "average_fall_depart" = "Average Fall Departure",
-    "stan_dev_fall_depart" = "Standard Deviation (in days)",
-    "earliest_fall_depart" = "Earliest Departure",
-    "latest_fall_depart" = "Latest Departure")) %>% 
-  set_table_properties(layout="autofit") %>% 
-  vline(part="header") %>% 
-  align(align ='center', part = 'all') %>% 
-  bg(part="header", bg="#dbdbdb") %>% 
-  bold(part="header") %>% 
-  set_caption("Fall departures of long-distance migrants by breeding status")
-```
-
-##### Spring arrival
-
-Dates of spring arrival for swans that traveled \>100 km during the nonbreeding season and returned to within 10 km of their previous summer territory were more consistent than fall departure dates, with the overall average spring arrival date of March 5 and a standard deviation of 10 days (Table \@ref(tab:combined-spring-table)), and yearly averages ranged from March 2 to March 7 (Table \@ref(tab:spring-yearly-table)).
-
-```{r combined-spring-table}
-# third round (post apr/may 2023)
-p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
-
-# all swans and years, spring arrivals
-spring_table<-p_dates %>% 
-  drop_na(spring_arrival) %>% 
-  summarize(num_swans=length(unique(swan_ID)),
-            num_swan_years=n(),
-            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
-            # median_spring_arrival=format(median(as.POSIXct(spring_arrival)), "%B %d"),
-            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
-            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
-            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
-
-spring_table %>% 
-  flextable() %>% 
-  set_header_labels(values=list(
-    "num_swans" = "Number of Swans",
-    "num_swan_years" = "Number of Swan-Years",
-    "average_spring_arrival" = "Average Spring Arrival",
-    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
-    "earliest_spring_arrival" = "Earliest Arrival",
-    "latest_spring_arrival" = "Latest Arrival")) %>% 
-  set_table_properties(layout="autofit") %>% 
-  vline(part="header") %>% 
-  align(align ='center', part = 'all') %>% 
-  bg(part="header", bg="#dbdbdb") %>% 
-  bold(part="header") %>% 
-  set_caption("Migration phenology of spring arrivals by long-distance migrants")
-```
-
-```{r spring-yearly-table}
-# third round (post apr/may 2023)
-p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
-
-spring_yearly<-p_dates %>% 
-  drop_na(spring_arrival) %>% 
-  group_by(spring_yr) %>% 
-  summarize(num_swans=length(unique(swan_ID)),
-            average_spring_arrival=format(mean(as.POSIXct(spring_arrival)), "%B %d"),
-            stan_dev_spring_arrival=signif(sd(spring_arrival), digits=0),
-            earliest_spring_arrival=format(range(spring_arrival)[1], "%B %d"),
-            latest_spring_arrival=format(range(spring_arrival)[2], "%B %d"))
-
-spring_yearly %>% 
-  flextable() %>% 
-  colformat_num(big.mark="") %>% 
-  set_header_labels(values=list(
-    "spring_yr" = "Year",
-    "num_swans" = "Number of Swans",
-    "average_spring_arrival" = "Average Spring Arrival",
-    "stan_dev_spring_arrival" = "Standard Deviation (in days)",
-    "earliest_spring_arrival" = "Earliest Arrival",
-    "latest_spring_arrival" = "Latest Arrival")) %>% 
-  set_table_properties(layout="autofit") %>% 
-  vline(part="header") %>% 
-  align(align ='center', part = 'all') %>% 
-  bg(part="header", bg="#dbdbdb") %>% 
-  bold(part="header") %>% 
-  set_caption("Spring arrivals of long-distance migrants by year")
-```
-
-#### Variation and repeatability:
-
-Due to parameters near the boundary of the feasible parameter space, we were unable to estimate variability estimates using a LMM framework for fall departure timing.
-Using a non-model-based approach, we estimated the average within-individual difference in fall departure to be 21 days (s.d.=18 days) and the average among-individual variability (defined as the time span between the first and last migrant) to be 53 days (s.d.= 30 days).
+Swans showed significant repeatability between years in spring arrival timing (considering 95% CI overlap with 0 as statistical significance), but did not show significant repeatability in migration duration (Table \@ref(tab:repeatability-tab)). Because parameters were near the boundary of the feasible parameter space, we were unable to estimate variability using a LMM framework for fall departure timing.
+Instead, we fit a linear model with fall departure as the response variable and breeding status and sex as the independent variables and estimated within-individual variance to be 297.91.
 For spring arrival timing, we fit a LMM including fixed effects of sex and breeding status and swan ID as a random effect.
-Repeatability of spring arrival timing was 0.67 (SE=0.123, CI=[0.38,0.85]) and among-individual variation (var=137, sd=11.8) was greater than within-individual variation (var=67, sd=8.2).
+Repeatability of spring arrival timing was 0.67 (SE=0.115, CI=[0.404,0.853]) and among-individual variation (var=137) was greater than within-individual variation (var=67).
 For migration duration, we fit an intercept-only LMM with swan ID as a random effect.
-Repeatability of migration duration was 0.086 (SE=0.22, CI=[0,0.69]) and among-individual variation (var=38, sd=6.2) was much lower than within-individual variation (var=408, sd=20.2).
-
-**Weird to give an average of differences for the non-model based and the squared standard deviation for the model-based? Should I not give the average and just square the s.d. for fall departure for both within and among?**
+Repeatability of migration duration was 0.086 (SE=0.21, CI=[0,0.664]) and among-individual variation (var=38) was much lower than within-individual variation (var=408).
 
 <!-- Swans arriving back on their territory in the spring had relatively low levels of individual variability within years, and arrival dates correlated highly with their breeding/capture latitude. -->
 
 <!-- There was also a much greater difference between breeding classes, with successful breeders arriving much earlier on average than non-breeders or paired swans. -->
 
-<!-- The level of individual variability between years was xxxxx. -->
-
-**Include a reference to the full table of all parameter output?**
-
-```{r duration-fig, fig.align="left", fig.cap="Insert caption for duration vs breeding status figure here..."}
+```{r duration-fig, fig.align="left", fig.cap="Migration duration (in days) facetted by breeding status (breeder, paired, and non-breeder) and breeding latitude. Boxplots show 75% inter-quartile range, black lines are median values for each category, and points indicate individual swan-year datasets. The grey area is the 95% confidence interval of a linear model fit to breeding latitude with a response of migration duration. R-squared values indicating the amount of variance in duration explained by latitude."}
 
 # For the code used to make this figure see this script:
 # here("scripts/scripts_for_manuscript/duration_vs_lat_and_breeding.R")
@@ -548,79 +372,71 @@ knitr::include_graphics(here("figures/figs_for_manuscript/durations.tiff"))
 
 ```
 
-```{r repeat-tab}
+
+```{r repeatability-tab}
 
 # Table from all the previous estimations
-rep_tab<-read_csv(here("output/repeatability/repeatability.csv"))
+rep_tab<-read_csv(here("output/repeatability/repeatability_lmm_or_lm_reduced_CI_version.csv"))
 
 rep_tab %>% 
   flextable %>% 
+  compose(i=1, j=7, value=as_paragraph("NA")) %>% # the en-dash changes column from numeric to character and then                                                    # NA doesn't display properly, so have to hard-code it 
   set_header_labels(values=list(
     "migration_metric"="Migration Metric",
     "swan-years"="Number of Migratory Tracks",
     "individuals"="Number of Swans",
-    "within-individual_variance (average difference in fall timing within an individual)"=
-      "Within-individual Variance",
-    "within-individual_std (std of individual difference in fall timing)"=
-      "Within-individual Standard Deviation",
+    "within-individual_variance"=
+      "Within-Individual Variance",
     "among-individual_variance"=
-      "Among-individual Variance",
-    "among-individual_std"=
-      "Among-individual Standard Deviation",
+      "Among-Individual Variance",
     "repeatability_estimate"=
       "Repeatability",
-    "repeatability_SE"=
-      "Repeatability Standard Error",
-    "repeatability_lcl"=
-      "Repeatability Lower Confidence Limit",
-    "repeatability_ucl"=
-      "Repeatability Upper Confidence Limit"
-  )) %>% 
+    "repeatability_95%_CI"=
+      "Repeatability 95% CI"
+  )) %>%
+  fontsize(size=9, part="all") %>% 
   vline(part="header") %>% 
   align(align ='center', part = 'all') %>% 
   bg(part="header", bg="#dbdbdb") %>% 
   bold(part="header") %>% 
-  set_table_properties(layout="autofit",
-                       opts_word=list(keep_with_next=TRUE)) 
+  colformat_num(na_str="NA") %>% 
+  set_caption("Variability estimates for derived migration metrics. Number of migratory tracks represent the number of 'swan-year' telemetry datasets that satisfied the rulesets for each metric. Repeatability is the proportion of the total variance accounted for by differences among groups; estimated as a point value between 0 and 1, and also with a 95% confidence interval (CI) range.") %>% 
+  width(., width = dim(.)$widths * 6.5 / (flextable::flextable_dim(.)$widths))
+
+
+  #set_table_properties(layout="autofit") %>% 
+                       #opts_word=list(keep_with_next=TRUE)) 
 
 # resize<-function(ft, pgwidth = 6){
 #     ft_out <- ft %>% autofit()
 #     ft_out <- width(ft_out, width = dim(ft_out)$widths*pgwidth /(flextable_dim(ft_out)$widths))
 #     return(ft_out)
 # }
+# 
+# resize(rep_table)
 ```
+------------------------------------------------------------------------
 
 ## Discussion
 
-### Summarize main take-aways and the bigger relevance
-
-**Provide brief summary of all results before going through easch section in more detail?** Our study finds that IP swans exhibit partial migration and were highly variable in their extent and timing, with a continuum of partial migration strategies each year including residency, local movement, regional migration, and long-distance migration.
+We found that annual movements of IP swans were highly variable in their extent and timing, with a continuum of partial migration strategies each year including residency (\<5 km), local movement (5–25 km), regional migration (25–100 km), and long-distance  migration (\>100 km).
 Much of this variability was related to factors tied to natural history demands and response to environmental conditions such as breeding status and breeding location.
 
-Breeding latitude was associated with the likelihood of migrating and the extent of movement during the non-breeding season (Fig. \@ref(fig:mig-extent-vs-latitude-fig)).
-Individuals that breed in the northern part of the IP range all made relatively long-distance autumn migrations.
-Autumn migration distances of swans breeding at mid-latitudes were variable, with some swans moving considerable distances and some swans remaining near their breeding locations during the non-breeding season.
-Swans breeding at lower latitudes all remained relatively near their breeding locations.
+Breeding latitude was associated with the likelihood of migrating and the extent of movement during the non-breeding season (Fig. \@ref(fig:latent-state-fig)). Individuals that breed in the northern part of the IP range all made relatively long-distance autumn migrations. Fall migration distances of swans breeding at mid-latitudes were variable, with some swans moving considerable distances and some swans remaining near their breeding locations during the non-breeding season. Swans breeding at lower latitudes all remained relatively near their breeding locations.
 
 Interior Population trumpeter swans appear to employ multiple migration strategies, which are in turn related to breeding latitude; some swans appear to migration a distance that is linearly related to their breeding latitude, whereas others stay near the breeding area during the winter except at higher latitudes, in which they migrate but to a much lesser extent than the first strategy (Fig. \@ref(fig:latent-state-fig)).
 It is unclear why these two groups seem to have distinct movement patterns.
 The effects of local environmental conditions are likely similar for swans at similar latitudes, so differences in migration strategies may be due to other factors such as social dynamics, genetic lineage, internal physiology, or site-specific knowledge and access to open water throughout the winter.
-
-### Ecology and evolution of migration (drivers and how are patterns passed on thru generations in general)
 
 The mechanisms that underlie transmission of migratory information between generations can be influenced both genetically and through social learning [@akesson2020].
 For some species with short lifespans (e.g. songbirds), migration is considered innate and primarily due to genetics based on observations of individuals that complete their first migrations independently without parents or other conspecifics to guide them [@berthold1991].
 However, for species with long generation times and high levels of parental care, such as trumpeter swans, social learning typically also plays an important role in forming migration habits [@mueller2013].
 Collective knowledge has been shown to accumulate over generations to drive migration patterns and improve efficiency in flocking species with socially learned migration behaviors, although in reintroduced populations of Whooping Cranes (*Grus americana*) that were initially trained (i.e., learned) to migrate by following aircraft, migratory efficiency of flocks rapidly increased when older individuals were present [@mueller2013; @sasaki2017].
 
-### Now bring it back to IP swans specifically
-
 IP swans are unique because their reintroduction to the greater Midwest occurred relatively recently (\<50 years) from a mix of source populations with varying migratory habits [@ransler2011].
 Thus, there may exist heterogeneity within the population in terms of internal physiological state and genetic makeup.
 Continued monitoring is needed to determine whether IP partial migration habits are still in flux or if conditions have stabilized akin to the environmental threshold model, in which certain parts of the population are obligate residents or migrants and annual environmental conditions determine the migration threshold that dictates the outcome of facultative migrants [@pulido2011].
 Partial migration is common among migratory species for which a mix of life-history strategies maximizes the overall fitness of the population, though this can be highly influenced by density-dependent effects such as competition for limited resources [@chapman2011].
-
-### Broader significance of differences in timing between latitude or breeding status and repeatability
 
 The observed patterns of migration phenology by IP trumpeter swans corresponds with those of many other long-lived avian migrants [@conklin2010; @vanwijk2012b].
 Spring arrival dates were strongly associated with both breeding latitudes and breeding status (Fig. \@ref(fig:timing-vs-latitude-fig) and Fig.
@@ -628,21 +444,19 @@ Spring arrival dates were strongly associated with both breeding latitudes and b
 Trumpeter swans, being the largest species of waterfowl in North America, have high energetic demands to produce young while also meeting their own physiological requirements, and optimal timing of arrival on breeding grounds in the spring to defend territories with adequate resources is necessary [@kokko1999].
 Like most avian migrants, breeders spent less time undergoing migration than non-breeders, though breeding latitude had no relationship with migration duration (Fig. \@ref(fig:duration-fig); @nilsson2013).
 
-### Broader significance of IP partial migration
-
 Ultimately, this study provides only a snapshot in time of current IP trumpeter swan migration patterns and population-level trends may be still stabilizing overall and experiencing annual variation based on environmental conditions each year.
 The history of IP reintroduction includes many years of anthropogenic influences, at the level of both wildlife manager and private citizen, that have likely caused considerable effects on migration patterns, and it is not well understood to what extent these influences may be passed down through future generations (cite sources).
 Some of these include intentional feeding during the winter at sites of high IP swan density and lake aerators that keep portions of lake ice-free throughout the winter to prevent winter kill of fish [@ellis1989; @slater2006; @ballard2021a].
-Although most supplemental feeding has been discontinued by state agencies, the practice continues with many private citizens, and potential impacts include not only curtailment of migration but also increased risk of pathogen transmission [@satterfield2018].
+Although supplemental feeding has been discontinued by state agencies, the practice continues with some private citizens, and potential impacts include not only curtailment of migration but also increased risk of pathogen transmission [@satterfield2018].
 There is also increasing evidence that many local groups of swans have discovered field feeding as an additional strategy to acquire nutrients, though the timing when most field feeding occurs needs more study [@varner2008; @baldassarre2014].
 
-Potential contributing reasons for partial migration: - Spectrum of environmental conditions along the latitudinal gradient of IP breeding range\
-- Potential delays due to initiation of migration trends for the first time in reintroduced areas being limited by intergenerational transfer of knowledge?
-- Potential "lag effects" of genetic lineage from RMP vs PCP?
 
-## Conclusion
 
-## Data availability
+## Availability of data and materials
+
+The tracking data collected for this study wil be made available on the Movebank Data Repository under DOI:xxx.
+
+## Code availability
 
 ## Acknowledgements
 

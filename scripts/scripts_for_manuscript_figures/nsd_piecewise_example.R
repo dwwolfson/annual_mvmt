@@ -132,16 +132,16 @@ gg_bands<-gg_fits$data[[2]]
 gg_pts<-gg_fits$data[[1]]
 #convert from julian to actual date
 gg_pts<-gg_pts %>% 
-  mutate(jdate=as.Date(x, origin="2019-12-31"))
+  mutate(jdate=as.Date(x, origin="2020-07-01"))
 
 
 lowers<-gg_bands %>% filter(group==1)
 lowers<-lowers %>% 
-  mutate(jdate=as.Date(x, origin="2019-12-31"))
+  mutate(jdate=as.Date(x, origin="2020-07-01"))
 
 uppers<-gg_bands %>% filter(group==2)
 uppers<-uppers %>% 
-  mutate(jdate=as.Date(x, origin="2019-12-31"))
+  mutate(jdate=as.Date(x, origin="2020-07-01"))
 
 # base version
 plot(gg_pts$jdate, gg_pts$y)
@@ -149,9 +149,25 @@ lines(lowers$jdate, lowers$y)
 lines(uppers$jdate, uppers$y)
 
 #ggplot
-ggplot(gg_pts, aes(jdate, y))+
+p1<-ggplot(gg_pts, aes(jdate, y))+
+  geom_point()+
+  #geom_ribbon(aes(ymin=lowers$y, ymax=uppers$y))  #doesn't work b/c wrong length
+  geom_line(data=lowers, aes(jdate, y), size=0.7, color='red', linetype=2)+
+  geom_line(data=uppers, aes(jdate, y), size=0.7, color='red', linetype=2)+
+  theme_minimal()+
+  labs(x="Date\n", y="Displacement (km)\n")+
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=18))
+ggsave(p1, file = "figures/piecewise_example.png", width = 9, height = 6, dpi=600, units = "in", bg="white")
+
+# again with no x axis
+p2<-ggplot(gg_pts, aes(jdate, y))+
   geom_point()+
   #geom_ribbon(aes(ymin=lowers$y, ymax=uppers$y))  #dosn't work b/c wrong length
   geom_line(data=lowers, aes(jdate, y), size=0.7, color='red', linetype=2)+
   geom_line(data=uppers, aes(jdate, y), size=0.7, color='red', linetype=2)+
-  theme_pubr()
+  theme_minimal()+
+  labs(x="", y="Displacement (km)\n")+
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=20))
+ggsave(p2, file = "figures/piecewise_example_no_x_axis.png", width = 9, height = 6, dpi=600, units = "in", bg="white")
