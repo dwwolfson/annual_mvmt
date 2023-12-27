@@ -63,7 +63,7 @@ autumn_depts<-p_dates %>%
   mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
   ggplot(., aes(breeding_lat, fall_mig_onset, color=fall_yr))+
   scale_y_date(date_labels = "%b %d")+
-  geom_point()+
+  geom_point(shape=21, aes(fill=fall_yr), color="black")+
   geom_smooth(method="lm", alpha=0.3)+
   stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
            r.accuracy = 0.01,
@@ -85,7 +85,7 @@ spring_arrival<-p_dates %>%
   mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
   ggplot(., aes(breeding_lat, spring_arrival, color=spring_yr))+
   scale_y_date(date_labels = "%b %d")+
-  geom_point()+
+  geom_point(shape=21, aes(fill=spring_yr),color="black")+
   geom_smooth(method="lm", alpha=0.3)+
   stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
            r.accuracy = 0.01,
@@ -101,12 +101,9 @@ spring_arrival<-p_dates %>%
   facet_wrap(~spring_yr)
 
 
-
-
-
  breeding_timing<-autumn_depts/spring_arrival
-# ggsave(here("figures/figs_for_manuscript/breeding_timing.tiff"),
-#             dpi=300, compression="lzw")
+ggsave(here("figures/figs_for_manuscript/breeding_timing.tiff"),
+            dpi=300, compression="lzw")
 
 
 
