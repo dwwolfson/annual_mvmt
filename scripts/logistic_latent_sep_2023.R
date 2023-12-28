@@ -78,11 +78,19 @@ df<-df %>%
   filter(!swan_yr%in%exclude)
 # excluded 10 more swan-year datasets, from 231 to 221
 
-# How many were over/under 100km threshold?
+#########################################################################
+
+hist(df$max_nsd, breaks=100)
+axis(side=1,at=seq(0,2000,100))
+
+# Migration categories
 df %>% 
-  filter(max_nsd>100) %>% 
-  nrow()
-# 90 under, 131 over
+  mutate(mig_cat=ifelse(max_nsd<25, "local",
+                        ifelse(max_nsd>25&max_nsd<100, "regional",
+                               ifelse(max_nsd>100, "long-distance","flag")))) %>% 
+  group_by(mig_cat) %>% 
+  summarise(count=n(),
+            prop=count/nrow(df))
 
 ####################################################
 # Now fit latent mixture model
