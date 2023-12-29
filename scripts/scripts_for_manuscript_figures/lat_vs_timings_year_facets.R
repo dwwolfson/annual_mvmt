@@ -102,7 +102,7 @@ spring_arrival<-p_dates %>%
 
 
  breeding_timing<-autumn_depts/spring_arrival
-ggsave(here("figures/figs_for_manuscript/breeding_timing.tiff"),
+ggsave(here("figures/figs_for_manuscript/timings_latitude.tiff"),
             dpi=300, compression="lzw")
 
 

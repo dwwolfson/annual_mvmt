@@ -94,8 +94,6 @@ spring_arrival<-p_dates %>%
  autumn_onset+spring_arrival
 
 breeding_timing<-autumn_onset+spring_arrival
-  plot_layout(
-    ncol=1
-  )
+
 ggsave(here("figures/figs_for_manuscript/breeding_timing.tiff"),
             dpi=300, compression="lzw")
