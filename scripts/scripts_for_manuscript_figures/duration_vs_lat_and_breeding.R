@@ -60,38 +60,47 @@ breeding_duration<-p_dates %>%
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
   mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
   ggplot(., aes(breeding_status, mig_duration,fill=breeding_status))+
-  scale_x_discrete(labels=c("Breeder", "Paired", "Non Breeder"))+
+  scale_x_discrete(labels=c("Breeder", "Paired", "Non-Breeder"))+
   geom_boxplot(outlier.shape = NA)+
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
-  ggtitle(label="Migration Duration vs Breeding Status")+
+  #ggtitle(label="Migration Duration vs Breeding Status")+
   theme(plot.title = element_text(hjust=0.5, size=14),
         plot.subtitle = element_text(hjust=0.5, size=12))+
   labs(x="\nBreeding Status", y="Migration Duration (# of days)\n")+
   theme_pubr()+
-  theme(legend.position = "none", plot.title = element_text(hjust=0.5))
+  theme(legend.position = "none",
+        text=element_text(size=16),
+        strip.text.x = element_text(size=16))
+  #theme(legend.position = "none", plot.title = element_text(hjust=0.5))
 
 migration_latitude<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
   mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
   ggplot(., aes(breeding_lat, mig_duration))+
+  scale_x_continuous(breaks=seq(42,52,2), limits=c(42,52))+
   geom_point()+
   geom_smooth(method="lm", alpha=0.3)+
   stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
+           label.x.npc="middle",
+           label.y=190,
            r.accuracy = 0.01,
-           size = 4)+
-  ggtitle(label="Migration Duration vs Breeding Latitude")+
-  theme(plot.title = element_text(hjust=0.5, size=14),
-        plot.subtitle = element_text(hjust=0.5, size=12))+
+           size = 6)+
+  #ggtitle(label="Migration Duration vs Breeding Latitude")+
+  # theme(plot.title = element_text(hjust=0.5, size=14),
+  #       plot.subtitle = element_text(hjust=0.5, size=12))+
   labs(x="\nBreeding Latitude", y="Migration Duration (# of days)\n")+
   theme_pubr()+
-  theme(legend.position = "none", plot.title = element_text(hjust=0.5))
+  theme(legend.position = "none",
+        text=element_text(size=16),
+        strip.text.x = element_text(size=16))
+  #theme(legend.position = "none", plot.title = element_text(hjust=0.5))
 
 
-# durations<-breeding_duration+migration_latitude+
-#   plot_layout(
-#     nrow=1
-#   )
-# 
-# ggsave(here("figures/figs_for_manuscript/durations.tiff"),
-#             dpi=300, compression="lzw")
+durations<-breeding_duration+migration_latitude+
+  plot_layout(
+    nrow=1
+  )
+
+ggsave(here("figures/figs_for_manuscript/durations.tiff"),
+            dpi=300, compression="lzw")

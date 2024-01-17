@@ -5,6 +5,7 @@ library(tidyverse)
 library(rptR)
 library(lme4)
 library(flextable)
+library(performance)
 
 
 # third round (post apr/may 2023)
@@ -23,44 +24,29 @@ param_df<-param_df %>%
 param_df<-param_df %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired"))
 
-# lmer models for checking random effects
-spring_lmer<-lmer(spring_arrival~sex+breeding_status+
+
+# Methodology is to fit a LMM with sex and breeding status and if the variance for the random intercept is 0,
+# then drop the random effect and fit a LM instead.
+
+
+# Autumn departure
+fall_lmer<-lmer(fall_mig_onset~sex+breeding_status+breeding_lat+
                   (1|swan_ID),
                 data=param_df)
-random_spr<-merTools::REsim(spring_lmer, n.sims=500)
-merTools::plotREsim(random_spr)
-s1<-broom.mixed::tidy(spring_lmer)
+# The random effect variance is 0, so switch to LM instead of LMM
+fall_lm<-lm(fall_mig_onset~sex+breeding_status+breeding_lat,
+            data=param_df)
 
-d4_lmer<-lmer(mig_duration~(1|swan_ID),
+
+# Spring arrival
+spring_lmer<-lmer(spring_arrival~sex+breeding_status+breeding_lat+
+                    (1|swan_ID), 
+                     data=param_df)
+# The variance of the random effect is not 0, so I'll use rptR to bootstrap for a repeatability estimate.
+spring_lm<-lm(spring_arrival~sex+breeding_status+breeding_lat,
               data=param_df)
-rand1_dur<-REsim(d4_lmer, n.sims=500)
-plotREsim(rand1_dur)
-qqnorm(residuals(d4_lmer))
 
-
-
-
-# fall departure
-# all combinations of fixed and random effects came out as singular models
-# fall_lmer<-lmer(fall_mig_onset~sex+
-#                   (1|swan_ID),
-#                 data=param_df)
-# fall2<-lmer(fall_mig_onset~1+
-#               (1|swan_ID),
-#             data=param_df)
-# fall3<-lmer(fall_mig_onset~breeding_status+
-#               (1|swan_ID),
-#             data=param_df)
-# f4<-lm(fall_mig_onset~1, 
-#        data=param_df)
-# f5<-lm(fall_mig_onset~breeding_status,data=param_df)
-f6<-lm(fall_mig_onset~breeding_status+sex,data=param_df)
-
-
-
-
-
-sm1<-rpt(spring_arrival~sex+breeding_status+
+sm1<-rpt(spring_arrival~sex+breeding_status+breeding_lat+
            (1|swan_ID),
          data=param_df,
          grname="swan_ID",
@@ -71,71 +57,14 @@ sm1<-rpt(spring_arrival~sex+breeding_status+
 summary(sm1)
 summary(sm1$mod)
 
-# dm1: mig_duration~sex+breeding_status+(1|swan_ID)
-# dm2: mig_duration~sex+(1|swan_ID)
-# dm3: mig_duration~breeding_status+(1|swan_ID)
-# dm1 and dm3 were singular, dm2 wasn't, but dm4 had better diagnostics
-dm4<-rpt(mig_duration~(1|swan_ID),
-         data=param_df,
-         grname="swan_ID",
-         datatype="Gaussian",
-         nboot=1000,
-         ratio=T,
-         ncores=7)
-summary(dm4$mod)
+# Migration duration
+duration_lmer<-lmer(mig_duration~sex+breeding_status+breeding_lat+
+                      (1|swan_ID),
+                    data=param_df)
+# The random effect variance is 0, so switch to LM instead of LMM
+duration_lm<-lm(mig_duration~sex+breeding_status+breeding_lat,
+                data=param_df)
 
-# To get variability info for fall departure, I can pull off a non-model-based option
-# within-individual: difference in timing for an individual between consecutive years 
-#   (report average difference, and standard deviations) 
-# among-individual: time span between the first and last individual 
-#   (report average time span and standard deviation)
-
-# need to add year in
-param_df<-param_df %>% 
-  mutate(fall_yr=map_chr(strsplit(.$id_year, "-"), ~.x[2]),
-         spring_yr=map_chr(strsplit(.$id_year, "-"), ~.x[3]))
-
-
-
-# within
-df<-param_df %>% 
-  filter(!is.na(fall_mig_onset)) 
-df<-df %>% 
-  group_by(swan_ID) %>% 
-  mutate(nrow=n(),
-         mig_fall_diff=ifelse(nrow>1, 
-                              max(fall_mig_onset)-min(fall_mig_onset),
-                              NA))
-
-# count multiple annual differences for swans with 3 years
-diffs<-vector()
-ids<-unique(df$swan_ID)
-for(i in 1:length(ids)){
-  tmp<-df[df$swan_ID==ids[i],]
-  nrow<-nrow(tmp)
-  if(nrow==2){
-    diffs<-c(diffs, abs(tmp$fall_mig_onset[2]-tmp$fall_mig_onset[1]))
-  }else if(nrow==3){
-    diffs<-c(diffs, abs(tmp$fall_mig_onset[2]-tmp$fall_mig_onset[1]))
-    diffs<-c(diffs, abs(tmp$fall_mig_onset[3]-tmp$fall_mig_onset[2]))
-  }
-}
-length(diffs)
-
-mean(diffs)
-sd(diffs)
-
-
-#among
-fall_ranges<-df %>% 
-  group_by(fall_yr) %>% 
-  summarise(fall_range=max(fall_mig_onset)-min(fall_mig_onset))
-mean(fall_ranges$fall_range)
-sd(fall_ranges$fall_range)
-
-# check sample sizes
-length(unique(df$swan_ID))
-length(unique(df$id_year))
 
 # Table from all the previous estimations
 rep_tab<-read_csv(here("output/repeatability/repeatability.csv"))
@@ -170,33 +99,15 @@ rep_tab %>%
   bold(part="header")
 
 
-#####
-# Try to make dumbbell plots
-# Fall departure
-# bob<-param_df %>%  
-#   filter(!is.na(fall_mig_onset)) %>% 
-#   group_by(swan_ID) %>% 
-#   mutate(avg_fall_dept=floor(mean(fall_mig_onset)),
-#          min_fall_dept=floor(min(fall_mig_onset)),
-#          max_fall_dept=floor(max(fall_mig_onset))) %>% 
-#   ungroup()
-# 
-# bob<-bob %>% 
-#   arrange(avg_fall_dept) %>% 
-#   mutate(order=seq(1, length(avg_fall_dept),1))
-#   
-# ranges<-bob %>% 
-#   select(swan_ID, min_fall_dept, max_fall_dept, order) %>% 
-#   distinct(swan_ID,min_fall_dept, max_fall_dept)
-# 
-# ggplot()+
-#   #geom_point(data=bob, aes(x=order, y=avg_fall_dept, colour=fall_yr), size=2)+
-#   geom_segment(data=ranges, aes(x=order, 
-#                                 xend=order, 
-#                                 y=min_fall_dept,
-#                                 yend=max_fall_dept),
-#                colour="darkgrey")
+#######
+# Plot model coefficients
+
+library(sjPlot)
 
 
+m1<-plot_model(spring_lmer)
+m2<-plot_model(fall_lm)
+m3<-plot_model(duration_lm)
 
+plot_grid(m1, m2, m3)
 

@@ -1,4 +1,4 @@
-# logit latent state model
+# logit latent state model without random effects
 
 # package names
 packages<-c("tidyverse", "here", "lubridate", "R2jags", 
@@ -89,52 +89,6 @@ removed_swan_yrs<-setdiff(original_swan_yrs,filtered_swan_yrs) # taken from 27 i
 removed_ids<-setdiff(original_ids, filtered_ids) # 10 individuals dropped out entirely
 
 #########################################################################
-
-hist(df$max_nsd, breaks=100)
-axis(side=1,at=seq(0,2000,100))
-
-# Migration categories
-df %>% 
-  mutate(mig_cat=ifelse(max_nsd<25, "local",
-                        ifelse(max_nsd>25&max_nsd<100, "regional",
-                               ifelse(max_nsd>100, "long-distance","flag")))) %>% 
-  group_by(mig_cat) %>% 
-  summarise(count=n(),
-            prop=count/nrow(df))
-
-# Summarize by individual instead of by swan-year
-switching<-df %>% 
-  drop_na(mig_cat) %>% 
-  group_by(id) %>% 
-  summarize(num_mig_cats=length(unique(mig_cat)))
-
-multiples<-switching %>% 
-  filter(num_mig_cats>1)
-
-# after going through by hand, these are the 'switchers' and their switch:
-# local and regional, n=4, OT_2nd, 1A, 2M, 5R
-# local and long-distance, n=0
-# regional and long-distance, n=3, 1C, 4J, 9A
-
-# how many swan_year datasets from swans that only had one migration category were in each category
-df %>% 
-  group_by(id) %>% 
-  mutate(num_mig_cats=length(unique(mig_cat))) %>% 
-  ungroup %>% 
-  filter(num_mig_cats==1) %>% 
-  group_by(mig_cat) %>% 
-  summarize(num=n())
-
-# how many swans that only had one migration categories were in each category
-df %>% 
-  group_by(id) %>% 
-  mutate(num_mig_cats=length(unique(mig_cat))) %>% 
-  ungroup %>% 
-  filter(num_mig_cats==1) %>%
-  group_by(mig_cat) %>% 
-  distinct(id) %>% 
-  summarize(num_cat=n())
-
 ####################################################
 # Now fit latent mixture model
 
@@ -151,19 +105,14 @@ n_inds<-length(unique(df$id))
 latent_model<-function(){
   #Random effects
   for(j in 1:n_inds){
-    logit(pi[j])<-beta0+b[j]
-    b[j] ~ dnorm(0, tau_b) # prior/distribution for the random effects
-    z[j] ~ dbern(pi[j]) # latent variables, held constant across years for each individual
+    z[j] ~ dbern(pi) # latent variables, held constant across years for each individual
   }
-  
-  beta0 ~ dnorm(0,1/3)
-  tau_b <- 1/(sigma_b*sigma_b)
-  sigma_b ~ dunif(0, 200)  # prior for random intercepts
+  pi ~ dunif(0, 1)  # prior for random intercepts
   
   # Other Priors
   alpha ~ dnorm(400, 0.001) # intercept for linear model
   beta1 ~ dnorm(150, 0.001) # slope for linear model
-
+  
   
   a ~ dnorm(30, 0.001)
   exp ~ dunif(0, 30)
@@ -187,21 +136,21 @@ latent_model<-function(){
 jags.dat<-(list(x = lats, Y = migs, n_obs=n_obs, n_inds=n_inds, ind_index=ind_index))
 
 # Parameters and computed values to track
-params <- c("mu","beta0","alpha", "beta1", "a","b", "c", "sigma1", "sigma2", "z", "exp", "sigma_b")
+params <- c("mu","alpha", "beta1", "a", "c", "sigma1", "sigma2", "z", "exp")
 
 # Run jags
 jagsfit <- jags.parallel(data=jags.dat, parameters.to.save=params,
                          model.file=latent_model,
-                         n.thin=10, n.chains=3, n.burnin=10000, n.iter=40000) 
-save(jagsfit, file="output/updated_latent_state_aug2023/full_jags_fit.Rda")
+                         n.thin=10, n.chains=3, n.burnin=10000, n.iter=30000) 
+save(jagsfit, file="output/updated_latent_jan_2024/jags_model.Rda")
 
-MCMCsummary(jagsfit, params = c("alpha","beta0", "beta1", "a", "c", "sigma1", "sigma2", "exp"))
+MCMCsummary(jagsfit, params = c("alpha", "beta1", "a", "c", "sigma1", "sigma2", "exp"))
 # out<-data.frame(MCMCsummary(jagsfit))
 # out<-rownames_to_column(out, "param")
 
 betas<-MCMCpstr(jagsfit, params=c("alpha", "beta1", "a","exp", "c"), type="chains")
-# save(betas, file="output/updated_latent_state_aug2023/fit_jags.Rda")
-#load(file="output/updated_latent_state_aug2023/fit_jags.Rda")
+#save(betas, file="output/updated_latent_jan_2024/fit_jags.Rda")
+#load(file="output/updated_latent_jan_2024/fit_jags.Rda")
 
 lats_pred<-seq(from=min(df$bl2),
                to=max(df$bl2),
@@ -232,13 +181,12 @@ for(i in 1:nlats){
   
 }
 
-betas_hat<-MCMCpstr(jagsfit, params = c("alpha", "beta1", "a", "b", "c", "z", "exp"), func=median)
-# save(betas_hat, file="output/updated_latent_state_aug2023/posterior_chains.Rda")
+betas_hat<-MCMCpstr(jagsfit, params = c("alpha", "beta1", "a", "c", "z", "exp"), func=median)
+# save(betas_hat, file="output/updated_latent_jan_2024/posterior_chains.Rda")
 #load("output/updated_latent_state_aug2023/posterior_chains.Rda")
 
 
-#  NEED TO GIVE EACH SWAN A Z INSTEAD OF EACH SWAN-YEAR
-# old version: df$groupID<-jagsfit$BUGSoutput$mean$z
+#  GIVE EACH SWAN A Z INSTEAD OF EACH SWAN-YEAR
 zdat<-data.frame(id=unique(df$id), groupID=jagsfit$BUGSoutput$mean$z)
 df<-left_join(df, zdat)
 
@@ -254,8 +202,8 @@ mu_hats2<-data.frame(est=betas_hat$c+betas_hat$a*lats_pred^betas_hat$exp,
                      UCL=conf.int2[,2],
                      latitudes=lats_pred)
 
-#write_csv(mu_hats1, file="output/updated_latent_state_aug2023/mu_hats1.csv")
-#write_csv(mu_hats2, file="output/updated_latent_state_aug2023/mu_hats2.csv")
+# write_csv(mu_hats1, file="output/updated_latent_jan_2024/mu_hats1.csv")
+# write_csv(mu_hats2, file="output/updated_latent_jan_2024/mu_hats2.csv")
 #mu_hats1<-read_csv("output/updated_latent_state_aug2023/mu_hats1.csv")
 #mu_hats2<-read_csv("output/updated_latent_state_aug2023/mu_hats2.csv")
 
@@ -276,17 +224,17 @@ ggplot(mu_hats1, aes(latitudes, est))+
 mu_hats1$raw_lats<-mu_hats1$latitudes+min(df$breeding_lat)
 mu_hats2$raw_lats<-mu_hats2$latitudes+min(df$breeding_lat)
 
-fig<-ggplot(mu_hats1, aes(raw_lats, est))+
-  geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=0.5)+
-  geom_line()+
-  geom_ribbon(data=mu_hats2, aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=0.5)+
-  #geom_line(data=mu_hats2, aes(latitudes, est))+
-  geom_point(data=df, aes(breeding_lat, max_nsd, color=groupID), size=2)+
-  geom_line(aes(x=lats_pred+min(df$breeding_lat), y=betas_hat$c+betas_hat$a*lats_pred^betas_hat$exp))+
-  scale_color_continuous(low='red', high='blue')+
-  labs(x="Breeding/Capture Latitude", 
-       y="Extent of Migration (in km)", 
-       color="Pr (Group 1)")
+# fig<-ggplot(mu_hats1, aes(raw_lats, est))+
+#   geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=0.5)+
+#   geom_line()+
+#   geom_ribbon(data=mu_hats2, aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=0.5)+
+#   #geom_line(data=mu_hats2, aes(latitudes, est))+
+#   geom_point(data=df, aes(breeding_lat, max_nsd, color=groupID), size=2)+
+#   geom_line(aes(x=lats_pred+min(df$breeding_lat), y=betas_hat$c+betas_hat$a*lats_pred^betas_hat$exp))+
+#   scale_color_continuous(low='red', high='blue')+
+#   labs(x="Breeding/Capture Latitude", 
+#        y="Extent of Migration (in km)", 
+#        color="Pr (Group 1)")
 
 library(ggpubr)
 
@@ -308,7 +256,7 @@ ggplot(mu_hats1, aes(raw_lats, est))+
   theme_pubr()+
   theme(text=element_text(size=20))
 
-ggsave(here("output/updated_latent_state_aug2023/logistic_pubr.tiff"),
+ggsave(here("output/updated_latent_jan_2024/no_randoms.tiff"),
        compression="lzw", dpi=300)
 
 zdat$assignment<-round(zdat$groupID)
@@ -317,11 +265,6 @@ zdat<-zdat %>%
 # add breeding lat
 zdat<-left_join(zdat, df[,c("id", "breeding_lat")])
 
-# Latitude-Migration categories
-zdat %>% 
-  mutate(lat_cat=ifelse(breeding_lat>48, "highs-lats",
-                        ifelse(breeding_lat>43&breeding_lat<48, "facultative-middle",
-                               ifelse(breeding_lat<43, "low-lats","flag"))))
 
 
 
