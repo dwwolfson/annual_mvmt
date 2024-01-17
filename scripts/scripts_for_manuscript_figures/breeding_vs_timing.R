@@ -67,7 +67,7 @@ autumn_onset<-p_dates %>%
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="Autumn Departure")+
-  labs(x="\nBreeding Status", y="Date of Autumn Departue\n")+
+  labs(x="", y="Date of Autumn Departure\n")+
   theme_pubr()+
   theme(legend.position = "none")+
   theme(plot.title = element_text(hjust=0.5, size=18),
@@ -84,14 +84,30 @@ spring_arrival<-p_dates %>%
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="Spring Arrival")+
-  labs(x="\nBreeding Status", y="Date of Spring Arrival\n")+
+  labs(x="", y="Date of Spring Arrival\n")+
   theme_pubr()+
   theme(legend.position = "none")+
   theme(plot.title = element_text(hjust=0.5, size=18),
         axis.title.y=element_text(size=18),
         text=element_text(size=16))
 
- autumn_onset+spring_arrival
+breeding_duration<-p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
+  ggplot(., aes(breeding_status, mig_duration,fill=breeding_status))+
+  scale_x_discrete(labels=c("Breeder", "Paired", "Non-Breeder"))+
+  geom_boxplot(outlier.shape = NA)+
+  geom_jitter(width = 0.1)+
+  scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  ggtitle(label="Migration Duration")+
+  labs(x="", y="Migration Duration ( of days)\n")+
+  theme_pubr()+
+  theme(legend.position = "none")+
+  theme(plot.title = element_text(hjust=0.5, size=18),
+        axis.title.y=element_text(size=18),
+        text=element_text(size=16))
+
+ autumn_onset+spring_arrival+breeding_duration
 
 breeding_timing<-autumn_onset+spring_arrival
 

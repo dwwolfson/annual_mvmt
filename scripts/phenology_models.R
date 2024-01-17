@@ -50,46 +50,31 @@ duration_lmer<-lmer(mig_duration~sex+breeding_status+breeding_lat+
 # The random effect variance is 0, so switch to LM instead of LMM
 duration_lm<-lm(mig_duration~sex+breeding_status+breeding_lat,
                 data=param_df)
-
+param_df$'Migration Duration'<-param_df$mig_duration
+duration_alt<-lm('Migration Duration'~sex+breeding_status+breeding_lat,
+                 data=param_df)
 
 ###########################################################################
 # Plot model coefficients
 
-m1<-plot_model(spring_lmer,
-               vline.color="black")
-
-
-
-m2<-plot_model(fall_lm)
-m3<-plot_model(duration_lm)
-
-m1<-m1+
-  theme_light()+
-  geom_vline(xintercept = 0, linetype="dashed", color="black", linewidth=1)+
-  ggtitle("Spring Arrival")+
-  theme(plot.title = element_text(hjust=0.5, size=18),
-        axis.title.y=element_text(size=18),
-        text=element_text(size=16))
-
-m2<-m2+
-  theme_pubr()
-
-
-m1+m2+m3
-m1/m2/m3
-
-
-plot_models(spring_lmer, fall_lm, duration_lm,
-            axis.labels=c('Breeding\\Capture Latitude', 'Paired', 'Non-Breeder', 'Sex'),
-            vline.color="black",
-            colors=c("#1b9e77", "#d95f02", "#7570b3"), # green, orange, purple, color-blind friendly paletter from colorbrewer
-            line.size=1.5, 
-            dot.size=4)+
-  theme_bw()+
-  theme(axis.title.y=element_text(size=18),
-        text=element_text(size=16),
-        panel.grid.minor = element_blank(),
+phenology_models<-plot_models(spring_lmer, fall_lm, duration_lm,
+                              axis.labels=c('Breeding\\Capture Latitude', 'Paired', 'Non-Breeder', 'Sex'),
+                              vline.color="black",
+                              colors=c("#1b9e77", "#d95f02", "#7570b3"), # green, orange, purple, color-blind friendly paletter from colorbrewer
+                              line.size=1.5, 
+                              dot.size=4)+
+  theme_pubr()+
+  theme(text=element_text(size=20, colour="black"),
+        panel.grid.major = element_line(colour="lightgrey"),
         panel.border = element_blank(),
-        axis.line=element_line(colour="black"))+
-  labs(y="\nCoefficient Estimates", legend="Migration Metrics")
- 
+        axis.line=element_line(colour="black"),
+        legend.pos="top")+
+  labs(y="\nCoefficient Estimates", color="Migration Metrics")+
+  scale_color_discrete(labels=c("Migration Duration","Autumn Departure","Spring Arrival"))
+
+ggsave(phenology_models, file=here("figures/figs_for_manuscript/phenology_models.tiff"),
+              dpi=300, compression="lzw")  
+
+                     
+
+

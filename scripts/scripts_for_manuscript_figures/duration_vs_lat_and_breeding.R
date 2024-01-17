@@ -104,3 +104,12 @@ durations<-breeding_duration+migration_latitude+
 
 ggsave(here("figures/figs_for_manuscript/durations.tiff"),
             dpi=300, compression="lzw")
+
+
+# This was the caption used for the figure chunk in the Rmd before we removed it:
+
+# "Migration duration (in days) facetted by breeding status (breeder, paired, and non-breeder) 
+# and breeding latitude. Boxplots show 75% inter-quartile range, black lines are median values 
+# for each category, and points indicate individual swan-years. The grey area is the 95% confidence 
+# interval of a linear model fit to breeding latitude with a response of migration duration. 
+# R-squared values indicate the amount of variance in duration explained by latitude."

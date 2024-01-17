@@ -75,13 +75,12 @@ Our goal was to describe seasonal movement patterns of IP trumpeter swans and qu
 
 We deployed 113 GPS-GSM transmitters on IP trumpeter swans in 6 U.S. states and 1 Canadian province across the current IP breeding range to quantify their annual movements.
 Using data from 252 unique 'swan-years', we segmented the annual cycle by fitting piecewise regression models to each yearly time-series of displacement from the breeding site, and then extracted dates of migration events.
-We also fit a latent state model to characterize population-level associations between breeding latitude and maximum extent of migration, and linear mixed models to quantify variability in migration phenology and duration.
+We also fit a latent state model to characterize population-level associations between breeding latitude and maximum extent of migration, and linear models to quantify associations in migration phenology.
 
 ### Results
 
 Annual movements of IP trumpeter swans were highly variable. At the individual level, we classified 59% of swan-year datasets as long-distance migration (defined as moving \>100km from the breeding site), 16% as regional migration (\>25 km and \<100 km from breeding site), and 19% as non-migratory but exhibiting local movements (\<25 km from breeding site), and 6% as exhibiting multiple migration strategies across years. The relationship between breeding latitude and migration extent was best described using a 2-component mixture model in which migration extent was linearly associated with breeding latitude for 1 group of individuals and was much lower and exhibited a non-linear association with breeding latitude for a second group of individuals. 
-Autumn departure dates were not associated with breeding latitude, but individuals breeding at lower latitudes returned to their breeding sites earlier in the spring.
-Successful breeders that migrated left the breeding area later in the autumn than paired adults and non-breeders and arrived earlier in the spring. 
+Breeding latitude was a significant predictor of spring arrival date, with swans arriving earlier to territories at lower latitudes. Swans at higher latitudes tended to depart earlier in the autumn, and breeding latitude had no relationship with overall migration duration. Breeding status was a significant predictor of autumn departure date, with successful breeders leaving later in the autumn than non-breeders, but had a weak relationship with spring arrival and migration duration.
 
 ### Conclusion
 
@@ -131,8 +130,8 @@ Swans breeding farther from the equator contend with shorter growing seasons and
 
 The 'push' to avoid the harsh winter conditions varies substantially throughout the IP breeding range, with concurrent implications for decisions related to migration propensity and timing. Many populations include some individuals that migrate each year while others are residents (i.e., partial migration), which can result in higher overall fitness [@lundberg1988; @chapman2011; @lundberg2013]. We expected the propensity for trumpeter swans to migrate to be higher in more northern latitudes.
 
-To better understand current movement ecology of the re-established IP trumpeter swans, we marked a sample of swans with GPS-GSM transmitters and monitored their movements over multiple annual cycles. Our primary goal was to better understand how a re-established population of trumpeter swans derived from different source pouplations uses a novel landscape. Our specific objectives were to quantify 1) the proportion of the IP that is migratory and the extent of migratory movements, 2) migration phenology (e.g., typical departure and arrival dates), 3) associations between annual movement patterns and breeding status and breeding location, and 4) the degree of individual and population-level variability in migration patterns.
-Ours is primarily a descriptive study of how a re-established population of trumpeter swans derived from different source populations uses a novel landscape.
+To better understand current movement ecology of the re-established IP trumpeter swans, we marked a sample of swans with GPS-GSM transmitters and monitored their movements over multiple annual cycles. Our primary goal was to better understand how a re-established population of trumpeter swans derived from different source pouplations uses a novel landscape. Our specific objectives were to quantify 1) the proportion of the IP that is migratory and the extent of migratory movements, 2) migration phenology (e.g., typical departure and arrival dates), and 3) associations between annual movement patterns and breeding status and breeding location.
+
 
 ------------------------------------------------------------------------
 
@@ -237,31 +236,9 @@ We used uniform priors for $c \sim Uniform(0,100$), $\delta \sim Uniform(0,30)$,
 We implemented the model in JAGS via the R2jags package using 3 MCMC chains with 30,000 iterations, a burn-in of 10,000, and a thinning rate of 10 [@plummer2003; @su2021b].
 We determined convergence of chains by assessing trace plots and using the Gelman-Rubin statistic with $\hat{R}$ \<1.1[@brooks1998].
 
-### Phenology descriptive statistics
+### Migration Phenology
 
-We fit univariate linear models separately for each year describing the relationship between breeding latitude and autumn departure and spring arrival. We visualized the differences in migration phenology (e.g., autumn departure, spring arrival) and duration between breeding classes with boxplots showing the medians, inter-quartile ranges, and outliers. We also fit a univariate linear model describing the relationship between breeding latitude and migration duration. 
-
-
-### Variability in Annual Movements
-
-We estimated the consistency of migration phenology by calculating among- and within-individual variation and repeatability of autumn departure dates, spring arrival dates, and migration duration.
-Repeatability (R), also referred to as the intra-class correlation coefficient, quantifies the degree of consistency in each individual's response by comparing the proportion of the total variance accounted for by differences among individuals [@nakagawa2010].
-We fit a linear mixed model (LMM) to each response (autumn departure date, spring arrival date, and migration duration) and added covariates for breeding status and sex to control for confounding effects that otherwise inflate the total phenotypic variance [@matuschek2017; @bates2018]:
-
-$$y_{ij}=\beta_0+breeding*\beta_1+sex*\beta_2+\alpha_i+\epsilon_{ij}$$ 
-$$\alpha\sim \mathcal{N}(0,\sigma_{\alpha}^2)$$ 
-$$\epsilon_{ij}\sim \mathcal{N}(0,\sigma_{\epsilon}^2)$$
-
-where $y_{ij}$ are the observations of the migration metric (e.g., spring arrival date) for the $i$th individual ($i=1,...,k$) during the $j$th year, $\beta_0$ is the overall population mean, $\beta_1$ is a coefficient for the effect of breeding status, $\beta_2$ is a coefficient for the effect of sex, $\alpha_i$ is a random intercept for individuals, and $\epsilon_{ij}$ is a random within-individual error term. The variance of random effects, $\sigma_{\alpha}^2$, specified as individual swan ID, quantifies among-individual variation.
-The variance remaining in model residuals, $\sigma_{\epsilon}^2$, represents within-individual variation.
-Repeatability, $R_M$, is the proportion of total phenotypic variance in the population, $\sigma_{p}^2=\sigma_{\alpha}^2+\sigma_{\epsilon}^2$, that is due to among-individual variation:
-
-$$R_M=\frac{\sigma_{\alpha}^2}{\sigma_{\alpha}^2+\sigma_{\epsilon}^2}$$
-
-We fit LMMs using the lme4 R package and conducted parametric bootstrapping with 1000 iterations to quantify the uncertainty in adjusted repeatability estimates using the rptR R package [@bates2014; @stoffel2017].
-
-In the LMM applied to autumn departure dates and migration duration, the $\sigma_{\alpha}^2$ term was estimated to be 0, and thus, we were unable to partition the among- and within-individual variation required to estimate repeatability.
-Instead, we removed the random intercept term for individual and fit a linear model with breeding status and sex as covariates to estimate a single variance parameter representing within-individual variation.
+We visualized differences in autumn departure and spring arrival across the range of breeding latitudes using scatterplots, facetted by year, with a univariate linear model fit as a statistical smoother for each year to quantify the amount of variation latitude explained in the migration metric. We visualized differences in migration phenology (e.g., autumn departure, spring arrival) and duration between breeding classes with boxplots showing the medians, inter-quartile ranges, and outliers. We also fit separate linear mixed models (LMM) using the lme4 package to each response (autumn departure date, spring arrival date, and migration duration) with a random intercept for each individual to account for repeated measures and fixed effects for sex, breeding status, and breeding latitude [@bates2014]. For the LMMs applied to autumn departure dates and migration duration the variance term for the random intercept was estimated to be 0, so instead, we dropped the random effect and refit linear models with the same set of covariates. The lack of among-individual heterogeneity after accounting for fixed effects may have been a true signal or the result of insufficient across-year repeated measures within the same individuals.   
 
 ------------------------------------------------------------------------
 
@@ -323,10 +300,10 @@ Many swans with breeding sites between 40 and 48 degrees North latitude, however
 knitr::include_graphics(here("output/updated_latent_jan_2024/no_randoms.tiff"))
 ```
 
-### Phenology descriptive statistics
+### Migration Phenology
 
-Average departure date from breeding territories in the autumn across years by long-distance migrants (\>100 km) was 1 November with a standard deviation of 20 days, and yearly averages ranged from 25 October to 7 November (Supplemental tables).
-There was little evidence of a relationship between breeding latitude and autumn departure date (Fig. \@ref(fig:timing-vs-latitude-fig)), but breeders left later, on average, than non-breeders or paired swans, and non-breeders had higher variability in timing than all other breeding categories (s.d.=30 days for non-breeders and s.d.=10 days for other categories; Fig. \@ref(fig:timing-vs-breeding-fig), Supplemental tables). Dates of spring arrival for swans that traveled \>100 km during the non-breeding period and returned to within 10 km of their previous summer territory were more consistent than autumn departure dates, with the overall average spring arrival date of 5 March and yearly averages ranging from 2 March to 7 March (Fig. \@ref(fig:timing-vs-latitude-fig), Fig. \@ref(fig:timing-vs-breeding-fig)).
+Average departure date from breeding territories in the autumn across years for all long-distance migrants (\>100 km) was 1 November with a standard deviation of 20 days, and yearly averages ranged from 25 October to 7 November (Fig. \@ref(fig:timing-vs-latitude-fig), Supplemental tables).
+There was little evidence of a relationship between breeding latitude and autumn departure date (Fig. \@ref(fig:coefplot-fig)), but breeders left later, on average, than non-breeders or paired swans, and the difference between breeders and non-breeders was statistically significant (Fig. \@ref(fig:timing-vs-breeding-fig), Fig. \@(fig:coefplot-fig)), Supplemental tables). The relationship between spring arrival (i.e., for swans that traveled \>100 km during the non-breeding period and returned to within 10 km of their previous summer territory) and breeding latitude was statistically significant, with swans returning to their territories sooner at lower latitudes. The average spring arrival date across years was 5 March and yearly averages ranging from 2 March to 7 March (Fig. \@ref(fig:timing-vs-latitude-fig), Supplemental tables).
 
 ```{r timing-vs-latitude-fig, fig.align="left", fig.cap="The timing of autumn departure and spring arrival as a function of breeding/capture latitude and facetted by year. Grey areas show 95% confidence intervals of linear models fit with latitude as the independent variable and date as the dependent variable. R-squared values indicating the amount of variance in timing explained by latitude are superimposed on each plot."}
 
@@ -336,7 +313,7 @@ There was little evidence of a relationship between breeding latitude and autumn
 knitr::include_graphics(here("figures/figs_for_manuscript/timings_latitude.tiff"))
 ```
 
-```{r timing-vs-breeding-fig, fig.align="left", fig.cap="Migration phenology by breeding status (breeder, paired, and non-breeder) facetted by season. Boxplots show 75% inter-quartile range, black lines are median values for each category, and points indicate individual swan-years."}
+```{r timing-vs-breeding-fig, fig.align="left", fig.cap="Migration phenology dates by breeding status (breeder, paired, and non-breeder). Boxplots show 75% inter-quartile range, black lines are median values for each category, and points indicate individual swan-years."}
 
 # For the code used to make this figure see this script:
 # here("scripts/scripts_for_manuscript/breeding_vs_timing.R")
@@ -344,65 +321,15 @@ knitr::include_graphics(here("figures/figs_for_manuscript/timings_latitude.tiff"
 knitr::include_graphics(here("figures/figs_for_manuscript/breeding_timing.tiff"))
 ```
 
-### Variability in Annual Movements
 
-Repeatability of spring arrival timing was 0.67 (SE=0.115, CI=[0.404,0.853]) and among-individual variation ($\sigma_{\alpha}^2=137$) was greater than within-individual variation ($\sigma_{\epsilon}^2=67$). Repeatability of migration duration was 0.086 (SE=0.21, CI=[0,0.664]) and among-individual variation ($\sigma_{\alpha}^2=38$) was much lower than within-individual variation ($\sigma_{\epsilon}^2=408$). Thus, swans exhibited significant repeatability between years in spring arrival timing (considering 95% CI overlap with 0 as statistical significance), but repeatability in migration duration was less clear and not statistically significant (Table \@ref(tab:repeatability-tab)). Lastly, the estimate of within-individual variation for autumn departure dates was $\sigma_{\epsilon}^2=298$.
-
-<!-- Swans arriving back on their territory in the spring had relatively low levels of individual variability within years, and arrival dates correlated highly with their breeding/capture latitude. -->
-
-<!-- There was also a much greater difference between breeding classes, with successful breeders arriving much earlier on average than non-breeders or paired swans. -->
-
-```{r duration-fig, fig.align="left", fig.cap="Migration duration (in days) facetted by breeding status (breeder, paired, and non-breeder) and breeding latitude. Boxplots show 75% inter-quartile range, black lines are median values for each category, and points indicate individual swan-years. The grey area is the 95% confidence interval of a linear model fit to breeding latitude with a response of migration duration. R-squared values indicate the amount of variance in duration explained by latitude."}
-
+```{r coefplot-fig, fig.align="left", fig.cap="Model coefficient estimates and 95% confidence intervals (CIs) for a linear mixed model for spring arrival and linear models for autumn departure and migration duration (defined as the number of days away from the breeding\\capture territory). The covariate for sex represents the difference between the baseline of female and the alternative treatment of male. The 2 covariates for breeding status represent the treatment between the baseline of succesful breeders. The 2 covariates with CIs that did not cross the vertical black line (breeding/capture latitude with spring arrival, and the difference between breeders and non-breeders with autumn departure) were statistically significant. "}
 # For the code used to make this figure see this script:
-# here("scripts/scripts_for_manuscript/duration_vs_lat_and_breeding.R")
-
-knitr::include_graphics(here("figures/figs_for_manuscript/durations.tiff"))
+# here("scripts/scripts_for_manuscript/phenology_models.R")
+knitr::include_graphics(here("figures/figs_for_manuscript/phenology_models.tiff"))
 
 ```
 
-```{r repeatability-tab}
 
-# Table from all the previous estimations
-rep_tab<-read_csv(here("output/repeatability/repeatability_lmm_or_lm_reduced_CI_version.csv"))
-
-rep_tab %>% 
-  flextable %>% 
-  compose(i=1, j=7, value=as_paragraph("NA")) %>% # the en-dash changes column from numeric to character and then                                                    # NA doesn't display properly, so have to hard-code it 
-  set_header_labels(values=list(
-    "migration_metric"="Migration Metric",
-    "swan-years"="Number of Migratory Tracks",
-    "individuals"="Number of Swans",
-    "within-individual_variance"=
-      "Within-Individual Variance",
-    "among-individual_variance"=
-      "Among-Individual Variance",
-    "repeatability_estimate"=
-      "Repeatability",
-    "repeatability_95%_CI"=
-      "Repeatability 95% CI"
-  )) %>%
-  fontsize(size=9, part="all") %>% 
-  vline(part="header") %>% 
-  align(align ='center', part = 'all') %>% 
-  bg(part="header", bg="#dbdbdb") %>% 
-  bold(part="header") %>% 
-  colformat_num(na_str="NA") %>% 
-  set_caption("Estimates of variance parameters for derived migration metrics. Number of migratory tracks represents the number of 'swan-years' that satisfied the rulesets for each metric. Repeatability is the proportion of the total variance accounted for by differences among groups; estimated as a point value between 0 and 1. Estimates for autumn departure came from a linear model and estimates for spring arrival and migration duration came from a linear mixed model.") %>% 
-  width(., width = dim(.)$widths * 6.5 / (flextable::flextable_dim(.)$widths))
-
-
-  #set_table_properties(layout="autofit") %>% 
-                       #opts_word=list(keep_with_next=TRUE)) 
-
-# resize<-function(ft, pgwidth = 6){
-#     ft_out <- ft %>% autofit()
-#     ft_out <- width(ft_out, width = dim(ft_out)$widths*pgwidth /(flextable_dim(ft_out)$widths))
-#     return(ft_out)
-# }
-# 
-# resize(rep_table)
-```
 
 ------------------------------------------------------------------------
 
@@ -431,10 +358,6 @@ Knowledge of current IP swan migration patterns can help inform IP swan conserva
 ## Availability of data and materials
 
 All code necessary to reproduce the analyses are available at https://github.com/dwwolfson/annual_mvmt and will be archived at the Data Repository for the University of Minnesota upon acceptance.
-
-
-## References
-
 
 ## Acknowledgements
 
@@ -492,3 +415,5 @@ David E. Andersen
 ### Contributions
 
 DWW, JRF, and DEA designed the methodology; DWW, RTK, ABT, LK, BK, SC, TF, TH, SM, TM, DF, TRC, and DEA collected the data; DWW analyzed the data; DWW wrote the first draft of the manuscript which was revised primarily by JRF and DEA. All authors reviewed the manuscript and gave final approval for publication.
+
+## References

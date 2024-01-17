@@ -1,0 +1,31 @@
+---
+title: "repeatability section"
+author: "David Wolfson"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Variability in Annual Movements
+
+We estimated the consistency of migration phenology by calculating among- and within-individual variation and repeatability of autumn departure dates, spring arrival dates, and migration duration.
+Repeatability (R), also referred to as the intra-class correlation coefficient, quantifies the degree of consistency in each individual's response by comparing the proportion of the total variance accounted for by differences among individuals [@nakagawa2010].
+We fit a linear mixed model (LMM) to each response (autumn departure date, spring arrival date, and migration duration) and added covariates for breeding status and sex to control for confounding effects that otherwise inflate the total phenotypic variance [@matuschek2017; @bates2018]:
+
+$$y_{ij}=\beta_0+breeding*\beta_1+sex*\beta_2+\alpha_i+\epsilon_{ij}$$ 
+$$\alpha\sim \mathcal{N}(0,\sigma_{\alpha}^2)$$ 
+$$\epsilon_{ij}\sim \mathcal{N}(0,\sigma_{\epsilon}^2)$$
+
+where $y_{ij}$ are the observations of the migration metric (e.g., spring arrival date) for the $i$th individual ($i=1,...,k$) during the $j$th year, $\beta_0$ is the overall population mean, $\beta_1$ is a coefficient for the effect of breeding status, $\beta_2$ is a coefficient for the effect of sex, $\alpha_i$ is a random intercept for individuals, and $\epsilon_{ij}$ is a random within-individual error term. The variance of random effects, $\sigma_{\alpha}^2$, specified as individual swan ID, quantifies among-individual variation.
+The variance remaining in model residuals, $\sigma_{\epsilon}^2$, represents within-individual variation.
+Repeatability, $R_M$, is the proportion of total phenotypic variance in the population, $\sigma_{p}^2=\sigma_{\alpha}^2+\sigma_{\epsilon}^2$, that is due to among-individual variation:
+
+$$R_M=\frac{\sigma_{\alpha}^2}{\sigma_{\alpha}^2+\sigma_{\epsilon}^2}$$
+
+We fit LMMs using the lme4 R package and conducted parametric bootstrapping with 1000 iterations to quantify the uncertainty in adjusted repeatability estimates using the rptR R package [@bates2014; @stoffel2017].
+
+In the LMM applied to autumn departure dates and migration duration, the $\sigma_{\alpha}^2$ term was estimated to be 0, and thus, we were unable to partition the among- and within-individual variation required to estimate repeatability.
+Instead, we removed the random intercept term for individual and fit a linear model with breeding status and sex as covariates to estimate a single variance parameter representing within-individual variation.
