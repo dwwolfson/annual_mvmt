@@ -23,6 +23,11 @@ flextable::set_flextable_defaults(
   )
 ```
 
+<style>
+caption {
+padding-bottom: 10px;
+}
+</style>
 <!--- this is how to write a comment that won't knit--->
 
 <!--- --->
@@ -39,7 +44,7 @@ library(ggpubr)
 ```
 
 
-## Supplemental Methods
+## Supplemental Methods Description
 
 Text Sections:
 
@@ -52,8 +57,9 @@ Rule-based thresholds chosen:
 - Latest date to be considered a fall migration onset / earliest date to be considered a spring return onset: December 1st  
 
 
-Figures:
-```{r deployment-fig, fig.align="left", out.width=100, fig.cap="An overview of GPS telemetry data received from all collared IP trumpeter swans. Each line represents the period of data collection from a single collared swan. The grey regions indicate periods of collar deployment. The black lines are 1 January of each year. Number of deployments (including redeployments) by state/province are: Michigan (n=14), Minnesota (n=56), Manitoba (n=11), Iowa (n=12), Ohio (n=20), Wisconsin (n=9), and Arkansas (n=4)."}
+## Figures
+
+```{r deployment-fig, fig.align="left", fig.cap="An overview of GPS telemetry data received from all collared IP trumpeter swans. Each line represents the period of data collection from a single collared swan. The grey regions indicate periods of collar deployment. The black lines are 1 January of each year. Number of deployments (including redeployments) by state/province are: Michigan (n=14), Minnesota (n=56), Manitoba (n=11), Iowa (n=12), Ohio (n=20), Wisconsin (n=9), and Arkansas (n=4)."}
 
 # package names
 packages<-c("tidyverse", "here", "lubridate", "scales", "data.table", "ggpubr")
@@ -63,27 +69,33 @@ invisible(lapply(packages, library, character.only = TRUE))
 options(scipen = 999)
 
 # use the most recent dataset (pulled 4/28/2023)
-df<-fread(here("data/full_dataset_4_28_2023/full_w_nsd.csv"))
+# df<-fread(here("data/full_dataset_4_28_2023/full_w_nsd.csv"))
+# 
+# # julian date
+# df$yday<-yday(df$timestamp)
+# 
+# # concatenate year and julian date
+# df$jdate<-as.Date(paste(as.character(df$year), as.character(df$yday), sep="-"), "%Y-%j")
+# 
+# # change capture state to factor
+# df$capture_state<-as.factor(df$capture_state)
+# 
+# # remove 1 outlier date
+# df<-df %>% 
+#   filter(year<2024)
+# 
+# sub<-df %>% distinct(jdate, id, capture_state)
+# sub<-sub %>% 
+#   group_by(id) %>% 
+#   mutate(days=n())
+# 
+# sub$id<-factor(sub$id, levels=sort(unique(sub$id[order(sub$days)])))
 
-# julian date
-df$yday<-yday(df$timestamp)
+# save out dataset to directly import in later runs
+#write_csv(sub, here("data/full_dataset_4_28_2023/consolidated_julian_date.csv"))
 
-# concatenate year and julian date
-df$jdate<-as.Date(paste(as.character(df$year), as.character(df$yday), sep="-"), "%Y-%j")
-
-# change capture state to factor
-df$capture_state<-as.factor(df$capture_state)
-
-# remove 1 outlier date
-df<-df %>% 
-  filter(year<2024)
-
-sub<-df %>% distinct(jdate, id, capture_state)
-sub<-sub %>% 
-  group_by(id) %>% 
-  mutate(days=n())
-
-sub$id<-factor(sub$id, levels=sort(unique(sub$id[order(sub$days)])))
+# import consolidated dataset to save time rendering
+sub<-read_csv(here("data/full_dataset_4_28_2023/consolidated_julian_date.csv"))
 
 rect1<-data.frame(xstart=as.Date("2019-07-25"), xend=as.Date("2019-08-29"))
 rect2<-data.frame(xstart=as.Date("2020-06-23"), xend=as.Date("2020-09-08"))
@@ -94,7 +106,7 @@ ggplot(sub, aes(jdate, fct_reorder(id, days, .desc=F), color=capture_state))+
   theme_pubr()+
   geom_point(size=1.5)+
   theme(axis.text.y=element_blank())+
-  theme(axis.text.x=element_text(size=16, face="bold"))+
+  theme(axis.text.x=element_text(size=12, face="bold"))+
   facet_grid(fct_relevel(capture_state, 'MI','MN', 'MB', 'IA', 'OH', 'WI', 'AR')~., scales="free")+
   geom_rect(data=rect1, aes(xmin=xstart, xmax=xend, ymin=-Inf, ymax=Inf,
   ), alpha=0.3, inherit.aes=F)+
@@ -106,7 +118,7 @@ ggplot(sub, aes(jdate, fct_reorder(id, days, .desc=F), color=capture_state))+
   ), alpha=0.3, inherit.aes=F)+
   theme(axis.title.y=element_blank())+
   theme(axis.title.x=element_blank())+
-  theme(strip.text.y = element_text(size=16, face="bold"))+
+  theme(strip.text.y = element_text(size=12, face="bold"))+
   theme(strip.background = element_rect(color="black", fill="white"))+
   guides(colour="none", fill="none")+
   scale_x_date(date_breaks = "1 year", date_labels = "%b-%Y")+
@@ -201,14 +213,16 @@ dist_plot<-df %>%
   #  geom_text(aes(52, quantile(p_dates$mig_extent, 0.75, na.rm=T),
 #               label="75% quantile", vjust=-1), size=5, color="darkgreen")+
 labs(x="\nBreeding/Capture Latitude",
-     y="Furthest Extent of Migration (in km)\n")+
+     y="Extent of Migration (km)\n")+
   theme_pubr()
 
 dist_plot
 ```
 
 
-Tables:
+## Tables:
+
+### Autumn Departure
 
 ```{r combined-fall-table}
 # third round (post apr/may 2023)
@@ -241,6 +255,7 @@ fall_table %>%
     "earliest_fall_depart" = "Earliest Departure",
     "latest_fall_depart" = "Latest Departure")) %>% 
   set_table_properties(layout="autofit") %>% 
+   fontsize(size=12, part="all") %>% 
   vline(part="header") %>% 
   align(align ='center', part = 'all') %>% 
   bg(part="header", bg="#dbdbdb") %>% 
@@ -249,7 +264,6 @@ fall_table %>%
 ```
 
 ---
-
 
 ```{r fall-yearly-table}
 # third round (post apr/may 2023)
@@ -293,6 +307,59 @@ fall_yearly %>%
 ```
 
 ---
+
+```{r fall-breeding-table}
+# third round (post apr/may 2023)
+p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
+
+# retain the total number of tracked swans (not just those that fit the rules for fall departure)
+tracked_by_breeding<-p_dates %>% 
+  drop_na(breeding_status) %>% 
+  group_by(breeding_status) %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%    #drop cygnets
+  summarize(tracked_swans=length(unique(swan_ID)))
+
+# Split by breeding status
+# Fall
+fall_breeding<-p_dates %>% 
+  drop_na(fall_mig_onset) %>% 
+  drop_na(breeding_status) %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
+    mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>% 
+  group_by(breeding_status) %>% 
+  summarize(num_swans=length(unique(swan_ID)),
+            num_swan_years=n(),
+            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
+            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
+            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
+            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
+            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
+
+fall_breeding<-cbind.data.frame(tracked_by_breeding, fall_breeding[,2:7])
+
+
+fall_breeding %>% 
+  flextable() %>% 
+  set_header_labels(values=list(
+    "breeding_status" = "Breeding Status",
+    "tracked_swans" = "Total Swans Tracked",
+    "num_swans" = "Number of Long-Distance Migrants",
+    "num_swan_years" = "Number of Fall Departure Events",
+    "average_fall_depart" = "Average Fall Departure",
+    "stan_dev_fall_depart" = "Standard Deviation (in days)",
+    "earliest_fall_depart" = "Earliest Departure",
+    "latest_fall_depart" = "Latest Departure")) %>% 
+  set_table_properties(layout="autofit") %>% 
+  vline(part="header") %>% 
+  align(align ='center', part = 'all') %>% 
+  bg(part="header", bg="#dbdbdb") %>% 
+  bold(part="header") %>% 
+  set_caption("Fall departures of long-distance migrants by breeding status")
+```
+
+------------------------------------------------------------------------------
+
+### Spring Arrival
 
 ```{r combined-spring-table}
 # third round (post apr/may 2023)
@@ -375,56 +442,6 @@ spring_yearly %>%
 
 ---
 
-```{r fall-breeding-table}
-# third round (post apr/may 2023)
-p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
-
-# retain the total number of tracked swans (not just those that fit the rules for fall departure)
-tracked_by_breeding<-p_dates %>% 
-  drop_na(breeding_status) %>% 
-  group_by(breeding_status) %>% 
-  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%    #drop cygnets
-  summarize(tracked_swans=length(unique(swan_ID)))
-
-# Split by breeding status
-# Fall
-fall_breeding<-p_dates %>% 
-  drop_na(fall_mig_onset) %>% 
-  drop_na(breeding_status) %>% 
-  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
-    mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>% 
-  group_by(breeding_status) %>% 
-  summarize(num_swans=length(unique(swan_ID)),
-            num_swan_years=n(),
-            average_fall_depart=format(mean(as.POSIXct(fall_mig_onset)), "%B %d"),
-            # median_fall_depart=format(median(as.POSIXct(fall_mig_onset)), "%B %d"),
-            stan_dev_fall_depart=signif(sd(fall_mig_onset), digits =0),
-            earliest_fall_depart=format(range(fall_mig_onset)[1], "%B %d"),
-            latest_fall_depart=format(range(fall_mig_onset)[2], "%B %d"))
-
-fall_breeding<-cbind.data.frame(tracked_by_breeding, fall_breeding[,2:7])
-
-
-fall_breeding %>% 
-  flextable() %>% 
-  set_header_labels(values=list(
-    "breeding_status" = "Breeding Status",
-    "tracked_swans" = "Total Swans Tracked",
-    "num_swans" = "Number of Long-Distance Migrants",
-    "num_swan_years" = "Number of Fall Departure Events",
-    "average_fall_depart" = "Average Fall Departure",
-    "stan_dev_fall_depart" = "Standard Deviation (in days)",
-    "earliest_fall_depart" = "Earliest Departure",
-    "latest_fall_depart" = "Latest Departure")) %>% 
-  set_table_properties(layout="autofit") %>% 
-  vline(part="header") %>% 
-  align(align ='center', part = 'all') %>% 
-  bg(part="header", bg="#dbdbdb") %>% 
-  bold(part="header") %>% 
-  set_caption("Fall departures of long-distance migrants by breeding status")
-```
-
-
 
 ```{r spring-breeding-table}
 # third round (post apr/may 2023)
@@ -472,7 +489,7 @@ spring_breeding %>%
   align(align ='center', part = 'all') %>% 
   bg(part="header", bg="#dbdbdb") %>% 
   bold(part="header") %>% 
-  set_caption("Fall departures of long-distance migrants by breeding status")
+  set_caption("Spring arrivals of long-distance migrants by breeding status")
 ```
 
 

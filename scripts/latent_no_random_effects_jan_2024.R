@@ -142,7 +142,8 @@ params <- c("mu","alpha", "beta1", "a", "c", "sigma1", "sigma2", "z", "exp")
 jagsfit <- jags.parallel(data=jags.dat, parameters.to.save=params,
                          model.file=latent_model,
                          n.thin=10, n.chains=3, n.burnin=10000, n.iter=30000) 
-save(jagsfit, file="output/updated_latent_jan_2024/jags_model.Rda")
+#save(jagsfit, file="output/updated_latent_jan_2024/jags_model.Rda")
+#load(file="output/updated_latent_jan_2024/jags_model.Rda")
 
 MCMCsummary(jagsfit, params = c("alpha", "beta1", "a", "c", "sigma1", "sigma2", "exp"))
 # out<-data.frame(MCMCsummary(jagsfit))
@@ -251,24 +252,16 @@ ggplot(mu_hats1, aes(raw_lats, est))+
   geom_line(aes(x=lats_pred+min(df$breeding_lat), y=betas_hat$c+betas_hat$a*lats_pred^betas_hat$exp))+
   scale_color_continuous(low='red', high='blue', breaks=c(0,1))+
   labs(x="\nBreeding/Capture Latitude", 
-       y="Extent of Migration (in km)\n", 
-       color="Probability of Group 1")+
+       y="Extent of Migration (km)\n", 
+       color="Probability of Group 1  ")+
   theme_pubr()+
-  theme(text=element_text(size=20))
+  theme(text=element_text(size=20),
+        panel.grid.major = element_line(colour="lightgrey"))
 
 ggsave(here("output/updated_latent_jan_2024/no_randoms.tiff"),
        compression="lzw", dpi=300)
 
-zdat$assignment<-round(zdat$groupID)
-zdat<-zdat %>% 
-  mutate(mig_status=ifelse(assignment==0, "non-migratory", "migratory"))
-# add breeding lat
-zdat<-left_join(zdat, df[,c("id", "breeding_lat")])
 
-
-
-
-write_csv(zdat, here("output/latent_state_assignments.csv"))
 
 
 

@@ -76,5 +76,3 @@ ggsave(phenology_models, file=here("figures/figs_for_manuscript/phenology_models
               dpi=300, compression="lzw")  
 
                      
-
-
