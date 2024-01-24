@@ -6,6 +6,7 @@ library(lme4)
 library(sjPlot)
 library(patchwork)
 library(ggpubr)
+library(emmeans)
 
 # third round (post apr/may 2023)
 param_df<-read_csv(here("output/migration_metrics_3rd.csv"))
@@ -75,4 +76,118 @@ phenology_models<-plot_models(spring_lmer, fall_lm, duration_lm,
 ggsave(phenology_models, file=here("figures/figs_for_manuscript/phenology_models.tiff"),
               dpi=300, compression="lzw")  
 
-                     
+#####
+# Alternate plotting format (group by migration metric instead of predictors)
+p1<-plot_model(fall_lm,
+               axis.labels=c('Breeding\\Capture Latitude', 'Paired', 'Non-Breeder', 'Sex'),
+               vline.color="black",
+               line.size=1.5, 
+               dot.size=4)+
+  theme_pubr()+
+  labs(y="")+
+  ggtitle("Autumn Departure")+
+  theme(plot.title = element_text(hjust=0.5, size=20),
+        text=element_text(size=20, colour="black"),
+        panel.grid.major = element_line(colour="lightgrey"),
+        panel.border = element_blank(),
+        axis.line=element_line(colour="black"))
+
+p2<-plot_model(spring_lmer,
+               axis.labels=c('Breeding\\Capture Latitude', 'Paired', 'Non-Breeder', 'Sex'),
+               vline.color="black",
+               line.size=1.5, 
+               dot.size=4)+
+  theme_pubr()+
+  labs(y="")+
+  ggtitle("Spring Arrival")+
+  theme(plot.title = element_text(hjust=0.5, size=20),
+        text=element_text(size=20, colour="black"),
+        panel.grid.major = element_line(colour="lightgrey"),
+        panel.border = element_blank(),
+        axis.line=element_line(colour="black"))
+
+p3<-plot_model(duration_lm,
+               axis.labels=c('Breeding\\Capture Latitude', 'Paired', 'Non-Breeder', 'Sex'),
+               vline.color="black",
+               line.size=1.5, 
+               dot.size=4)+
+  theme_pubr()+
+  labs(y="\nCoefficient Estimates")+
+  ggtitle("Migration Duration")+
+  theme(plot.title = element_text(hjust=0.5, size=20),
+        text=element_text(size=20, colour="black"),
+        panel.grid.major = element_line(colour="lightgrey"),
+        panel.border = element_blank(),
+        axis.line=element_line(colour="black"))
+
+new_phenology<-p1/p2/p3
+
+ggsave(new_phenology, file=here("figures/figs_for_manuscript/updated_phenology_models.tiff"),
+       dpi=300, compression="lzw")
+
+
+# Multiple comparisons
+# autumn departure
+autumn_contrasts<-emmeans(fall_lm, "breeding_status")
+autumn_contrasts
+pairs(autumn_contrasts, infer=c(T,T))
+
+# spring arrival
+spring_contrasts<-emmeans(spring_lmer, "breeding_status")
+spring_contrasts
+pairs(spring_contrasts, infer=c(T,T))
+
+# migration duration
+duration_contrasts<-emmeans(duration_lm, "breeding_status")
+duration_contrasts
+pairs(duration_contrasts, infer=c(T,T))
+
+
+
+# # Supplemental: Adding an interaction with breeding status and sex
+# library(performance)
+# 
+# # Autumn departure
+# fall_lmer<-lmer(fall_mig_onset~sex+breeding_status+breeding_lat+
+#                   (1|swan_ID),
+#                 data=param_df)
+# 
+# fall_lmer1<-lmer(fall_mig_onset~sex+breeding_status+breeding_lat+sex:breeding_status+
+#                   (1|swan_ID),
+#                 data=param_df)
+# # The random effect variance is 0, so switch to LM instead of LMM
+# fall_lm<-lm(fall_mig_onset~sex+breeding_status+breeding_lat,
+#             data=param_df)
+# fall_lm1<-lm(fall_mig_onset~sex+breeding_status+breeding_lat+sex:breeding_status,
+#             data=param_df)
+# 
+# ####################################################
+# # Spring arrival
+# spring_lmer<-lmer(spring_arrival~sex+breeding_status+breeding_lat+
+#                     (1|swan_ID), 
+#                   data=param_df)
+# # The variance of the random effect is not 0, so I'll keep the mixed model.
+# spring_lmer1<-lmer(spring_arrival~sex+breeding_status+breeding_lat+sex:breeding_status+
+#                     (1|swan_ID), 
+#                   data=param_df)
+# ####################################################
+# # Migration duration
+# duration_lmer<-lmer(mig_duration~sex+breeding_status+breeding_lat+
+#                       (1|swan_ID),
+#                     data=param_df)
+# duration_lmer1<-lmer(mig_duration~sex+breeding_status+breeding_lat+sex:breeding_status+
+#                       (1|swan_ID),
+#                     data=param_df)
+# # The random effect variance is 0, so switch to LM instead of LMM
+# duration_lm<-lm(mig_duration~sex+breeding_status+breeding_lat,
+#                 data=param_df)
+# duration_lm1<-lm(mig_duration~sex+breeding_status+breeding_lat+sex:breeding_status,
+#                 data=param_df)
+# 
+# plot_models(spring_lmer, spring_lmer1 ,fall_lm1, fall_lm, 
+#             duration_lm,duration_lm1, line.size = 2)+
+#   theme( panel.background = element_rect(fill = "black", color  =  NA),                                   
+#            panel.border = element_rect(fill = NA, color = "white"),  
+#            panel.grid.major = element_line(color = "grey35"),  
+#           panel.grid.minor = element_line(color = "grey20"))
+
