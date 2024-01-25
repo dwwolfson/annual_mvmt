@@ -173,7 +173,7 @@ Both types of neck collars contained a unique alpha-numeric code for visual iden
 Swans captured in Michigan were fit with CTT collars and all other swans in the study were fit with Ornitela collars.
 All transmitters were programmed to collect GPS locations at 15-min intervals throughout the 24-hr daily period.
 We leg-banded each swan with a U.S.
-Geological Survey butt-end aluminum band and determined sex via cloacal examination.
+Geological Survey butt-end aluminum band and determined sex via cloacal examination. We assigned a breeding status to each swan at the time of capture depending on if a mate and cygnet were present ('breeder' status), if a mate was present but no cygnets were observed ('paired' status), or if neither a mate or cygnets were present ('non-breeder' status). This status assessment may change in subsequent years of tracking.
 
 Protocols for capturing and marking trumpeter swans in U.S. states were approved by the University of Minnesota Animal Care and Use Committee (protocol no. 1905-37072A), the U.S.
 Fish and Wildlife Service (Research & Monitoring Special Use Permit no. K-10-001), the U.S.

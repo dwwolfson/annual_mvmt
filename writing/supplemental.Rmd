@@ -313,8 +313,9 @@ p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
 # retain the total number of tracked swans (not just those that fit the rules for fall departure)
 tracked_by_breeding<-p_dates %>% 
   drop_na(breeding_status) %>% 
-  group_by(breeding_status) %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%    #drop cygnets
+  mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>% 
+  group_by(breeding_status) %>% 
   summarize(tracked_swans=length(unique(swan_ID)))
 
 # Split by breeding status
@@ -323,7 +324,6 @@ fall_breeding<-p_dates %>%
   drop_na(fall_mig_onset) %>% 
   drop_na(breeding_status) %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
-    mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>% 
   group_by(breeding_status) %>% 
   summarize(num_swans=length(unique(swan_ID)),
             num_swan_years=n(),
@@ -448,8 +448,9 @@ p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
 # retain the total number of tracked swans (not just those that fit the rules for fall departure)
 tracked_by_breeding<-p_dates %>% 
   drop_na(breeding_status) %>% 
-  group_by(breeding_status) %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%    #drop cygnets
+  mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>% 
+  group_by(breeding_status) %>% 
   summarize(tracked_swans=length(unique(swan_ID)))
 
 # Split by breeding status
@@ -458,7 +459,6 @@ spring_breeding<-p_dates %>%
   drop_na(spring_arrival) %>% 
   drop_na(breeding_status) %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%
-  mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>% 
   group_by(breeding_status) %>% 
   summarize(num_swans=length(unique(swan_ID)),
             num_swan_years=n(),
@@ -582,7 +582,7 @@ p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))
 # all swans and years, migration duration
 duration_table<-p_dates %>% 
   drop_na(mig_duration) %>% 
-   group_by(breeding_status) %>% 
+  group_by(breeding_status) %>% 
   summarize(num_swans=length(unique(swan_ID)),
             average_migration_duration=round(mean(mig_duration)),
             stan_duration=round(sd(mig_duration)))
@@ -592,8 +592,9 @@ duration_table<-p_dates %>%
 # retain the total number of tracked swans (not just those that fit the rules for fall departure)
 tracked_by_breeding<-p_dates %>% 
   drop_na(breeding_status) %>% 
-  group_by(breeding_status) %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>%    #drop cygnets
+  mutate(breeding_status=recode(.$breeding_status, breeder="Breeder", non_breeder="Non-Breeder", paired="Paired")) %>%
+  group_by(breeding_status) %>% 
   summarize(tracked_swans=length(unique(swan_ID)))
 
 duration_table<-cbind.data.frame(tracked_by_breeding, duration_table[,2:4])
