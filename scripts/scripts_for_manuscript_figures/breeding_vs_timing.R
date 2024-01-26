@@ -1,4 +1,4 @@
-# latitude vs migration timing
+# Breeding status vs migration timing
 
 library(here)
 library(tidyverse)

@@ -51,25 +51,10 @@ options(scipen = 999)
 
 ------------------------------------------------------------------------
 
-```{=html}
-<!--- 
-Word limit: 350
-
-Must contain 
-Background: the context and purpose of the study
-Methods: how the study was performed and statistical tests used
-Results: the main findings
-Conclusions: brief summary and potential implications
-
-Break abstract into the above sections specifically.
-
-Also, between Abstract and Intro include 3-10 keywords
---->
-```
 ### Background {-}
 
-The Interior Population (IP) of trumpeter swans (*Cygnus buccinator*), formerly extirpated by market hunting, was re-established in eastern North America by releasing individuals from both migratory and non-migratory populations, but their current annual movement patterns are largely unknown.
-Our goal was to describe their seasonal movement patterns and quantify the proportion of the IP that is migratory, the extent and phenology (e.g., departure and arrival dates) of seasonal movements, and associations between movement patterns and breeding status and breeding location.
+The Interior Population (IP) of trumpeter swans (*Cygnus buccinator*), formerly extirpated by market hunting, was re-established in eastern North America by releasing individuals from both migratory and non-migratory populations; their current annual movement patterns are largely unknown.
+Our goal was to describe their seasonal movements and quantify the proportion of the IP that is migratory, the extent and phenology (e.g., departure and arrival dates) of seasonal movements, and associations between movement patterns and breeding status and breeding location.
 
 ### Methods {-}
 
@@ -80,24 +65,21 @@ We fit a latent state model to characterize population-level associations betwee
 ### Results {-}
 
 At the individual level, 59% of swans moved to distant wintering areas (long-distance migration defined as moving \>100km from the breeding site), 16% exhibited regional migration (\>25 km and \<100 km from breeding site), 19% exhibited non-migratory but local movements (\<25 km from breeding site), and 6% exhibited multiple migration strategies across years.
-Migration extent was best described using a 2-component mixture model in which migration extent was linearly associated with breeding latitude for some individuals and was much lower and exhibited a non-linear association with breeding latitude for others. Swans breeding at more northern latitudes tended to depart on migration earlier in autumn and return to their territories later in the spring than those breeding at more southern latitudes. Breeding swans departed later in the autumn than non-breeders, but breeding status didn't have a strong association with arrival in the spring. 
+Migration extent was best described using a 2-component mixture model in which migration extent was linearly associated with breeding latitude for some individuals and was much lower and exhibited a non-linear association with breeding latitude for others. Swans breeding at more northern latitudes returned to their territories later in the spring than those breeding at more southern latitudes. Breeding swans departed later in the autumn than non-breeders, but breeding status didn't have a strong association with arrival in the spring. 
 
 ### Conclusion {-}
 
 IP trumpeter swans are partial migrants, with a continuum of strategies each year, from local movements to long-distance migration.
 Much of the variability in movement patterns was related to factors tied to natural history demands (e.g., breeding status) and response to environmental conditions (e.g., through associations with breeding latitude).
 
+### Keywords {-}
+
+Trumpeter swan, migration phenology, annual movements, *Cygnus buccinator*, Interior Population, GPS telemetry, net-squared displacement, species reintroductions
 
 ## Introduction {-}
 
 ------------------------------------------------------------------------
 
-```{=html}
-<!--- 
-(From Movement Ecology page)
-The Background section should explain the background to the study, its aims, a summary of the existing literature and why this study was necessary or its contribution to the field.
---->
-```
 Migration is a behavioral mechanism widely used by all major vertebrate groups (e.g., birds, fish, mammal, herpetofauna) that allows individuals to track seasonal availability of resources to increase short-term survival, and by optimizing migration phenology, maximize long-term fitness [@fryxell1988; @milner-gulland2011; @winger2019; @barker2022].
 Despite its prevalence as an ecological process and a large body of research involving migration, how population-level migratory traditions are established is not well understood [@abrahms2021b].
 In part, that lack of understanding is hindered by challenges associated with making population-level inference from observations of individuals, quantifying migratory movements along a continuum of variability, and the relative scarcity of successful reintroductions of formerly rare migratory species [@mueller2011a; @senner2020].
@@ -113,7 +95,7 @@ Low numbers of trumpeter swans led to the establishment of Red Rock Lakes Nation
 As trumpeter swan numbers at RRLNWR started to rise, this population became a source for reintroduction efforts in other parts of the historical breeding range of trumpeter swans.
 Trumpeter swans from RRLNWR were translocated to several U.S. states to augment and increase the abundance and distribution of the diminished Rocky Mountain Population (RMP) in the inter-Mountain West and to restore the Interior Population (IP), which had been extirpated, in the Great Lakes region of North America [@shea2002].
 In the 1950s, aerial surveys in central Alaska revealed abundant numbers of trumpeter swans in the Pacific Coast Population (PCP), and this group subsequently provided the majority of swans used for reintroductions within the IP [@hansen1971; @matteson1988].
-An important distinction between these source populations is that PCP swans breeding in Alaska migrate to British Columbia and the northwestern United States each winter, but RMP swans from RRLNWR are non-migratory [@baskin1993; @oyler-mccance2007].
+An important distinction between these source populations is that PCP swans breeding in Alaska migrate to British Columbia and the northwestern United States each winter, whereas RMP swans from RRLNWR are non-migratory [@baskin1993; @oyler-mccance2007].
 
 Estimates of IP abundance have increased dramatically since reintroductions began in the 1960s, and both population size and distribution have expanded significantly [@groves2017].
 Trumpeter swans currently breed throughout most of the western Great Lakes region, including in Minnesota, Wisconsin, Michigan, Iowa, Manitoba, Ontario, and Ohio.
@@ -168,7 +150,7 @@ Both types of neck collars contained a unique alpha-numeric code for visual iden
 Swans captured in Michigan were fit with CTT collars and all other swans in the study were fit with Ornitela collars.
 All transmitters were programmed to collect GPS locations at 15-min intervals throughout the 24-hr daily period.
 We leg-banded each swan with a U.S.
-Geological Survey butt-end aluminum band and determined sex via cloacal examination. We assigned a breeding status to each swan at the time of capture depending on if a mate and cygnet were present ('breeder' status), if a mate was present but no cygnets were observed ('paired' status), or if neither a mate or cygnets were present ('non-breeder' status). This status assessment may change in subsequent years of tracking.
+Geological Survey butt-end aluminum band and determined sex via cloacal examination. We assigned a breeding status to each swan at the time of capture depending on if a mate and cygnet were present ('breeder' status), if a mate was present but no cygnets were observed ('paired' status), or if neither a mate or cygnets were present ('non-breeder' status). Due to logistical constraints, we were unable to continuously monitor the breeding status of swans in subsequent years, and we retained the initial designation for all analyses.
 
 Protocols for capturing and marking trumpeter swans in U.S. states were approved by the University of Minnesota Animal Care and Use Committee (protocol no. 1905-37072A), the U.S.
 Fish and Wildlife Service (Research & Monitoring Special Use Permit no. K-10-001), the U.S.
@@ -192,7 +174,7 @@ The syntax of each model corresponded to an increasing number of intercepts incl
 ```
 
 We fit all piecewise regression models in JAGS [@plummer2003] using the *mcp* package [@lindelov2020] in Program R version 4.0.2 [@rcoredevelopmentteam2022], using 15,000 iterations and a burn-in period of 10,000.
-We used the future R package to run all scripts in parallel on the Minnesota Supercomputing Institute using a partition with 24 cores and 50GB RAM per core [@bengtsson2021].
+We used the *future* R package to run all scripts in parallel via the Minnesota Supercomputing Institute using a partition with 24 cores and 50GB RAM per core [@bengtsson2021].
 We evaluated Markov-chain Monte Carlo (MCMC) chain convergence via the Gelman-Rubin convergence diagnostic and excluded models containing any parameters with a value of $\hat{R}$ \>1.1 from further consideration [@brooks1998].
 Through extensive testing, we found that models with MCMC samples that failed to converge in distribution after 15,000 samples were typically associated with poorly fitting models (i.e., fitting a single intercept despite multiple migration periods or fitting multiple breakpoints during a stationary period).
 If all parameters in a model passed the $\hat{R}$ threshold, we evaluated model fit and predictive performance using leave-one-out cross-validation (LOO-CV) with Pareto smoothed importance sampling to estimate the Expected Log Predictive Density (ELPD), using the *loo* package [@gelman2014; @vehtari2017].
@@ -208,8 +190,8 @@ We estimated migration duration as the difference in time between autumn departu
 
 ### Migration Extent {-}
 
-An exploratory analysis of annual movement data suggested a strong linear association between breeding latitude and migration extent for many individuals, whereas others moved to a much lesser extent, especially at lower latitudes.
-It is possible that these patterns reflect two different migratory strategies with one segment of the population consistently migrating to lower latitudes and a second segment of the population seeking out areas with open water closer to the location of their breeding site during winter.
+An exploratory analysis of annual movement data suggested a strong linear association between breeding latitude and migration extent for many individuals, whereas others moved a much lesser extent, especially at lower latitudes.
+It is possible that these patterns reflect two different migratory strategies with one segment of the population consistently migrating to lower latitudes and a second segment of the population using areas with open water closer to the location of their breeding site during winter.
 
 We use a 2-component mixture model (i.e., a model with two different groups of individuals, each following a different response pattern) to describe the relationship between breeding latitude and migration extent.
 Let $Y_{ij}$ represent the migration extent for individual $i$ in year $j$, and let $z_{i}$ be a latent variable representing the group membership of each individual.
@@ -236,23 +218,23 @@ $$
 \end{cases}
 $$
 
-The $\mu_{ij}$ term takes one of two functional forms depending on the group assignment of ($z_i$); either a linear model when $z_i=1$ with $\alpha$ and $\beta$ as the intercept and slope terms, and $x_{ij}$ as the breeding latitude for individual $i$ in year $j$, or a non-linear model when $z=0$ with $c$, $\gamma$, as the intercept and slope, and $\delta$ as an exponential term on $x_{ij}$.
+The $\mu_{ij}$ takes one of two functional forms depending on the group assignment, $z_i$; either a linear model when $z_i=1$ with $\alpha$ and $\beta$ as the intercept and slope terms, and $x_{ij}$ as the breeding latitude for individual $i$ in year $j$, or a non-linear model when $z=0$ with $c$, $\gamma$, as the intercept and slope, and $\delta$ as an exponential term on $x_{ij}$.
 In addition, we assumed the variance of $Y_{ij}$ depended on the latent state $z_i$.
 
 The latent state $z_i$ (0 or 1) for assignment to a group (i.e., migration strategy) for each individual $i$ is modeled as: $$z_i\sim Bernoulli(\pi_{i})$$
 
 We used normal priors for $\alpha \sim\mathcal{N}(400, 0.001)$, $\beta \sim\mathcal{N}(150, 0.001)$, and $\gamma \sim\mathcal{N}(30, 0.001)$, parameterized in terms of their mean and precision ($1/variance$).
 We used uniform priors for $c \sim Uniform(0,100$), $\delta \sim Uniform(0,30)$, $\pi \sim Uniform(0,1)$, $\sigma_1 \sim Uniform(1,200)$, and $\sigma_2 \sim Uniform(1,200)$.
-We used priors partially informed by the data for the intercepts of each group, $\alpha$ and $c$, based on the assumption that group 1 migrates to a greater extent than group 2.
+We used priors partially informed by the data for the intercepts of each group, $\alpha$ and $c$, based on the assumption that group 1 migrates a greater extent than group 2.
 
 We implemented the model in JAGS via the *R2jags* package using 3 MCMC chains with 30,000 iterations, a burn-in of 10,000, and a thinning rate of 10 [@plummer2003; @su2021b].
 We determined convergence of chains by assessing trace plots and using the Gelman-Rubin statistic with $\hat{R}$ \<1.1[@brooks1998].
 
 ### Migration Phenology {-}
 
-We visualized migration phenology across the range of breeding/capture latitudes that collared trumpeter swans used using scatterplots, facetted by year, with a univariate linear model fit as a statistical smoother to quantify the amount of variation in each migration metric explained by latitude. We visualized observations of migration phenology grouped by breeding status with boxplots showing the medians, inter-quartile ranges, and outliers. To test associations between predictor variables and migration phenology, we fit separate linear mixed models (LMM) using the *lme4* package to each response (autumn departure date, spring arrival date, and migration duration), with a random intercept for each individual to account for repeated measures, and fixed effects for sex, breeding status, and breeding latitude [@bates2014].
-For the LMMs fit to autumn departure dates and migration duration, the variance term for the random intercept was estimated to be 0, so we dropped the random effect and refit linear models with the same set of covariates.
-The lack of among-individual heterogeneity after accounting for fixed effects may reflect a true signal or may simply be the result of insufficient across-year repeated measures within the same set of individuals. We assessed model assumptions using the *performance* R package [@ludecke2021]. To conduct post-hoc comparisons of the categorical levels of breeding status (i.e., breeder, paired, non-breeder), we used the *emmeans* package to extract sets of pairwise contrasts for each migration metric, considering each combination of breeding status categories, and estimated means and 95% confidence intervals using Tukey's Honest Significant Difference (HSD) test to adjust p-values and confidence intervals for each comparison [@lenth2023]. We approximated the degrees of freedom for the HSD test of the spring arrival LMM using the Kenward--Roger method [@kenward1997].  
+We visualized observations of migration phenology across the range of breeding/capture latitudes using scatterplots, facetted by year, with a univariate linear model fit as a statistical smoother to quantify the amount of variation in each migration metric explained by latitude. We visualized observations of migration phenology grouped by breeding status with boxplots showing the medians, inter-quartile ranges, and outliers. To test associations between predictor variables and migration phenology, we fit separate linear mixed models (LMM) using the *lme4* package to each response (autumn departure date, spring arrival date, and migration duration), with a random intercept for each individual to account for repeated measures (i.e., multiple migrations by the same individual), and fixed effects for sex, breeding status, and breeding latitude [@bates2014].
+For the LMMs fit to autumn departure dates and migration duration, we estimated the variance term for the random intercept to be 0, so we dropped the random effect and refit linear models with the same set of covariates.
+The lack of among-individual heterogeneity after accounting for fixed effects may reflect a true signal or may simply be the result of insufficient across-year repeated measures within the same set of individuals. We assessed model assumptions using the *performance* R package [@ludecke2021]. To conduct post-hoc pairwise comparisons involving the categorical levels of breeding status (i.e., breeder, paired, non-breeder), we used the *emmeans* package with Tukey's Honest Significant Difference (HSD) to adjust p-values and confidence intervals for each comparison [@lenth2023]. We approximated the degrees of freedom for the HSD test of the spring arrival LMM using the Kenward--Roger method [@kenward1997].  
 
 
 
@@ -260,7 +242,7 @@ The lack of among-individual heterogeneity after accounting for fixed effects ma
 
 ------------------------------------------------------------------------
 
-We deployed 113 collars with GPS-GSM transmitters on 126 trumpeter swans (including 13 redeployments using collars recovered from mortalities), resulting in 252 unique 'swan-year' telemetry datasets (Supplemental Materials deployment figure).
+We deployed 113 collars with GPS-GSM transmitters on 126 trumpeter swans (including 13 redeployments using collars recovered from mortalities), resulting in 252 unique 'swan-year' telemetry datasets (Fig. S1).
 Of the 126 swans, 78 were female and 48 were male; 73 were breeding adults (cygnets present), 22 were adults with mates present but no cygnets observed at time of capture, 24 were non-breeding adults captured while in large groups, and 6 were cygnets at the time of capture.
 
 ```{=html}
@@ -319,19 +301,19 @@ knitr::include_graphics(here("output/updated_latent_jan_2024/no_randoms.tiff"))
 ### Migration Phenology {-}
 
 #### Autumn departure {-}
-The average autumn departure date from breeding/capture territories across years for all long-distance (\>100 km) migrants was 1 November with a standard deviation of 20 days, and yearly averages ranged from 25 October to 7 November (Fig. \@ref(fig:timing-vs-latitude-fig), Supplemental tables). There was slight evidence that long-distance migrants at higher latitudes tended to leave territories earlier in autumn than swans at lower latitudes ($\beta$ = -1.3, 95% CI = -3.0--0.5; Fig. \@ref(fig:coefplot-fig). There was stronger evidence in the difference between breeding status and autumn departure, with breeders leaving, on average, 11 days later than non-breeders (95% CI = -0.4--22.4), and 8 days later than paired swans (95% CI = -4.2--19.4).
+The average autumn departure date from breeding/capture territories across years for all long-distance (\>100 km) migrants was 1 November with a standard deviation of 20 days, and yearly averages ranged from 25 October to 7 November (Fig. \@ref(fig:timing-vs-latitude-fig), Table S1, Table S2). Long-distance migrants at higher latitudes left territories earlier in autumn than swans at lower latitudes, though the confidence interval for the coefficient associated with breeding latitude spanned 0 ($\beta$ = -1.3, 95% CI = -3.0--0.5; Fig. \@ref(fig:coefplot-fig)). Estimated autumn departure dates of breeding swans were, on average, 11 days (95% CI = -0.4--22.4) later than non-breeders, and 8 days (95% CI = -4.2--19.4) later than paired swans (Fig. \@ref(fig:coefplot-fig), Table S3).
 
 
 #### Spring Arrival {-}
 
-The average spring arrival date across years was 5 March with a standard deviation of 10 days, and yearly averages ranged from 2 March to 7 March (Fig. \@ref(fig:timing-vs-latitude-fig), Supplemental tables). Long-distance migrants that traveled \>100 km during the non-breeding period and returned to within 10 km of their previous summer territory arrived earliest at southern latitudes, on average, with spring arrivals for each increasing degree of breeding latitude (corresponding to approximately 111km) taking an additional 5 days (95% CI = 3.9--6.4; Fig. \@ref(fig:coefplot-fig)). Differences in spring arrival between breeding statuses were minimal, and confidence intervals spanned 0 (breeding--non-breeder, $\beta$ = 2.7, 95% CI = -8.9--14.4; breeder--paired, $\beta$ = -3.1, 95% CI = -12.2--5.9; non-breeder--paired, $\beta$=-5.9, 95% CI = -18.6--6.9).
+The average spring arrival date across years was 5 March with a standard deviation of 10 days, and yearly averages ranged from 2 March to 7 March (Fig. \@ref(fig:timing-vs-latitude-fig), Table S4, Table S5). Long-distance migrants that traveled \>100 km during the non-breeding period and returned to within 10 km of their previous summer territory arrived earliest at southern latitudes. On average, swans arrived 5 days (95% CI = 3.9--6.4) later for every increase of 1 degree of breeding latitude (corresponding to approximately 111km; Fig. \@ref(fig:coefplot-fig)). Differences in spring arrival between breeding categories were minimal, and confidence intervals spanned 0 for all two-way comparisons (breeding--non-breeder, $\beta$ = 2.7, 95% CI = -8.9--14.4; breeder--paired, $\beta$ = -3.1, 95% CI = -12.2--5.9; non-breeder--paired, $\beta$=-5.9, 95% CI = -18.6--6.9; Fig. \@ref(fig:coefplot-fig), Table S6).
 
 
 #### Migration Duration {-}
 
-There was no relationship between breeding latitude and migration duration ($\beta$ = 0.2, 95% CI = -4.4--4.8; Fig. \@ref(fig:coefplot-fig)). Breeders had the shortest average migration duration of 125 days, 19 days less than non-breeders (95% CI = 11.8--50.1), and 13 days less than paired swans (95% CI = 9.3--36.2; Fig. \@ref(fig:coefplot-fig)).
+We did not detect an association between migration duration and breeding latitude ($\beta$ = 0.2, 95% CI = -4.4--4.8; Fig. \@ref(fig:coefplot-fig)). Breeders had the shortest average migration duration of 125 days, 19 days (95% CI = -50.1--11.8) less than non-breeders, and 13 days (95% CI = -36.2--9.3) less than paired swans (Fig. \@ref(fig:coefplot-fig), Table S9).
 
-```{r timing-vs-latitude-fig, fig.align="left", fig.cap="The timing of autumn departure and spring arrival as a function of breeding/capture latitude and facetted by year. Grey areas show 95% confidence intervals of linear models fit with latitude as the predictor and date as the dependent variable. R-squared values indicating the amount of variance in timing explained by latitude are superimposed on each plot."}
+```{r timing-vs-latitude-fig, fig.align="left", fig.cap="Timing of autumn departure and spring arrival as a function of breeding/capture latitude and facetted by year. Grey areas show 95% confidence intervals of linear models fit with latitude as the predictor and date as the dependent variable. R-squared values indicating the amount of variance in timing explained by latitude are superimposed on each plot."}
 
 # For the code used to make this figure see this script:
 # here("scripts/scripts_for_manuscript_figures/lat_vs_timing_year_facets.R")
@@ -347,7 +329,7 @@ knitr::include_graphics(here("figures/figs_for_manuscript/timings_latitude.tiff"
 knitr::include_graphics(here("figures/figs_for_manuscript/breeding_timing.tiff"))
 ```
 
-```{r coefplot-fig, fig.align="left", fig.cap="Model coefficient estimates and 95% confidence intervals for a linear mixed model for spring arrival and linear models for autumn departure and migration duration (defined as the number of days away from the breeding/capture territory). The covariate for sex represents the difference between males and females (the reference category). The coefficients for non-Breeder and paired contrast these categories with breeders (the reference category). Blue results represent positive coefficient estimates and red results represent negative coefficient estimates."}
+```{r coefplot-fig, fig.align="left", fig.cap="Model coefficient estimates and 95% confidence intervals for a linear mixed model of spring arrival and linear models of autumn departure and migration duration (defined as the number of days away from the breeding/capture territory). The covariate for sex represents the difference between males and females (the reference category). The coefficients for non-breeder and paired contrast these categories with breeders (the reference category). Blue results represent positive coefficient estimates and red results represent negative coefficient estimates."}
 # For the code used to make this figure see this script:
 # here("scripts/scripts_for_manuscript/phenology_models.R")
 knitr::include_graphics(here("figures/figs_for_manuscript/updated_phenology_models.tiff"))
@@ -372,7 +354,7 @@ We did not, however, find an association between breeding latitude and migration
 Breeding latitude was associated with the likelihood of migrating and the extent of movement during the non-breeding season (Fig. \@ref(fig:latent-state-fig)).
 Individuals that breed in the northern part of the IP range all made relatively long-distance autumn migrations.
 Given the severity of winter conditions at higher latitudes, options for accessing open water created by currents on rivers or anthropogenic influences (e.g., below dams, on lakes with aerators) were likely not within close proximity of breeding locations.
-Autumn migration distances of swans breeding at mid-latitudes were variable, with some swans moving relatively long distances, while others only exhibited local or regional movements.
+Autumn migration distances of swans breeding at mid-latitudes were variable, with some swans moving relatively long distances, whereas others only exhibited local or regional movements.
 These latter swans likely remained near their breeding locations during the non-breeding season as long as they were able to find open water that provided access to food.
 Swans breeding at lower latitudes all remained close to their breeding locations year-round, as the local environmental conditions likely continued to provide open water and access to food.
 
@@ -388,9 +370,9 @@ IP swans are unique because their reintroduction to central North America occurr
 Thus, there may exist heterogeneity within the population in terms of genetic makeup that influence swan movements.
 Although previous studies have considered genetic differences of IP source populations using microsatellites, contemporary research methods (i.e., population genomics) are needed to better evaluate the genetic structure of the IP as it relates to other trumpeter swan populations [@oyler-mccance2007; @ransler2011].
 Continued monitoring is also necessary to determine whether population-level migration characteristics (e.g., annual proportion of IP swans that migrate) are still in flux or if conditions have stabilized akin to the environmental threshold model, in which certain parts of the population are obligate residents or migrants and annual environmental conditions determine the migration threshold that dictates the outcome of facultative migrants; a population-level paradigm thought to be maintained predominantly through genetic variation [@pulido2011].
-Ultimately, our study provides a snapshot in time of current IP trumpeter swan migration patterns and population-level trends may be still stabilizing and exhibiting variation based on annual environmental conditions.
+Ultimately, our study provides a snapshot in time of current IP trumpeter swan migration patterns \~50 years following initial reintroduction efforts, and population-level trends may be still stabilizing and exhibiting variation based on annual environmental conditions.
 
-The history of IP reintroduction includes many years of anthropogenic influences, at the level of both wildlife managers and private citizens, that have likely influenced migration patterns, and it is not well understood to what extent these influences may be passed down through future generations [@shea2002].
+In addition, the history of IP reintroduction includes many years of anthropogenic influences, at the level of both wildlife managers and private citizens, that have likely influenced migration patterns, and it is not well understood to what extent these influences may be passed down through future generations [@shea2002].
 Some of these influences include intentional feeding during the winter at sites of high IP swan density and lake aerators that keep lakes ice-free throughout the winter to prevent winter kill of fish [@ellis1989; @slater2006; @ballard2021a].
 Although supplemental feeding has been discontinued by state and provincial management agencies throughout the IP distribution, the practice continues with some private citizens, and potential effects include not only curtailment of migration but also increased risk of pathogen transmission [@satterfield2018].
 There is also increasing evidence that many local groups of swans have discovered field feeding as an additional strategy to acquire resources, though the timing when most field feeding occurs is not well documented [@varner2008; @baldassarre2014].
@@ -399,9 +381,9 @@ There is also increasing evidence that many local groups of swans have discovere
 
 ------------------------------------------------------------------------
 
-Knowledge of current IP swan migration patterns can help inform IP swan conservation efforts by providing accurate limits of the wintering range and quantifying the variability in migration strategies.
+Knowledge of current IP swan migration patterns can help inform IP swan conservation efforts by providing accurate limits of the wintering range and quantifying variability in migration strategies.
 Under current conditions, winter habitat for swans occurs in all but the most northerly portions of the IP breeding distribution and at mid-latitudes south of the current breeding distribution.
-Managers may need to conserve habitat during the non-breeding season for both long-distance migrants and residents that stay on their breeding territories year-round while also anticipating the impacts of future climate scenarios [@reese2017].
+Managers may need to conserve habitat during the non-breeding season for both long-distance migrants and residents that remain on their breeding territories year-round while also anticipating the impacts of future climate scenarios [@reese2017].
 It is not clear how changing climate conditions will influence future IP swan migration strategies, but currently, multiple migration strategies exist within the IP, providing a range of behavior as the basis for adaptation to changing conditions that may help offset potential negative impacts of potential asynchrony between migration phenology and environmental conditions [@nussey2005].
 The variability present in IP annual movements may position IP swans to quickly adapt to changing climate.
 
@@ -409,34 +391,36 @@ The variability present in IP annual movements may position IP swans to quickly 
 
 ------------------------------------------------------------------------
 
-All code necessary to reproduce the analyses are available at <https://github.com/dwwolfson/annual_mvmt> and will be archived at the Data Repository for the University of Minnesota upon acceptance.
+All R code used in this analysis are available at <https://github.com/dwwolfson/swan_migration_manuscript>. Data used to support this study are available from the corresponding author upon request.
 
 
 ### Abbreviations {-}
 
 ------------------------------------------------------------------------
 
-*CI:* Confidence interval
+**CI:** Confidence interval
 
-*ELPD:* Expected log predictive density
+**ELPD:** Expected log predictive density
 
-*GPS-GSM:* Global positioning system - global system for mobile communications
+**GPS-GSM:** Global positioning system - global system for mobile communications
 
-*HSD:* Honest Significant Difference
+**HSD:** Honest Significant Difference
 
-*IP:* Interior Population
+**IP:** Interior Population
 
-*LMM:* Linear mixed model
+**LMM:** Linear mixed model
 
-*MCMC:* Markov-chain Monte Carlo
+**LOO-CV:** Leave-one-out cross-validation
 
-*NSD:* Net-squared displacement
+**MCMC:** Markov-chain Monte Carlo
 
-*PCP:* Pacific Coast Population
+**NSD:** Net-squared displacement
 
-*RMP:* Rocky Mountain Population
+**PCP:** Pacific Coast Population
 
-*RRLNWR:* Red Rock Lakes National Wildlife Refuge
+**RMP:** Rocky Mountain Population
+
+**RRLNWR:** Red Rock Lakes National Wildlife Refuge
 
 
 
@@ -468,8 +452,7 @@ The authors declare that they have no competing interests.
 
 ------------------------------------------------------------------------
 
-J.F. was supported by the National Aeronautics and Space Administration award 80NSSC21K1182 and received partial salary support from the Minnesota Agricultural Experimental Station. Initial funding for this project was provided in part by the Minnesota Environmental and Natural Resources Trust Fund as recommended by the Legislative-Citizen Commission on Minnesota Resources (LCCMR), the U.S. Geological Survey, the Minnesota Cooperative Fish and Wildlife Research Unit, the U.S.
-Fish and Wildlife Service, the University of Minnesota, and the Minnesota Department of Natural Resources. Additional funding or project support was provided by the Michigan Department of Natural Resources, the Iowa Department of Natural Resources, the Canadian Wildlife Service branch of Environment and Climate Change Canada, the Cleveland Metroparks Zoo, the Great Lakes Indian Fish and Wildlife Commission, the Wisconsin Department of Natural Resources, Three Rivers Park District, the Arkansas Game and Fish Commission, and the Trumpeter Swan Society. Any use of trade, firm, or product names is for descriptive purposes only and does not imply endorsement by the U.S. Government, the University of Minnesota, or the State of Minnesota.
+J.F. was supported by the National Aeronautics and Space Administration award 80NSSC21K1182 and received partial salary support from the Minnesota Agricultural Experimental Station. Initial funding for this project was provided in part by the Minnesota Environmental and Natural Resources Trust Fund as recommended by the Legislative-Citizen Commission on Minnesota Resources (LCCMR), U.S. Fish and Wildlife Service, Minnesota Cooperative Fish and Wildlife Research Unit, and University of Minnesota. Additional funding or project support was provided by Michigan Department of Natural Resources, Ohio Department of Natural Resources, Iowa Department of Natural Resources, the Canadian Wildlife Service branch of Environment and Climate Change Canada, Wisconsin Department of Natural Resources, Cleveland Metroparks Zoo, Great Lakes Indian Fish and Wildlife Commission, Minnesota Department of Natural Resources, Three Rivers Park District, Arkansas Game and Fish Commission, and the Trumpeter Swan Society. Any use of trade, firm, or product names is for descriptive purposes only and does not imply endorsement by the U.S. Government, the University of Minnesota, or the State of Minnesota.
 
 ### Authors' contributions {-}
 
