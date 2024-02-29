@@ -50,6 +50,7 @@ p_dates<-p_dates %>%
   mutate(entire_yr=paste(map_chr(strsplit(.$id_year, "-"), ~.x[2]),
                          map_chr(strsplit(.$id_year, "-"), ~.x[3]), sep="-"))
 
+
 # Or, just load this instead
 # third round (post apr/may 2023)
 #p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv"))

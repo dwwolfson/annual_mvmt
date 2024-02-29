@@ -1,12 +1,12 @@
 ---
 title: "Migration ecology of a re-established trumpeter swan population"
-author: "David W. Wolfson, Randall T. Knapik, Anna Buckardt-Thomas, Laura Kearns,
-  Brian Kiss, Steven Cordts, Taylor Finger, Tyler Harms, Sumner Matteson, Tiffany
-  Mayo, Timothy Poole, John Moriarty, Margaret Smith, Christine Herwig, Drew Fowler,
-  Thomas R. Cooper, John R. Fieberg, David E. Andersen"
+author: "David W. Wolfson, Randall T. Knapik, Anna Buckardt Thomas, Laura J. Kearns,
+  Brian W. Kiss, Taylor A. Finger, Tyler M. Harms, Sumner W. Matteson, Tiffany
+  Mayo, Timothy F. Poole, John J. Moriarty, Margaret Smith, Christine M. Herwig, 
+  Drew N. Fowler, John R. Fieberg, David E. Andersen"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 header-includes: \usepackage{booktabs}
 ---
 ```{r chunk-setup-options, include=FALSE}
@@ -225,7 +225,7 @@ dist_plot
 
 ### Autumn Departure
 
-We estimated migration duration for all swans that traveled >100km from the breeding/capture territory by 1 December. 
+We estimated migration duration for all swans that traveled \>100km from the breeding/capture territory by 1 December. 
 
 ```{r combined-fall-table, ft.align="left"}
 # third round (post apr/may 2023)
