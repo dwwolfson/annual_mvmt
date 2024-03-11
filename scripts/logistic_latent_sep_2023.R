@@ -92,6 +92,8 @@ removed_ids<-setdiff(original_ids, filtered_ids) # 10 individuals dropped out en
 
 hist(df$max_nsd, breaks=100)
 axis(side=1,at=seq(0,2000,100))
+abline(v=25, col="red", lwd=2)
+abline(v=100, col="blue", lwd=2)
 
 # Migration categories
 df %>% 

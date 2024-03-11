@@ -7,35 +7,6 @@ packages <- c("tidyverse", "here")
 invisible(lapply(packages, library, character.only = TRUE))
 
 ###################################################################################################
-# Exclude years with incomplete info (e.g. only summer/fall migration data)
-# This is the entire dataset (n=125) condensed to one record for day with averaged NSD
-nsd_df<-read_csv(here("data/full_dataset_4_28_2023/daily_nsd.csv"))
-
-
-# split years up each summer
-nsd_df <- nsd_df %>%
-  group_by(id) %>%
-  mutate(swan_yr = ifelse(yday < 182, paste(id, year - 1, year, sep = "-"),
-                          paste(id, year, year + 1, sep = "-")
-  )) # 182 is julian day for july 1
-
-# check each swan-year to see if it's a complete time-series of data
-# this doesn't account for data gaps
-nsd_df %>% 
-  group_by(swan_yr) %>% 
-  mutate(ndays=n()) %>% 
-  ggplot(aes(ndays))+geom_histogram()
-
-# Hard to pick a clear cutoff threshold for considering it a 'complete-enough' year
-# Some swans are still on wintering area when year ends at the same time that others
-# have already made it back to the breeding area
-
-#  *** The best way might be to divide everything into 2 datasets: one for 'complete-enough',
-#  *** and the other into a partial dataset. There seems to be a bunch of years where at least the 
-#  *** summer->winter data is there, just not the entire return trip back to the breeding area.
-
-
-###################################################################################################
 # Now pick apart all the migration metrics from mcp output
 
 # This is all the output from the mcp best fit models
