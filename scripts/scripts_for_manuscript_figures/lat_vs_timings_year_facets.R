@@ -55,6 +55,9 @@ p_dates<-p_dates %>%
 # p_dates<-read_csv(here("output/metrics_3rd_round_manuscript_ready.csv")) %>% 
 #   filter(!id_year%in%"8P-2021-2022")
 
+# the spring return intercept for 6K is fit to a messy cloud->(i.e., the swan didn't settle)
+p_dates<-p_dates %>% 
+  filter(!swan_ID=="6K")
 
 # plot for timing of migration vs breeder/non-breeder/paired
 autumn_depts<-p_dates %>% 
@@ -68,7 +71,7 @@ autumn_depts<-p_dates %>%
   stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
            r.accuracy = 0.01,
            label.x.npc="middle",
-           label.y=as.Date("2020-12-10"),
+           label.y=as.Date("2020-12-20"),
            size = 5)+
   labs(x="", y="\nDate of Autumn Departure\n")+
   scale_x_continuous(breaks = seq(42,52, 2),limits=c(41,53)) +
@@ -90,7 +93,7 @@ spring_arrival<-p_dates %>%
   stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
            r.accuracy = 0.01,
            label.x.npc="middle",
-           label.y=as.Date("2020-04-24"),
+           label.y=as.Date("2020-04-15"),
            size = 5)+
   labs(x="\nBreeding\\Capture Latitude", y="Date of Spring Arrival\n")+
   scale_x_continuous(breaks = seq(42,52, 2),limits=c(41,53)) +
@@ -105,7 +108,27 @@ spring_arrival<-p_dates %>%
 ggsave(here("figures/figs_for_manuscript/timings_latitude.tiff"),
             dpi=300, compression="lzw")
 
+duration<-p_dates %>% 
+  filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
+  filter(entire_yr!='2019-2020') %>% 
+  mutate(breeding_status=fct_relevel(breeding_status, "breeder", "paired", "non_breeder")) %>% 
+  ggplot(., aes(breeding_lat, mig_duration, color=entire_yr))+
+  geom_point(shape=21, aes(fill=entire_yr),color="black")+
+  geom_smooth(method="lm", alpha=0.3)+
+  stat_cor(aes(label = paste(after_stat(rr.label))), # adds R^2 value
+           r.accuracy = 0.01,
+           label.x.npc="middle",
+           label.y=160,
+           size = 5)+
+  labs(x="\nBreeding\\Capture Latitude", y="Days away from summer territory\n")+
+  scale_x_continuous(breaks = seq(42,52, 2),limits=c(41,53)) +
+  theme_pubr()+
+  theme(legend.position = "none",
+        text=element_text(size=16),
+        strip.text.x = element_text(size=16))+
+  facet_wrap(~entire_yr)
 
+autumn_depts/spring_arrival/duration
 
-
-
+# 3/15/2024:
+# Decide if we want to include duration. If we do, resave figure and take out x-axis title from spring plot.

@@ -103,21 +103,12 @@ df<-df %>%
   mutate(swan_yr = ifelse(yday < 182, paste(id, year - 1, year, sep = "-"),
                           paste(id, year, year + 1, sep = "-")))
 
-# maybe just try 5 and 6 intercepts?
-
 m5<-mcp(model=int_mods[[5]],
         data=df[,c("rescale", "date")],
         par_x = "date",
         adapt=10000, # amount of burn-in
         iter=15000)
 
-# m6<-mcp(model=int_mods[[6]],
-#         data=df[,c("rescale", "date")],
-#         par_x = "date",
-#         adapt=10000, # amount of burn-in
-#         iter=15000)
-
-# 5 intercepts beats 6, although I think 6 won in previous MSI run?
 # pull off raw data
 points<-m5$data
 bob<-plot(m5, lines=0, q_fit=T)

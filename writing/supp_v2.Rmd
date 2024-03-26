@@ -1,0 +1,51 @@
+---
+title: "Migration ecology of a re-established trumpeter swan population"
+output: 
+  bookdown::pdf_document2:
+    number_sections: yes
+    toc: no
+    tables: true
+header-includes:
+- \usepackage{float}
+- \floatplacement{figure}{H}
+- \usepackage[left]{lineno}
+- \linenumbers
+- \usepackage{setspace}
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+\doublespacing
+David W. Wolfson$^{1,}$, Randall T. Knapik$^{2}$, Anna Buckardt Thomas$^{3}$, Tyler M. Harms$^{3}$, Laura J. Kearns$^{4}$, Brian W. Kiss$^{5}$, Timothy F. Poole$^{5}$, Drew N. Fowler$^{6}$, Taylor A. Finger$^{7}$, Sumner W. Matteson$^{7}$, John J. Moriarty$^{8}$, Tiffany Mayo$^{9}$, Margaret Smith$^{10}$, Christine M. Herwig$^{11}$, David E. Andersen$^{12}$, John R. Fieberg$^{13}$
+
+
+$^1$ University of Minnesota, Minnesota Cooperative Fish and Wildlife Research Unit
+
+$^2$ Michigan Department of Natural Resources
+
+$^3$ Iowa Department of Natural Resources
+
+$^4$ Ohio Department of Natural Resources
+
+$^5$ Manitoba Department of Economic Development, Investment, Trade, and Natural Resources 
+
+$^6$ U.S. Geological Survey, Louisiana Cooperative Fish and Wildlife Research Unit
+
+$^7$ Wisconsin Department of Natural Resources
+
+$^8$ Three Rivers Park District
+
+$^9$ Cleveland Metroparks Zoo 
+
+$^{10}$ Trumpeter Swan Society 
+
+$^{11}$ Minnesota Department of Natural Resources
+
+$^{12}$ U.S. Geological Survey, Minnesota Cooperative Fish and Wildlife Research Unit
+
+$^{13}$ University of Minnesota

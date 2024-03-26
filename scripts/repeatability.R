@@ -30,23 +30,27 @@ param_df<-param_df %>%
 
 
 # Autumn departure
-fall_lmer<-lmer(fall_mig_onset~sex+breeding_status+
+fall_lmer<-lmer(fall_mig_onset~sex+breeding_status+breeding_lat+
                   (1|swan_ID),
                 data=param_df)
-# The random effect variance is 0, so switch to LM instead of LMM
-fall_lm<-lm(fall_mig_onset~sex+breeding_status,
-            data=param_df)
+fall_rep<-rpt(fall_mig_onset~sex+breeding_status+breeding_lat+
+                (1|swan_ID),
+              data=param_df,
+              grname="swan_ID",
+              datatype="Gaussian",
+              nboot=1000,
+              ratio=T,
+              ncores=7)
+summary(fall_rep)
 
 
 # Spring arrival
-spring_lmer<-lmer(spring_arrival~sex+breeding_status+
+spring_lmer<-lmer(spring_arrival~sex+breeding_status+breeding_lat+
                     (1|swan_ID), 
                      data=param_df)
-# The variance of the random effect is not 0, so I'll use rptR to bootstrap for a repeatability estimate.
-spring_lm<-lm(spring_arrival~sex+breeding_status,
-              data=param_df)
 
-sm1<-rpt(spring_arrival~sex+breeding_status+
+
+sm1<-rpt(spring_arrival~sex+breeding_status+breeding_lat+
            (1|swan_ID),
          data=param_df,
          grname="swan_ID",
@@ -61,10 +65,15 @@ summary(sm1$mod)
 duration_lmer<-lmer(mig_duration~sex+breeding_status+
                       (1|swan_ID),
                     data=param_df)
-# The random effect variance is 0, so switch to LM instead of LMM
-duration_lm<-lm(mig_duration~sex+breeding_status,
-                data=param_df)
 
+dm1<-rpt(mig_duration~sex+breeding_status+breeding_lat+
+           (1|swan_ID),
+         data=param_df,
+         grname="swan_ID",
+         datatype="Gaussian",
+         nboot=1000,
+         ratio=T,
+         ncores=7)
 
 ##############################################################################################
 # This is the chunk that I had in the Rmd document before we removed the repeatability section

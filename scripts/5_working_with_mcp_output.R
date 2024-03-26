@@ -64,7 +64,7 @@ for (i in seq_along(ids)) {
       spring_proximity_threshold<-10   # kilometers
       
       # latest date to be considered fall migration onset/ earliest date to be considered spring return
-      fall_spring_threshold<-150  #translates to about December 1
+      fall_spring_threshold<-150  #translates to about December 1 (remember that dates start at July 1, not Jan 1)
       
       ######################################################################
 
@@ -75,7 +75,7 @@ for (i in seq_along(ids)) {
         out_params["fall_mig_onset"]<-NA
         out_params["fall_mig_onset_comment"]<-"can't consider a migrant with only 1 changepoint"
       } else if (length(grep("int", tmp_yr$name))>2){ # at least 2 changepoints
-        if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st 2 segments
+        if((tmp_yr[tmp_yr$name == "int_2", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 (dist b/w segments) passes for 1st 2 segments
            tmp_yr[tmp_yr$name=="int_2", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"] && # swan must be moving away from breeding/capture origin
            tmp_yr[tmp_yr$name == "cp_1", "mean"]<fall_spring_threshold &&    # must be between July and December
            
@@ -83,7 +83,7 @@ for (i in seq_along(ids)) {
            abs(max(tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean)-tmp_yr[grepl("int", tmp_yr$name), "mean"]$mean[[1]])>fall_onset_threshold
            ){      
           out_params["fall_mig_onset"] <- tmp_yr[tmp_yr$name == "cp_1", "mean"]
-        } else if ((tmp_yr[tmp_yr$name == "int_3", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 3rd seg
+        } else if ((tmp_yr[tmp_yr$name == "int_3", "mean"] - tmp_yr[tmp_yr$name == "int_1", "mean"])>dist_threshold && # rule 1 passes for 1st and 3rd segment
                    tmp_yr[tmp_yr$name=="int_3", "mean"]>tmp_yr[tmp_yr$name=="int_1", "mean"] && # swan must be moving away from breeding/capture origin
                    tmp_yr[tmp_yr$name == "cp_1", "mean"]<fall_spring_threshold  &&   # must be between July and December
                    

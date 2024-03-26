@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.10.12)  25 MAR 2024 15:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.8.28) (preloaded format=pdflatex 2022.10.12)  19 MAR 2024 15:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./supplemental.tex
-(supplemental.tex
+**./supp_v2.tex
+(supp_v2.tex
 LaTeX2e <2022-06-01> patch level 5
 L3 programming layer <2022-09-28> (C:\Users\David\AppData\Local\Programs\MiKTeX
  2.9\tex/latex/base\article.cls
@@ -253,6 +253,73 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/geometry\geometry.c
 fg))
+(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\longtable.sty
+Package: longtable 2019/02/06 v4.12 Multi-page Table package (DPC)
+\LTleft=\skip53
+\LTright=\skip54
+\LTpre=\skip55
+\LTpost=\skip56
+\LTchunksize=\count277
+\LTcapwidth=\dimen159
+\LT@head=\box54
+\LT@firsthead=\box55
+\LT@foot=\box56
+\LT@lastfoot=\box57
+\LT@cols=\count278
+\LT@rows=\count279
+\c@LT@tables=\count280
+\c@LT@chunks=\count281
+\LT@p@ftn=\toks26
+)
+(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/booktabs\booktabs.s
+ty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen160
+\lightrulewidth=\dimen161
+\cmidrulewidth=\dimen162
+\belowrulesep=\dimen163
+\belowbottomsep=\dimen164
+\aboverulesep=\dimen165
+\abovetopsep=\dimen166
+\cmidrulesep=\dimen167
+\cmidrulekern=\dimen168
+\defaultaddspace=\dimen169
+\@cmidla=\count282
+\@cmidlb=\count283
+\@aboverulesep=\dimen170
+\@belowrulesep=\dimen171
+\@thisruleclass=\count284
+\@lastruleclass=\count285
+\@thisrulewidth=\dimen172
+) (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\array.sty
+Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
+\col@sep=\dimen173
+\ar@mcellbox=\box58
+\extrarowheight=\dimen174
+\NC@list=\toks27
+\extratabsurround=\skip57
+\backup@length=\skip58
+\ar@cellbox=\box59
+) (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count286
+\calc@Bcount=\count287
+\calc@Adimen=\dimen175
+\calc@Bdimen=\dimen176
+\calc@Askip=\skip59
+\calc@Bskip=\skip60
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count288
+\calc@Cskip=\skip61
+)
+(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/footnotehyper\footn
+otehyper.sty
+Package: footnotehyper 2021/08/13 v1.1e hyperref aware footnote.sty (JFB)
+\FNH@notes=\box60
+\FNH@width=\dimen177
+\FNH@toks=\toks28
+)
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\graphicx.s
 ty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
@@ -269,128 +336,42 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
 )
-\Gin@req@height=\dimen159
-\Gin@req@width=\dimen160
+\Gin@req@height=\dimen178
+\Gin@req@width=\dimen179
+) (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count289
+\float@exts=\toks29
+\float@box=\box61
+\@float@everytoks=\toks30
+\@floatcapt=\box62
+) (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lineno\lineno.sty
+Package: lineno 2022/07/30 line numbers on paragraphs v5.0
+\linenopenalty=\count290
+\output=\toks31
+\linenoprevgraf=\count291
+\linenumbersep=\dimen180
+\linenumberwidth=\dimen181
+\c@linenumber=\count292
+\c@pagewiselinenumber=\count293
+\c@LN@truepage=\count294
+\c@internallinenumber=\count295
+\c@internallinenumbers=\count296
+\quotelinenumbersep=\dimen182
+\bframerule=\dimen183
+\bframesep=\dimen184
+\bframebox=\box63
+\linenoamsmath@ams@eqpen=\count297
+LaTeX Info: Redefining \\ on input line 3114.
 )
-(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/booktabs\booktabs.s
+(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/setspace\setspace.s
 ty
-Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen161
-\lightrulewidth=\dimen162
-\cmidrulewidth=\dimen163
-\belowrulesep=\dimen164
-\belowbottomsep=\dimen165
-\aboverulesep=\dimen166
-\abovetopsep=\dimen167
-\cmidrulesep=\dimen168
-\cmidrulekern=\dimen169
-\defaultaddspace=\dimen170
-\@cmidla=\count277
-\@cmidlb=\count278
-\@aboverulesep=\dimen171
-\@belowrulesep=\dimen172
-\@thisruleclass=\count279
-\@lastruleclass=\count280
-\@thisrulewidth=\dimen173
+Package: setspace 2022/12/04 v6.7b set line spacing
 )
-(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/multirow\multirow.s
+(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/bookmark\bookmark.s
 ty
-Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip53
-\multirow@cntb=\count281
-\multirow@dima=\skip54
-\bigstrutjot=\dimen174
-) (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\multicol.st
-y
-Package: multicol 2019/03/01 v1.8w multicolumn formatting (FMi)
-\c@tracingmulticols=\count282
-\mult@box=\box54
-\multicol@leftmargin=\dimen175
-\c@unbalance=\count283
-\c@collectmore=\count284
-\doublecol@number=\count285
-\multicoltolerance=\count286
-\multicolpretolerance=\count287
-\full@width=\dimen176
-\page@free=\dimen177
-\premulticols=\dimen178
-\postmulticols=\dimen179
-\multicolsep=\skip55
-\multicolbaselineskip=\skip56
-\partial@page=\box55
-\last@line=\box56
-\maxbalancingoverflow=\dimen180
-\mult@rightbox=\box57
-\mult@grightbox=\box58
-\mult@gfirstbox=\box59
-\mult@firstbox=\box60
-\@tempa=\box61
-\@tempa=\box62
-\@tempa=\box63
-\@tempa=\box64
-\@tempa=\box65
-\@tempa=\box66
-\@tempa=\box67
-\@tempa=\box68
-\@tempa=\box69
-\@tempa=\box70
-\@tempa=\box71
-\@tempa=\box72
-\@tempa=\box73
-\@tempa=\box74
-\@tempa=\box75
-\@tempa=\box76
-\@tempa=\box77
-\c@minrows=\count288
-\c@columnbadness=\count289
-\c@finalcolumnbadness=\count290
-\last@try=\dimen181
-\multicolovershoot=\dimen182
-\multicolundershoot=\dimen183
-\mult@nat@firstbox=\box78
-\colbreak@box=\box79
-\mc@col@check@num=\count291
-)
-(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/colortbl\colortbl.s
-ty
-Package: colortbl 2022/06/20 v1.0f Color table columns (DPC)
-(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\array.sty
-Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
-\col@sep=\dimen184
-\ar@mcellbox=\box80
-\extrarowheight=\dimen185
-\NC@list=\toks26
-\extratabsurround=\skip57
-\backup@length=\skip58
-\ar@cellbox=\box81
-)
-\everycr=\toks27
-\minrowclearance=\skip59
-\rownum=\count292
-) (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\hhline.sty
-Package: hhline 2014/10/28 v2.03 Table rule package (DPC)
-)
-\Oldarrayrulewidth=\skip60
-\Oldtabcolsep=\skip61
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
 
-(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\longtable.sty
-Package: longtable 2019/02/06 v4.12 Multi-page Table package (DPC)
-\LTleft=\skip62
-\LTright=\skip63
-\LTpre=\skip64
-\LTpost=\skip65
-\LTchunksize=\count293
-\LTcapwidth=\dimen186
-\LT@head=\box82
-\LT@firsthead=\box83
-\LT@foot=\box84
-\LT@lastfoot=\box85
-\LT@cols=\count294
-\LT@rows=\count295
-\c@LT@tables=\count296
-\c@LT@chunks=\count297
-\LT@p@ftn=\toks28
-)
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\hyperref.s
 ty
 Package: hyperref 2022-09-22 v7.00t Hypertext links for LaTeX
@@ -440,7 +421,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count298
 )
-\@linkdim=\dimen187
+\@linkdim=\dimen185
 \Hy@linkcounter=\count299
 \Hy@pagecounter=\count300
 
@@ -477,7 +458,7 @@ Package hyperref Info: Bookmarks ON on input line 4410.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4748.
-\XeTeXLinkMargin=\dimen188
+\XeTeXLinkMargin=\dimen186
 
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
@@ -488,8 +469,8 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
 \Fld@menulength=\count303
-\Field@Width=\dimen189
-\Fld@charsize=\dimen190
+\Field@Width=\dimen187
+\Fld@charsize=\dimen188
 Package hyperref Info: Hyper figures OFF on input line 6027.
 Package hyperref Info: Link nesting OFF on input line 6032.
 Package hyperref Info: Hyper index ON on input line 6035.
@@ -537,35 +518,16 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 85.
 )
-\Hy@SectionHShift=\skip66
-) (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/float\float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count309
-\float@exts=\toks29
-\float@box=\box86
-\@float@everytoks=\toks30
-\@floatcapt=\box87
+\Hy@SectionHShift=\skip62
 )
-(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/wrapfig\wrapfig.sty
-\wrapoverhang=\dimen191
-\WF@size=\dimen192
-\c@WF@wrappedlines=\count310
-\WF@box=\box88
-\WF@everypar=\toks31
-Package: wrapfig 2003/01/31  v 3.6
-)
-(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/bookmark\bookmark.s
-ty
-Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
-
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/bookmark\bkm-pdftex
 .def
 File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
-\BKM@id=\count311
+\BKM@id=\count309
 )) (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xurl\xurl.sty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 89
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 87
 .
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -573,41 +535,41 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3backend\l3backend
 -pdftex.def
 File: l3backend-pdftex.def 2022-09-28 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count312
-\l__pdf_internal_box=\box89
-) (supplemental.aux)
-\openout1 = `supplemental.aux'.
+\l__color_backend_stack_int=\count310
+\l__pdf_internal_box=\box64
+) (supp_v2.aux)
+\openout1 = `supp_v2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Info: Redefining \microtypecontext on input line 89.
-Package microtype Info: Applying patch `item' on input line 89.
-Package microtype Info: Applying patch `toc' on input line 89.
-Package microtype Info: Applying patch `eqnum' on input line 89.
-Package microtype Info: Applying patch `footnote' on input line 89.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Info: Redefining \microtypecontext on input line 87.
+Package microtype Info: Applying patch `item' on input line 87.
+Package microtype Info: Applying patch `toc' on input line 87.
+Package microtype Info: Applying patch `eqnum' on input line 87.
+Package microtype Info: Applying patch `footnote' on input line 87.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 89.
+LaTeX Info: Redefining \showhyphens on input line 87.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -620,16 +582,16 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-pd
 f.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count313
-\scratchdimen=\dimen193
-\scratchbox=\box90
-\nofMPsegments=\count314
-\nofMParguments=\count315
+\scratchcounter=\count311
+\scratchdimen=\dimen189
+\scratchbox=\box65
+\nofMPsegments=\count312
+\nofMParguments=\count313
 \everyMPshowfont=\toks32
-\MPscratchCnt=\count316
-\MPscratchDim=\dimen194
-\MPnumerator=\count317
-\makeMPintoPDFobject=\count318
+\MPscratchCnt=\count314
+\MPscratchDim=\dimen190
+\MPnumerator=\count315
+\makeMPintoPDFobject=\count316
 \everyMPtoPDFconversion=\toks33
 )
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/epstopdf-pkg\epstop
@@ -676,34 +638,39 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 89.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 9
-1.
+Package hyperref Info: Link coloring OFF on input line 87.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 8
+9.
+(C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\t1lmss.fd
+File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 8
+9.
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 9
-1.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 8
+9.
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-91.
+89.
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-91.
+89.
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 91.
+(Font)              <12> on input line 89.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 91.
+(Font)              <8> on input line 89.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 91.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 91.
+(Font)              <6> on input line 89.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 89.
 
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -712,7 +679,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 g
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 91.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 89.
 
 (C:\Users\David\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -721,236 +688,36 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 g
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-Overfull \hbox (1097.63579pt too wide) in paragraph at lines 91--91
- [][] 
- []
-
-<supplemental_files/figure-latex/deployment-fig-1.pdf, id=3, 459.7175pt x 312.1
-6624pt>
-File: supplemental_files/figure-latex/deployment-fig-1.pdf Graphic file (type p
-df)
-<use supplemental_files/figure-latex/deployment-fig-1.pdf>
-Package pdftex.def Info: supplemental_files/figure-latex/deployment-fig-1.pdf  
-used on input line 116.
-(pdftex.def)             Requested size: 459.72337pt x 312.17024pt.
-<supplemental_files/figure-latex/threshold-filtering-fig-1.pdf, id=4, 469.755pt
- x 325.215pt>
-File: supplemental_files/figure-latex/threshold-filtering-fig-1.pdf Graphic fil
-e (type pdf)
-<use supplemental_files/figure-latex/threshold-filtering-fig-1.pdf>
-Package pdftex.def Info: supplemental_files/figure-latex/threshold-filtering-fi
-g-1.pdf  used on input line 123.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
-
- []
-
-<supplemental_files/figure-latex/histogram-max-extent-fig-1.pdf, id=5, 459.7175
-pt x 315.1775pt>
-File: supplemental_files/figure-latex/histogram-max-extent-fig-1.pdf Graphic fi
-le (type pdf)
-<use supplemental_files/figure-latex/histogram-max-extent-fig-1.pdf>
-Package pdftex.def Info: supplemental_files/figure-latex/histogram-max-extent-f
-ig-1.pdf  used on input line 130.
-(pdftex.def)             Requested size: 459.74442pt x 315.19595pt.
-<supplemental_files/figure-latex/mig-extent-vs-latitude-fig-1.pdf, id=6, 461.72
-5pt x 315.1775pt>
-File: supplemental_files/figure-latex/mig-extent-vs-latitude-fig-1.pdf Graphic 
-file (type pdf)
-<use supplemental_files/figure-latex/mig-extent-vs-latitude-fig-1.pdf>
-Package pdftex.def Info: supplemental_files/figure-latex/mig-extent-vs-latitude
--fig-1.pdf  used on input line 137.
-(pdftex.def)             Requested size: 461.75204pt x 315.19595pt.
-
-Overfull \hbox (590.49533pt too wide) in alignment at lines 164--174
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (590.49533pt too wide) in alignment at lines 174--182
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (590.49533pt too wide) in alignment at lines 182--194
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (419.04495pt too wide) in alignment at lines 218--228
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (419.04495pt too wide) in alignment at lines 228--236
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (419.04495pt too wide) in alignment at lines 236--272
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (686.31378pt too wide) in alignment at lines 296--306
-[] [] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (686.31378pt too wide) in alignment at lines 306--314
-[] [] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (686.31378pt too wide) in alignment at lines 314--342
-[] [] [] [] [] [] [] [] 
- []
-
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 92.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 92.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 92.
 [1
 
-{C:/Users/David/AppData/Local/MiKTeX/2.9/fonts/map/pdftex/pdftex.map}] [2
-pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.342 \end{longtable}
-                      <./supplemental_files/figure-latex/deployment-fig-1.pdf>]
-[3
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.342 \end{longtable}
-                      <./supplemental_files/figure-latex/threshold-filtering-fi
-g-1.pdf>] [4
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.342 \end{longtable}
-                      <./supplemental_files/figure-latex/histogram-max-extent-f
-ig-1.pdf>] [5
-pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.342 \end{longtable}
-                      <./supplemental_files/figure-latex/mig-extent-vs-latitude
--fig-1.pdf>]
-Overfull \hbox (549.3304pt too wide) in alignment at lines 374--384
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (549.3304pt too wide) in alignment at lines 384--392
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (549.3304pt too wide) in alignment at lines 392--404
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (379.6375pt too wide) in alignment at lines 428--438
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (379.6375pt too wide) in alignment at lines 438--446
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (379.6375pt too wide) in alignment at lines 446--482
-[] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (645.14885pt too wide) in alignment at lines 506--516
-[] [] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (645.14885pt too wide) in alignment at lines 516--524
-[] [] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (645.14885pt too wide) in alignment at lines 524--552
-[] [] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (432.47139pt too wide) in alignment at lines 587--597
-[] [] [] [] [] 
- []
-
-
-Overfull \hbox (432.47139pt too wide) in alignment at lines 597--605
-[] [] [] [] [] 
- []
-
-
-Overfull \hbox (432.47139pt too wide) in alignment at lines 605--617
-[] [] [] [] [] 
- []
-
-[6]
-Overfull \hbox (306.18144pt too wide) in alignment at lines 641--651
-[] [] [] [] [] 
- []
-
-
-Overfull \hbox (306.18144pt too wide) in alignment at lines 651--659
-[] [] [] [] [] 
- []
-
-
-Overfull \hbox (306.18144pt too wide) in alignment at lines 659--695
-[] [] [] [] [] 
- []
-
-
-Overfull \hbox (373.69443pt too wide) in alignment at lines 719--729
-[] [] [] [] [] 
- []
-
-
-Overfull \hbox (373.69443pt too wide) in alignment at lines 729--737
-[] [] [] [] [] 
- []
-
-
-Overfull \hbox (373.69443pt too wide) in alignment at lines 737--765
-[] [] [] [] [] 
- []
-
-[7] (supplemental.aux) ) 
+{C:/Users/David/AppData/Local/MiKTeX/2.9/fonts/map/pdftex/pdftex.map}] (supp_v2
+.aux) ) 
 Here is how much of TeX's memory you used:
- 13918 strings out of 475351
- 227308 string characters out of 2773388
- 640221 words of memory out of 3000000
- 35000 multiletter control sequences out of 15000+600000
- 499448 words of font info for 75 fonts, out of 8000000 for 9000
+ 13993 strings out of 475351
+ 227328 string characters out of 2773388
+ 603524 words of memory out of 3000000
+ 35104 multiletter control sequences out of 15000+600000
+ 510905 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,7n,67p,1479b,539s stack positions out of 10000i,1000n,20000p,200000b,80000s
-{C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts
-/enc/dvips/lm/lm-ec.enc}<C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts
-/type1/public/lm/lmbx10.pfb><C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/public/lm/lmbx12.pfb><C:/Users/David/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/David/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Users/David/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/type1/public/lm/lmr17.pfb>
-Output written on supplemental.pdf (7 pages, 2686450 bytes).
+ 74i,5n,81p,1006b,454s stack positions out of 10000i,1000n,20000p,200000b,80000s
+{C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-
+rm.enc}{C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-
+mathit.enc}{C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm
+/lm-ec.enc}<C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
+/lm/lmmi7.pfb><C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/lm/lmr10.pfb><C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
+public/lm/lmr17.pfb><C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
+e1/public/lm/lmr7.pfb><C:/Users/David/AppData/Local/Programs/MiKTeX 2.9/fonts/t
+ype1/public/lm/lmss8.pfb>
+Output written on supp_v2.pdf (1 page, 106933 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
- 33 named destinations out of 1000 (max. 500000)
- 16453 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 42 PDF objects out of 1000 (max. 8388607)
+ 2 named destinations out of 1000 (max. 500000)
+ 22529 words of extra memory for PDF output out of 24883 (max. 10000000)
 
