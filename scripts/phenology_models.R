@@ -161,21 +161,6 @@ fall_marg<-plot_model(fall_lmer, type="pred", terms = "breeding_lat", show.data 
 spring_marg<-plot_model(spring_lmer, type="pred", terms = "breeding_lat",show.data = T)
 duration_marg<-plot_model(duration_lmer, type="pred", terms="breeding_lat",show.data = T)
 
-library(ggeffects)
-f1<-plot_model(fall_lmer, type="pred", terms = "breeding_status")
-phat<-ggeffect(fall_lmer, terms="breeding_status")
-f_gg<-plot(phat, show_data = T, jitter=0.3)
-
-s1<-plot_model(spring_lmer, type="pred", terms = "breeding_status")
-shat<-ggeffect(spring_lmer, terms="breeding_status")
-s_gg<-plot(shat, show_data = T, jitter=0.3)
-
-d1<-plot_model(duration_lmer, type="pred", terms = "breeding_status")
-dhat<-ggeffect(duration_lmer, terms="breeding_status")
-d_gg<-plot(dhat, show_data = T, jitter=0.3)
-
-f_gg+s_gg+d_gg
-
 
 # Julian date positions for Sep-Dec 1 dates on y axis
 fall_dates<-c(64,94,125, 155)

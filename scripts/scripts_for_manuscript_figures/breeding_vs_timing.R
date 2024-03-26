@@ -58,12 +58,12 @@ autumn_onset<-p_dates %>%
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="A)")+
-  labs(x="", y="Date of Autumn Departure")+
+  labs(x="", y="Date of Autumn Departure\n")+
   theme_pubr()+
   theme(legend.position = "none")+
   theme(plot.title = element_text(size=18),
-        axis.title.y=element_text(size=18),
-        text=element_text(size=16))
+        axis.title.y=element_text(size=20),
+        text=element_text(size=18))
 
 spring_arrival<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
@@ -75,12 +75,12 @@ spring_arrival<-p_dates %>%
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="B)")+
-  labs(x="", y="Date of Spring Arrival")+
+  labs(x="", y="Date of Spring Arrival\n")+
   theme_pubr()+
   theme(legend.position = "none")+
   theme(plot.title = element_text(size=18),
-        axis.title.y=element_text(size=18),
-        text=element_text(size=16))
+        axis.title.y=element_text(size=20),
+        text=element_text(size=18))
 
 breeding_duration<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
@@ -91,12 +91,12 @@ breeding_duration<-p_dates %>%
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="C)")+
-  labs(x="", y="Duration of nonbreeding season (Days)")+
+  labs(x="", y="Duration of nonbreeding season (Days)\n")+
   theme_pubr()+
   theme(legend.position = "none")+
   theme(plot.title = element_text(size=18),
-        axis.title.y=element_text(size=18),
-        text=element_text(size=16))
+        axis.title.y=element_text(size=20),
+        text=element_text(size=18))
 
  autumn_onset+spring_arrival+breeding_duration
 
