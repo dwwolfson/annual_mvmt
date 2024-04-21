@@ -91,7 +91,7 @@ p1<-plot_model(fall_lmer,
   labs(y="")+
   ggtitle("Autumn Departure")+
   theme(plot.title = element_text(hjust=0.5, size=20),
-        text=element_text(size=20, colour="black"),
+        text=element_text(size=20, colour="black", face='bold'),
         panel.grid.major = element_line(colour="lightgrey"),
         panel.border = element_blank(),
         axis.line=element_line(colour="black"))
@@ -108,7 +108,7 @@ p2<-plot_model(spring_lmer,
   labs(y="")+
   ggtitle("Spring Arrival")+
   theme(plot.title = element_text(hjust=0.5, size=20),
-        text=element_text(size=20, colour="black"),
+        text=element_text(size=20, colour="black", face='bold'),
         panel.grid.major = element_line(colour="lightgrey"),
         panel.border = element_blank(),
         axis.line=element_line(colour="black"))
@@ -123,9 +123,9 @@ p3<-plot_model(duration_lmer,
                colors = c("red", "red", "red", "blue"))+
   theme_pubclean()+
   labs(y="\nCoefficient Estimates")+
-  ggtitle("Duration of Non-Breeding Season")+
+  ggtitle("Duration of Non-Breeding Period")+
   theme(plot.title = element_text(hjust=0.5, size=20),
-        text=element_text(size=20, colour="black"),
+        text=element_text(size=20, colour="black", face='bold'),
         panel.grid.major = element_line(colour="lightgrey"),
         panel.border = element_blank(),
         axis.line=element_line(colour="black"))

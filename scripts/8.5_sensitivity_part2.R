@@ -64,6 +64,7 @@ fall_onset_threshold<-seq(0, 500, 1)
 mod_df <- read_csv(here("output/best_mod_params.csv"))
 ids <- unique(mod_df$id)
 autumn_sensitivity_params<-list()
+actual_autumn_distances<-list()
 skipped_vec<-vector()
 
 mod_df<-mod_df %>% 
@@ -279,12 +280,12 @@ skipped_vec<-vector()
 
 mod_df<-mod_df %>% 
   filter(!id%in%c("7L", "8L", "9L")) # Arkansas captures don't fit pipeline
-
+                                  
 # these are the assessments of whether the mcp fit is adequate to extract model parameters
 assess<-read_csv(here("mcp_assessment.csv"))
 
 # loop by values of spring proximity threshold
-for (k in seq_along(spring_proximity_threshold)){
+for (k in seq_along(spring_proximity_threshold)){               
   
   # loop by individual swans
   for (i in seq_along(ids)){

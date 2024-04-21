@@ -1,0 +1,15 @@
+---
+title: "test italics fig caption"
+author: "David Wolfson"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r fig.cap="is this italics \\textit{italic stuff}"}
+plot(1:5, 1:5)
+```
+

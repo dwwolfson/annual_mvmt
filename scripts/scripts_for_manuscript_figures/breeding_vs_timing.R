@@ -58,12 +58,15 @@ autumn_onset<-p_dates %>%
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="A)")+
-  labs(x="", y="Date of Autumn Departure\n")+
+  labs(x="", y="Date")+
   theme_pubr()+
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size=18),
-        axis.title.y=element_text(size=20),
-        text=element_text(size=18))
+  theme(plot.title = element_text(size=17),
+        axis.title.y=element_text(size=18),
+        text=element_text(size=18, face='bold'),
+        axis.text.x=element_text(angle=-25, vjust=0.5),
+        panel.grid.major = element_line(colour="lightgrey"))+
+  ggtitle("A) Autumn Departure")
 
 spring_arrival<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
@@ -75,12 +78,15 @@ spring_arrival<-p_dates %>%
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="B)")+
-  labs(x="", y="Date of Spring Arrival\n")+
+  labs(x="", y="Date")+
   theme_pubr()+
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size=18),
-        axis.title.y=element_text(size=20),
-        text=element_text(size=18))
+  theme(plot.title = element_text(size=17),
+        axis.title.y=element_text(size=18),
+        text=element_text(size=18, face='bold'),
+        axis.text.x=element_text(angle=-25, vjust=0.5),
+        panel.grid.major = element_line(colour="lightgrey"))+
+  ggtitle("B) Spring Arrival")
 
 breeding_duration<-p_dates %>% 
   filter(breeding_status%in%c("breeder", "non_breeder", "paired")) %>% 
@@ -91,12 +97,15 @@ breeding_duration<-p_dates %>%
   geom_jitter(width = 0.1)+
   scale_fill_manual(values = c("#00AFBB", "#E7B800", "#FC4E07"))+
   ggtitle(label="C)")+
-  labs(x="", y="Duration of nonbreeding season (Days)\n")+
+  labs(x="", y="Number of Days")+
   theme_pubr()+
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size=18),
-        axis.title.y=element_text(size=20),
-        text=element_text(size=18))
+  theme(plot.title = element_text(size=17),
+        axis.title.y=element_text(size=18),
+        text=element_text(size=18, face='bold'),
+        axis.text.x=element_text(angle=-25, vjust=0.5),
+        panel.grid.major = element_line(colour="lightgrey"))+
+  ggtitle("C) Duration of Non-Breeding Period")
 
  autumn_onset+spring_arrival+breeding_duration
 
@@ -106,5 +115,4 @@ ggsave(here("figures/figs_for_manuscript/breeding_timing.tiff"),
             dpi=300, compression="lzw")
 
 
-# Worth it to try to plot predicted marginal effects for breeding status 
-# as violin plots with error bars superimposed?
+

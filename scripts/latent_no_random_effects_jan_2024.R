@@ -143,7 +143,7 @@ jagsfit <- jags.parallel(data=jags.dat, parameters.to.save=params,
                          model.file=latent_model,
                          n.thin=10, n.chains=3, n.burnin=10000, n.iter=30000) 
 #save(jagsfit, file="output/updated_latent_jan_2024/jags_model.Rda")
-#load(file="output/updated_latent_jan_2024/jags_model.Rda")
+load(file="output/updated_latent_jan_2024/jags_model.Rda")
 
 MCMCsummary(jagsfit, params = c("alpha", "beta1", "a", "c", "sigma1", "sigma2", "exp"))
 # out<-data.frame(MCMCsummary(jagsfit))
@@ -151,7 +151,7 @@ MCMCsummary(jagsfit, params = c("alpha", "beta1", "a", "c", "sigma1", "sigma2", 
 
 betas<-MCMCpstr(jagsfit, params=c("alpha", "beta1", "a","exp", "c"), type="chains")
 #save(betas, file="output/updated_latent_jan_2024/fit_jags.Rda")
-#load(file="output/updated_latent_jan_2024/fit_jags.Rda")
+load(file="output/updated_latent_jan_2024/fit_jags.Rda")
 
 lats_pred<-seq(from=min(df$bl2),
                to=max(df$bl2),
@@ -243,7 +243,7 @@ library(ggpubr)
 #        compression="lzw")
 
 
-ggplot(mu_hats1, aes(raw_lats, est))+
+final_latent_plot<-ggplot(mu_hats1, aes(raw_lats, est))+
   geom_ribbon(aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=0.5)+
   geom_line()+
   geom_ribbon(data=mu_hats2, aes(ymin=LCL, ymax=UCL), fill="grey70", alpha=0.5)+
@@ -252,14 +252,27 @@ ggplot(mu_hats1, aes(raw_lats, est))+
   geom_line(aes(x=lats_pred+min(df$breeding_lat), y=betas_hat$c+betas_hat$a*lats_pred^betas_hat$exp))+
   scale_color_continuous(low='red', high='blue', breaks=c(0,1))+
   labs(x="\nBreeding/Capture Latitude", 
-       y="Extent of Migration (km)\n", 
+       y="Migration Extent (km)\n", 
        color="Probability of Group 1  ")+
   theme_pubr()+
   theme(text=element_text(size=20),
         panel.grid.major = element_line(colour="lightgrey"))
 
-ggsave(here("output/updated_latent_jan_2024/no_randoms.tiff"),
-       compression="lzw", dpi=300)
+# save(final_latent_plot, file="figures/figs_for_manuscript/latent_plot.Rda")
+load(file="figures/figs_for_manuscript/latent_plot.Rda")
+
+
+final_latent_plot+
+  theme(text=element_text(size=22, face='bold'),
+        plot.title=element_text(size=22))
+
+# size with aspect ratio closer to 1 instead of longer horizontal
+ggsave(here("figures/figs_for_manuscript/latent_plot.tiff"),
+       compression="lzw", dpi=300, width=6383, height=5195, units="px")
+
+# before tweak from extent of migration to migration extent
+# ggsave(here("output/updated_latent_jan_2024/no_randoms.tiff"),
+#        compression="lzw", dpi=300)
 
 
 

@@ -46,7 +46,8 @@ box<-make_bbox(c(-101,-79), c(52,34))
 background<-get_stadiamap(box, 
              maptype = "stamen_terrain")
 # this is big, so save it to file
-save(background, file=here("output/maps/stadia_stamen_terrain.rda"))
+# save(background, file=here("output/maps/stadia_stamen_terrain.rda"))
+load(here("output/maps/stadia_stamen_terrain.rda"))
 
 my_map<-ggmap(background)+
   geom_point(data=df,
